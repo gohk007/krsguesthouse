@@ -12,7 +12,10 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-content">
-        <h1>K R S GUEST HOUSE</h1>
+        <div className="logo-title">
+          <img src="krs.png" alt="KRS Logo" className="krs-logo" />
+          <h1>K R S GUEST HOUSE</h1>
+        </div>
         <p>For assistance with bookings or information, give us a call at: <strong>9448734152</strong></p>
       </div>
       <nav className="nav-bar">
@@ -63,14 +66,6 @@ const Header = () => {
             </Link>
           </li>
         </ul>
-        {/* <a
-          href="https://wa.me/919448734152"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="whatsapp-link"
-        >
-          WhatsApp
-        </a> */}
       </nav>
     </header>
   );

@@ -10,6 +10,22 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.logo-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.krs-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background-color: white;
+  object-fit: cover;  /* Ensures proper scaling */
+}
+
 .header h1 {
   margin: 0;
   font-size: 2rem;
@@ -62,21 +78,3 @@
   padding: 10px 15px;
   border-radius: 5px;
 }
-
-/* WhatsApp Link Styling */
-.whatsapp-link {
-  background-color: #25d366; /* WhatsApp green */
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.whatsapp-link:hover {
-  background-color: #128c7e; /* Darker WhatsApp green */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-

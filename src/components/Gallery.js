@@ -7,6 +7,9 @@ const Gallery = () => {
     "/image6.jpeg",
     "/image2.jpg",
     "/image3.jpg",
+    "/image1.jpg",
+    "/image4.jpg",
+    "/image5.jpeg"
   ];
 
   return (

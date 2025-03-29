@@ -23,7 +23,7 @@ const attractions = [
     {
         name: "ಕೊಡಚಾದ್ರಿ",
         description: "ಕೊಡಚಾದ್ರಿಯು ದಟ್ಟವಾದ ಕಾಡುಗಳನ್ನು ಹೊಂದಿರುವ ಪರ್ವತ ಶಿಖರವಾಗಿದೆ, ಸಮುದ್ರ ಮಟ್ಟದಿಂದ ಸುಮಾರು 1343 ಮೀ ಗಳಷ್ಟು ಎತ್ತರದಲ್ಲಿದೆ. ಇದು ಕರ್ನಾಟಕ ಸರ್ಕಾರದಿಂದ ಪಾರಂಪರಿಕ ನೈಸರ್ಗಿಕ ಸ್ಥಳದ ಮಾನ್ಯತೆ ಪಡೆದಿದೆ.",
-        distance: "150 km from KRS Guest House",
+        distance: "40 km from KRS Guest House",
         image: "kodachadri.jpg",
       }
   ];
