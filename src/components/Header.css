@@ -1,13 +1,18 @@
 /* General Styling */
 .header {
-  background: linear-gradient(90deg, #3b8d40, #5ebd65);
+  background: linear-gradient(90deg, #3b8d40, #5ebd65); /* Smooth gradient */
   color: white;
   padding: 20px;
   text-align: center;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.header:hover {
+  background: linear-gradient(90deg, #5ebd65, #3b8d40);
 }
 
 .logo-title {
@@ -18,33 +23,46 @@
 }
 
 .krs-logo {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 3px solid white;
   background-color: white;
-  object-fit: cover;  /* Ensures proper scaling */
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.krs-logo:hover {
+  transform: scale(1.1); /* Scale logo on hover */
 }
 
 .header h1 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Depth effect */
 }
 
 .header p {
-  margin: 5px 0 15px;
-  font-size: 1rem;
+  margin: 10px 0 20px;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
 }
 
 /* Navbar Styling */
 .nav-bar {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center; /* Center navbar items */
+  align-items: center; /* Center nav items */
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px 20px;
+  padding: 12px 20px;
+  border-top: 3px solid #5ebd65;
+  border-bottom: 2px solid #ccc;
+  flex-wrap: wrap; /* Allow wrapping for mobile devices */
+  overflow: hidden; /* Prevent overflow on small screens */
 }
 
 .nav-bar ul {
@@ -52,23 +70,26 @@
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 15px;
+  gap: 20px;
+  justify-content: center;
 }
 
 .nav-bar li {
-  display: inline;
+  display: inline-block; /* Ensures horizontal layout */
 }
 
 .nav-bar a {
   text-decoration: none;
   color: #3b8d40;
   font-weight: bold;
-  font-size: 1rem;
-  transition: color 0.3s ease;
+  font-size: 1.1rem;
+  padding: 12px 20px;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .nav-bar a:hover {
   color: #0056b3;
+  transform: translateY(-3px); /* Lift effect */
 }
 
 /* Active Link Styling */
@@ -77,4 +98,81 @@
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-bar a.active {
+  background-color: #5ebd65; /* Brighter active link */
+}
+
+/* Mobile-Friendly Adjustments */
+@media (max-width: 768px) {
+  /* General Header Adjustments for Mobile */
+  .header {
+    padding: 15px;
+  }
+
+  .logo-title {
+    flex-direction: row; /* Horizontally align logo and title */
+    margin-bottom: 10px;
+  }
+
+  .krs-logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .header p {
+    font-size: 1rem;
+  }
+
+  /* Navbar for Small Screens */
+  .nav-bar {
+    padding: 10px 15px;
+    flex-wrap: wrap; /* Allow navbar to wrap on smaller screens */
+    justify-content: space-between; /* Distribute space evenly between links */
+  }
+
+  .nav-bar ul {
+    flex-direction: row; /* Keep items in a horizontal layout */
+    gap: 15px; /* Space between navbar items */
+    flex-wrap: wrap; /* Ensure items wrap if the screen is too narrow */
+    justify-content: center; /* Center navbar items */
+  }
+
+  .nav-bar a {
+    font-size: 1.1rem;
+    padding: 12px 20px; /* Larger padding for easier clicking */
+    width: auto; /* Make width auto for horizontal alignment */
+    text-align: center;
+  }
+
+  .nav-bar a:hover {
+    color: #0056b3;
+    transform: translateY(-3px);
+  }
+}
+
+/* Extra Mobile Styling (For smaller screens like phones in portrait mode) */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .header p {
+    font-size: 0.9rem;
+  }
+
+  .nav-bar ul {
+    gap: 10px;
+  }
+
+  .nav-bar a {
+    font-size: 1.1rem;
+    padding: 10px 15px;
+  }
 }
