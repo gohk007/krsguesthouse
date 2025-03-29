@@ -16,7 +16,7 @@ const Gallery = () => {
           <img
             key={index}
             src={image}
-            alt={`Image ${index + 1}`}
+            alt={`Gallery item ${index + 1}`}
             className="gallery-image"
           />
         ))}
