@@ -1,0 +1,23 @@
+.location {
+    padding: 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .location h2 {
+    color: #007b5e;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+  }
+  
+  .map-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  iframe {
+    border-radius: 10px;
+    max-width: 100%;
+  }
+  
