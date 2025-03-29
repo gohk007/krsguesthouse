@@ -16,7 +16,12 @@ const Header = () => {
           <img src="krs.png" alt="KRS Logo" className="krs-logo" />
           <h1>K R S GUEST HOUSE</h1>
         </div>
-        <p>For assistance with bookings or information, give us a call at: <strong>9448734152</strong></p>
+        <p>
+          For assistance with bookings or information, give us a call at:{" "}
+          <a href="tel:+9448734152" className="call-button">
+            <strong>9448734152</strong>
+          </a>
+        </p>
       </div>
       <nav className="nav-bar">
         <ul>

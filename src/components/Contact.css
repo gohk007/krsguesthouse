@@ -1,80 +1,75 @@
-/* Contact.css */
-
 /* General Styling */
 .contact {
-    font-family: Arial, sans-serif;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+}
+
+.contact h2 {
+  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.contact ol {
+  text-align: left;
+  margin: 20px 0;
+  padding-left: 20px;
+  line-height: 1.8;
+  color: #34495e;
+}
+
+.contact ol li {
+  margin-bottom: 10px;
+}
+
+.contact ol li strong {
+  color: #2980b9;
+}
+
+.contact p {
+  font-size: 16px;
+  color: #34495e;
+  margin-bottom: 10px;
+}
+
+.contact p strong {
+  color: #2980b9;
+}
+
+.contact p a {
+  color: #2980b9;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.contact p a:hover {
+  text-decoration: underline;
+  color: #1d67a1; /* Darker blue on hover */
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .contact {
+    padding: 15px;
   }
-  
-  /* Section Title Styling */
+
   .contact h2 {
-    color: #2c3e50;
-    font-size: 24px;
-    margin-bottom: 15px;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: bold;
+    font-size: 20px;
   }
-  
-  /* Styling for the Ordered List */
+
   .contact ol {
-    display: flow;
-    text-align: left;
-    margin: 20px 0;
-    padding-left: 20px;
-    line-height: 1.8;
-    color: #34495e;
+    padding-left: 15px;
   }
-  
-  .contact ol li {
-    margin-bottom: 10px;
-  }
-  
-  .contact ol li strong {
-    color: #2980b9;
-  }
-  
-  /* Styling for Contact Info */
+
   .contact p {
-    font-size: 16px;
-    color: #34495e;
-    margin-bottom: 10px;
+    font-size: 14px;
   }
-  
-  .contact p strong {
-    color: #2980b9;
-  }
-  
-  .contact p a {
-    color: #2980b9;
-    text-decoration: none;
-  }
-  
-  /* Hover Effects */
-  .contact p a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Responsive Styling */
-  @media (max-width: 768px) {
-    .contact {
-      padding: 15px;
-    }
-  
-    .contact h2 {
-      font-size: 20px;
-    }
-  
-    .contact ol {
-      padding-left: 15px;
-    }
-  
-    .contact p {
-      font-size: 14px;
-    }
-  }
-  
+}

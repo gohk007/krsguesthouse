@@ -3,7 +3,7 @@ import "./Footer.css";
 
 const Footer = () => (
   <footer className="footer">
-    <p>© 2024 KRS Guest House. All rights reserved.</p>
+    <p>© 2025 KRS Guest House. All rights reserved.</p>
     <p>
       Need assistance? 
       <a 
@@ -19,4 +19,3 @@ const Footer = () => (
 );
 
 export default Footer;
-
