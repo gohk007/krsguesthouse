@@ -1,9 +1,8 @@
-/* Gallery.css */
-
+/* General styling for gallery */
 .gallery {
   text-align: center;
   padding: 40px 20px;
-  background-color: #f9f9f9; /* Light background for contrast */
+  background-color: #f9f9f9; /* Light background */
 }
 
 .image-container {
@@ -15,7 +14,8 @@
 
 .gallery-image {
   width: 100%;
-  max-width: 300px; /* Restricts overly large images */
+  height: 250px; /* Ensures uniform height */
+  object-fit: cover; /* Maintains aspect ratio and fills container */
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -23,7 +23,7 @@
 
 .gallery-image:hover {
   transform: scale(1.05); /* Zoom effect on hover */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
 }
 
 /* Optional - Adjust spacing for smaller screens */
