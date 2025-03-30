@@ -3,14 +3,21 @@ import "./Gallery.css";
 
 const Gallery = () => {
   const images = [
+    "image14.jpeg",
     "/image7.jpeg",
     "/image6.jpeg",
     "/image2.jpg",
     "/image3.jpg",
     "/image1.jpg",
     "/image4.jpg",
-    "/image5.jpeg"
-  ];
+    "/image5.jpeg",
+    "/image8.jpeg",
+    "/image9.jpeg",
+    "/image10.jpeg",
+    "/image11.jpeg",
+    "/image12.jpeg",
+    "/image13.jpeg"
+    ];
 
   return (
     <section className="gallery">
