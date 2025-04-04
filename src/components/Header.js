@@ -76,7 +76,7 @@ const Header = () => {
               onClick={() => handleLinkClick("details")}
               className={activeLink === "details" ? "active" : ""}
             >
-              Terms & condition
+              Guest Policies
             </Link>
           </li>
         </ul>

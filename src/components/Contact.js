@@ -7,7 +7,7 @@ const Contact = () => (
     <ol>
       <li>Call us at <a href="tel:+919448734152"><strong>+91-9448734152</strong></a> to check room availability.</li>
       <li>If rooms are available, proceed with the payment via 
-        <a href="https://payments.google.com" target="_blank" rel="noopener noreferrer"><strong>Google Pay</strong></a> 
+        <a href="https://payments.google.com" target="_blank" rel="noopener noreferrer"><strong>GPay</strong></a> 
         or 
         <a  href="https://www.phonepe.com/" target="_blank" rel="noopener noreferrer"><strong>PhonePe</strong></a>.
       </li>

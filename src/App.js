@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Location from "./components/Location";
 import AttractionsList from "./components/attraction";
 import Details from "./components/Details";
+import FloatingButtons from "./components/FloatingButtons";
 import "./App.css";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
+      <FloatingButtons />
     </div>
   );
 }
