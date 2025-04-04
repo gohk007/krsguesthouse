@@ -70,6 +70,15 @@ const Header = () => {
               Gallery
             </Link>
           </li>
+          <li>
+            <Link
+              to="/details"
+              onClick={() => handleLinkClick("details")}
+              className={activeLink === "details" ? "active" : ""}
+            >
+              Details
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>
