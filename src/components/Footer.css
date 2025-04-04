@@ -1,55 +1,90 @@
 /* General Footer Styling */
 .footer {
   text-align: center;
-  background-color: #333; /* Dark background */
+  background: linear-gradient(135deg, #222, #444); /* Smooth gradient */
   color: #fff;
-  padding: 15px 20px; /* Reduced padding for compactness */
-  font-size: 0.9rem; /* Slightly smaller font size for better fitting */
-  border-top: 2px solid #444; /* Lighter border at the top */
-  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  min-height: 60px; /* Ensures it doesn't stretch too much */
+  padding: 20px;
+  font-size: 0.95rem;
+  border-top: 3px solid #25d366;
+  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.15);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Footer Text */
-.footer p {
-  margin: 5px 0; /* Reduced margin to save space */
+/* Footer Content */
+.footer-content p {
+  margin: 5px 0;
 }
 
 /* Footer Links */
-.footer a {
-  color: #c9dfd1; /* WhatsApp Green Color */
+.whatsapp-link {
+  color: #fff;
   text-decoration: none;
   font-weight: bold;
-  transition: all 0.3s ease;
-  padding: 8px 16px;
-  border-radius: 5px;
-  background-color: #25d366; /* WhatsApp Green */
+  display: inline-flex;
+  align-items: center;
+  background: #25d366;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+.whatsapp-link .icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+.whatsapp-link:hover {
+  background: #128c7e;
+  transform: scale(1.05);
+}
+
+/* Social Icons */
+.social-icons {
+  display: flex;
+  gap: 15px;
   margin-top: 10px;
-  display: inline-block;
-  font-size: 1rem; /* Slightly smaller font size */
 }
 
-/* Footer Links Hover Effect */
-.footer a:hover {
+.icon {
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
   color: #fff;
-  background-color: #128c7e; /* Darker WhatsApp Green */
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
 }
 
-/* Mobile Responsiveness */
+.icon.whatsapp:hover {
+  color: #25d366;
+  transform: scale(1.2);
+}
+
+.icon.facebook:hover {
+  color: #1877f2;
+  transform: scale(1.2);
+}
+
+.icon.instagram:hover {
+  color: #e4405f;
+  transform: scale(1.2);
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .footer {
-    padding: 10px 15px; /* Reduced padding for smaller screens */
-    font-size: 0.85rem; /* Smaller font size on mobile */
+    padding: 15px;
+    font-size: 0.85rem;
   }
 
-  .footer p {
-    font-size: 0.85rem; /* Smaller text for better fitting */
+  .whatsapp-link {
+    font-size: 0.9rem;
+    padding: 8px 12px;
   }
 
-  .footer a {
-    font-size: 0.95rem; /* Smaller button text */
-    padding: 10px 18px; /* More padding on mobile for better tap targets */
-    margin-top: 8px; /* Reduced margin for a more compact layout */
+  .icon {
+    font-size: 1.3rem;
   }
 }
