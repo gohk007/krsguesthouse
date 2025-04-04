@@ -6,7 +6,8 @@ import Gallery from "./components/Gallery";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Location from "./components/Location";
-import AttractionsList from "./components/attraction"
+import AttractionsList from "./components/attraction";
+import Details from "./components/Details";
 import "./App.css";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/attraction" element={<AttractionsList />} />
           <Route path="/location" element={<Location />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/details" element={<Details />} />
         </Routes>
         <Footer />
       </Router>
