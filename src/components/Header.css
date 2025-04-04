@@ -58,7 +58,6 @@
   align-items: center; /* Center nav items */
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 12px 20px;
   border-top: 3px solid #5ebd65;
   border-bottom: 2px solid #ccc;
   flex-wrap: wrap; /* Allow wrapping for mobile devices */
@@ -132,7 +131,6 @@
 
   /* Navbar for Small Screens */
   .nav-bar {
-    padding: 10px 15px;
     flex-wrap: wrap; /* Allow navbar to wrap on smaller screens */
     justify-content: space-between; /* Distribute space evenly between links */
   }

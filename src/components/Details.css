@@ -1,0 +1,73 @@
+
+.instruction-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .instruction-section {
+    background: white;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    color: #444;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  p, li {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    background: white;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+  }
+
+  .instruction-text{
+    color: red;
+  }
+  
+  .timing-text{
+    color: black;
+  }
+  @media (max-width: 768px) {
+    .instruction-container {
+      max-width: 90%;
+      padding: 15px;
+    }
+  
+    h2 {
+      font-size: 22px;
+    }
+  
+    h3 {
+      font-size: 18px;
+    }
+  
+    p, li {
+      font-size: 14px;
+    }
+  }
+  
