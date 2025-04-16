@@ -2,7 +2,7 @@ name: Auto Sync Fork
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs every day at midnight UTC
+    - cron: '30 2 * * *'  # Runs every day at 2:30 AM UTC (8:00 AM IST)
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
@@ -21,8 +21,8 @@ jobs:
 
       - name: Add upstream and sync
         run: |
-          git remote add upstream https://github.com/ORIGINAL_OWNER/REPO_NAME.git
+          git remote add upstream https://github.com/kskoushik26/krsguesthouse.git
           git fetch upstream
-          git checkout main  # Change to your default branch if needed
+          git checkout main  # Change this if your default branch is different
           git merge upstream/main --no-edit
           git push origin main
