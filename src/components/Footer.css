@@ -19,7 +19,16 @@
   margin: 5px 0;
 }
 
-/* Footer Links */
+/* Flex container for links */
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* WhatsApp Link */
 .whatsapp-link {
   color: #fff;
   text-decoration: none;
@@ -31,7 +40,6 @@
   border-radius: 8px;
   transition: all 0.3s ease-in-out;
   font-size: 1rem;
-  margin-top: 8px;
 }
 
 .whatsapp-link .icon {
@@ -44,13 +52,32 @@
   transform: scale(1.05);
 }
 
-/* Social Icons */
-.social-icons {
-  display: flex;
-  gap: 15px;
-  margin-top: 10px;
+/* Google Review Link */
+.review-link {
+  color: #fff;
+  background: #4285f4; /* Google blue */
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  font-size: 1rem;
 }
 
+.review-link .icon.star {
+  margin-right: 8px;
+  color: gold;
+  font-size: 1.2rem;
+}
+
+.review-link:hover {
+  background: #3367d6;
+  transform: scale(1.05);
+}
+
+/* Icon styling for hover effects */
 .icon {
   font-size: 1.5rem;
   transition: all 0.3s ease;
@@ -79,12 +106,18 @@
     font-size: 0.85rem;
   }
 
-  .whatsapp-link {
+  .whatsapp-link,
+  .review-link {
     font-size: 0.9rem;
     padding: 8px 12px;
   }
 
   .icon {
     font-size: 1.3rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
   }
 }
