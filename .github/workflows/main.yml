@@ -2,8 +2,8 @@ name: Auto Sync Fork
 
 on:
   schedule:
-    - cron: '30 2 * * *'  # Runs every day at 8:00 AM IST (2:30 AM UTC)
-  workflow_dispatch:  # Allows manual trigger
+    - cron: '30 2 * * *'  # 8:00 AM IST
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -24,7 +24,11 @@ jobs:
           if ! git remote | grep upstream; then
             git remote add upstream https://github.com/kskoushik26/krsguesthouse.git
           fi
+
           git fetch upstream
           git checkout main  # Change if your default branch is different
           git merge upstream/main --allow-unrelated-histories --no-edit
+
+          # Change push URL to use the GitHub token
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin main
