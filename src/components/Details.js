@@ -12,7 +12,7 @@ const Details = () => {
       </div>
 
       <div className="instruction-section">
-        <h3>Rules & Regulations</h3>
+        <h3>Rules & Regulation</h3>
         <ul>
     <li><b className="instruction-text">Pets are not allowed inside the room.</b></li>
     <li><b className="instruction-text">Cooking is not permitted inside the rooms or near the guest house.</b></li>
