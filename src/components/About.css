@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   height: 100vh;
-  background: url("https://source.unsplash.com/1600x900/?river,mountains") no-repeat center center/cover;
+  background: url("/public/Sbridge.png") no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,7 +10,6 @@
 }
 
 .overlay {
-  background: linear-gradient(to right bottom, rgba(0, 128, 128, 0.6), rgba(34, 139, 34, 0.6));
   width: 100%;
   height: 100%;
   padding: 20px;
@@ -61,18 +60,23 @@ p {
   padding: 14px 16px;
   font-size: 1rem;
   border-radius: 10px;
-  border: none;
+  border: 1px solid rgba(63, 108, 128, 0.25);
+  /* soft bluish-gray border */
   font-family: "Segoe UI", sans-serif;
   background: rgba(255, 255, 255, 0.95);
-  color: #333;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #2f4858;
+  /* deep blue-gray for consistency */
+  box-shadow: 0 2px 8px rgba(47, 72, 88, 0.08);
+  /* soft shadow */
   transition: all 0.3s ease;
 }
 
 .enquiry-form input:focus,
 .enquiry-form textarea:focus {
   outline: none;
-  box-shadow: 0 0 10px rgba(0, 128, 128, 0.6);
+  box-shadow: 0 0 10px rgba(0, 191, 170, 0.5);
+  /* teal focus glow */
+  border: 1px solid #00bfa6;
 }
 
 .enquiry-form textarea {
@@ -81,35 +85,43 @@ p {
 }
 
 .enquiry-form button {
-  background: #007f5f;
-  color: #fff;
+  background: linear-gradient(90deg, #00bfa6, #009688);
+  /* vibrant teal gradient */
+  color: #ffffff;
   font-size: 1.1rem;
   font-weight: 600;
   padding: 12px;
   border: none;
   border-radius: 30px;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 191, 170, 0.3);
+  /* subtle glow */
   transition: background 0.3s ease-in-out;
 }
 
 .enquiry-form button:hover {
-  background: #00664d;
+  background: linear-gradient(90deg, #009688, #00796b);
+  /* deep teal hover */
 }
 
 .error {
-  color: #ffcdd2;
+  color: #f44336;
+  /* accessible red */
   font-size: 0.9rem;
   text-align: left;
 }
 
 .success {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: #d0f2ec;
+  /* light teal success box */
+  color: #155f5a;
+  /* rich teal text */
   padding: 10px 15px;
   border-radius: 10px;
   margin-top: 10px;
   font-weight: 500;
 }
+
 
 /* Animation */
 @keyframes fadeIn {
@@ -117,6 +129,7 @@ p {
     opacity: 0;
     transform: translateY(-15px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
