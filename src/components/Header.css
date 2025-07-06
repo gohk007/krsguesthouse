@@ -40,7 +40,8 @@
   margin: 5px 0 10px;
   font-size: 1rem;
   font-weight: 300;
-  color: #d0e7f5; /* Soft sky blue for better tone */
+  color: #d0e7f5;
+  /* Soft sky blue for better tone */
 }
 
 /* Navbar Styling */
@@ -72,7 +73,8 @@
 
 .nav-bar a {
   text-decoration: none;
-  color: #2f4858; /* Deep blue-gray text for nav links */
+  color: #2f4858;
+  /* Deep blue-gray text for nav links */
   font-weight: bold;
   font-size: 1rem;
   padding: 8px 12px;
@@ -80,7 +82,8 @@
 }
 
 .nav-bar a:hover {
-  color: #00bfaa; /* Teal highlight on hover */
+  color: #00bfaa;
+  /* Teal highlight on hover */
   transform: translateY(-2px);
 }
 

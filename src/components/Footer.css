@@ -1,7 +1,8 @@
 /* General Footer Styling */
 .footer {
   text-align: center;
-  background: linear-gradient(135deg, #222, #444); /* Smooth gradient */
+  background: linear-gradient(135deg, #222, #444);
+  /* Smooth gradient */
   color: #fff;
   padding: 20px;
   font-size: 0.95rem;
@@ -55,7 +56,8 @@
 /* Google Review Link */
 .review-link {
   color: #fff;
-  background: #4285f4; /* Google blue */
+  background: #4285f4;
+  /* Google blue */
   text-decoration: none;
   font-weight: bold;
   display: inline-flex;
