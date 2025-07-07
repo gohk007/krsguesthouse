@@ -27,19 +27,21 @@ h2 {
   gap: 20px;
 }
 
-.main-section > * {
-  flex: 1; /* Make the components take equal width */
+.main-section>* {
+  flex: 1;
+  /* Make the components take equal width */
 }
 
 @media (max-width: 768px) {
   .main-section {
-    flex-direction: column; /* Stack items vertically */
-    gap: 10px; /* Reduce gap for mobile */
+    flex-direction: column;
+    /* Stack items vertically */
+    gap: 10px;
+    /* Reduce gap for mobile */
   }
 
-  .main-section > * {
-    width: 100%; /* Take full width on mobile */
+  .main-section>* {
+    width: 100%;
+    /* Take full width on mobile */
   }
 }
-
-

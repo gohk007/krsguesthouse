@@ -11,16 +11,16 @@ const Footer = () => {
         <p>© {currentYear} KRS Guest House. All rights reserved.</p>
 
         <div className="footer-links">
-          <a 
-            href="https://wa.me/919448734152" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://wa.me/919448734152"
+            target="_blank"
+            rel="noopener noreferrer"
             className="whatsapp-link"
           >
             <FaWhatsapp className="icon" /> Chat with us on WhatsApp
           </a>
 
-          <a 
+          <a
             href="https://g.page/r/CVuyigziKlU3EBM/review"
             target="_blank"
             rel="noopener noreferrer"
