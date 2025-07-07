@@ -1,8 +1,8 @@
 /* General Styling */
 .header {
-  background: linear-gradient(90deg, #3b8d40, #5ebd65);
+  background: linear-gradient(90deg, #2f4858, #3f6c80);
   color: white;
-  padding: 10px 15px; /* Reduced padding for better fit */
+  padding: 10px 15px;
   text-align: center;
   position: sticky;
   top: 0;
@@ -30,7 +30,7 @@
 
 .header h1 {
   margin: 0;
-  font-size: 2rem; /* Reduced size for better fit */
+  font-size: 2rem;
   font-weight: bold;
   color: white;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -40,6 +40,8 @@
   margin: 5px 0 10px;
   font-size: 1rem;
   font-weight: 300;
+  color: #d0e7f5;
+  /* Soft sky blue for better tone */
 }
 
 /* Navbar Styling */
@@ -49,7 +51,7 @@
   align-items: center;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-top: 3px solid #5ebd65;
+  border-top: 3px solid #3f6c80;
   border-bottom: 2px solid #ccc;
   flex-wrap: wrap;
   padding: 5px 0;
@@ -62,7 +64,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px; /* Reduced gap for better fit */
+  gap: 10px;
 }
 
 .nav-bar li {
@@ -71,7 +73,8 @@
 
 .nav-bar a {
   text-decoration: none;
-  color: #3b8d40;
+  color: #2f4858;
+  /* Deep blue-gray text for nav links */
   font-weight: bold;
   font-size: 1rem;
   padding: 8px 12px;
@@ -79,13 +82,14 @@
 }
 
 .nav-bar a:hover {
-  color: #0056b3;
+  color: #00bfaa;
+  /* Teal highlight on hover */
   transform: translateY(-2px);
 }
 
 /* Active Link Styling */
 .nav-bar .active {
-  background-color: #3b8d40;
+  background-color: #3f6c80;
   color: white;
   padding: 8px 12px;
   border-radius: 5px;
@@ -97,27 +101,34 @@
   .header {
     padding: 10px;
   }
+
   .logo-title {
     gap: 8px;
   }
+
   .krs-logo {
     width: 40px;
     height: 40px;
   }
+
   .header h1 {
     font-size: 1.8rem;
   }
+
   .header p {
     font-size: 0.9rem;
   }
+
   .nav-bar {
     flex-direction: column;
     align-items: center;
     padding: 5px 0;
   }
+
   .nav-bar ul {
     gap: 8px;
   }
+
   .nav-bar a {
     font-size: 1rem;
     padding: 8px 10px;
@@ -128,12 +139,15 @@
   .header h1 {
     font-size: 1.5rem;
   }
+
   .header p {
     font-size: 0.8rem;
   }
+
   .nav-bar ul {
     gap: 5px;
   }
+
   .nav-bar a {
     font-size: 0.9rem;
     padding: 6px 8px;
