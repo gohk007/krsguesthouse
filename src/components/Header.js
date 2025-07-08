@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState("home");
 
-  const handleLinkClick = (link) => {
-    setActiveLink(link);
-  };
+  const handleLinkClick = useCallback((link) => setActiveLink(link), []);
+
+  const navItems = [
+    { path: "/", label: "Home", id: "home" },
+    { path: "/location", label: "Map", id: "location" },
+    { path: "/contact", label: "Reservation", id: "contact" },
+    { path: "/attraction", label: "Attraction", id: "attraction" },
+    { path: "/gallery", label: "Gallery", id: "gallery" },
+    { path: "/details", label: "Guest Policies", id: "details" },
+  ];
 
   return (
     <header className="header">
@@ -17,68 +24,23 @@ const Header = () => {
           <h1>K R S GUEST HOUSE</h1>
         </div>
         <p>
-          For assistance with bookings or information, give us a call at:{" "}
-          <a href="tel:+9448734152" className="call-button">
-            <strong>9448734152</strong>
-          </a>
+        near Siganduru Chowdeshwari Temple, please call:{" "}
+          <a href="tel:+9448734152" className="call-button"><strong>9448734152</strong></a>
         </p>
       </div>
       <nav className="nav-bar">
         <ul>
-          <li>
-            <Link
-              to="/"
-              onClick={() => handleLinkClick("home")}
-              className={activeLink === "home" ? "active" : ""}
-            >
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/location"
-              onClick={() => handleLinkClick("location")}
-              className={activeLink === "location" ? "active" : ""}
-            >
-              Map
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/contact"
-              onClick={() => handleLinkClick("contact")}
-              className={activeLink === "contact" ? "active" : ""}
-            >
-              Reservation
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/attraction"
-              onClick={() => handleLinkClick("attraction")}
-              className={activeLink === "attraction" ? "active" : ""}
-            >
-              Attraction
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/gallery"
-              onClick={() => handleLinkClick("gallery")}
-              className={activeLink === "gallery" ? "active" : ""}
-            >
-              Gallery
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/details"
-              onClick={() => handleLinkClick("details")}
-              className={activeLink === "details" ? "active" : ""}
-            >
-              Guest Policies
-            </Link>
-          </li>
+          {navItems.map(({ path, label, id }) => (
+            <li key={id}>
+              <Link
+                to={path}
+                onClick={() => handleLinkClick(id)}
+                className={activeLink === id ? "active" : ""}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </header>
