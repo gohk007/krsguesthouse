@@ -1,0 +1,27 @@
+/* src/components/ContactBar.css */
+
+.contact-bar {
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+    gap: 30px;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .contact-icon {
+    color: darkgreen;
+    font-size: 18px;
+  }
+  
+  .contact-text {
+    color: #000;
+    font-weight: 600;
+  }
+  
