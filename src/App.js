@@ -9,12 +9,14 @@ import Location from "./components/Location";
 import AttractionsList from "./components/attraction";
 import Details from "./components/Details";
 import FloatingButtons from "./components/FloatingButtons";
+import ContactBar from "./components/ContactBar";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <Router>
+        <ContactBar />
         <Header />
         <Routes>
           <Route path="/" element={<About />} />

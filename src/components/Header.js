@@ -24,8 +24,7 @@ const Header = () => {
           <h1>K R S GUEST HOUSE</h1>
         </div>
         <p>
-        near Siganduru Chowdeshwari Temple, for Room bookings please call:{" "}
-          <a href="tel:+9448734152" className="call-button"><strong>9448734152</strong></a>
+        near Siganduru Chowdeshwari Temple
         </p>
       </div>
       <nav className="nav-bar">
