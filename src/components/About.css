@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   height: 100vh;
-  background: url("/public/Sbridge.png") no-repeat center center/cover;
+  background: url("https://res.cloudinary.com/dm0l1t1vk/image/upload/v1752042709/Sbridge_b1mjoy.png") no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
