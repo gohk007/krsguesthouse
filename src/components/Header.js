@@ -20,11 +20,11 @@ const Header = () => {
     <header className="header">
       <div className="header-content">
         <div className="logo-title">
-          <img src="krs.png" alt="KRS Logo" className="krs-logo" />
+          <img src="https://res.cloudinary.com/dm0l1t1vk/image/upload/v1752042707/krs_gelrwv.webp" alt="KRS Logo" className="krs-logo" />
           <h1>K R S GUEST HOUSE</h1>
         </div>
         <p>
-        near Siganduru Chowdeshwari Temple, please call:{" "}
+        near Siganduru Chowdeshwari Temple, for Room bookings please call:{" "}
           <a href="tel:+9448734152" className="call-button"><strong>9448734152</strong></a>
         </p>
       </div>

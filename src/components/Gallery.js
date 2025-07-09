@@ -2,8 +2,9 @@ import React from "react";
 import "./Gallery.css";
 
 const images = [
-  "/image1.png", "/image5.png", "/image9.png", "/image3.png",
-  "/image13.png", "/image2.png", "/image6.png", "/image7.png"
+  "/image1.png", "https://res.cloudinary.com/dm0l1t1vk/image/upload/v1752042709/image5_j4v2ry.jpg", "https://res.cloudinary.com/dm0l1t1vk/image/upload/v1752042710/image7_l9m8tg.jpg", "https://res.cloudinary.com/dm0l1t1vk/image/upload/v1752042704/image3_wkn9am.jpg",
+  "https://res.cloudinary.com/dm0l1t1vk/image/upload/v1752042716/image9_e7fsub.jpg",
+   "https://res.cloudinary.com/dm0l1t1vk/image/upload/v1752042705/image2_ab94xp.jpg", "https://res.cloudinary.com/dm0l1t1vk/image/upload/v1752042708/image6_mp6ajj.jpg", "/image7.png"
 ];
 
 const LazyImage = React.memo(({ src, alt }) => (
