@@ -37,7 +37,7 @@
 }
 
 .header p {
-  margin: 5px 0 10px;
+  margin: 0px 0 4px;
   font-size: 20px;
   font-weight: 300;
   color: #d0e7f5;
@@ -51,10 +51,7 @@
   align-items: center;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-top: 3px solid #3f6c80;
-  border-bottom: 2px solid #ccc;
   flex-wrap: wrap;
-  padding: 5px 0;
 }
 
 .nav-bar ul {
@@ -96,6 +93,10 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.call-button{
+  color: lightsalmon;
+}
+
 /* Mobile-Friendly Adjustments */
 @media (max-width: 768px) {
   .header {
@@ -107,8 +108,8 @@
   }
 
   .krs-logo {
-    width: 40px;
-    height: 40px;
+    width: 40px !important;
+    height: 40px !important;
   }
 
   .header h1 {
