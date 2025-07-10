@@ -1,0 +1,36 @@
+name: Sync from Upstream
+
+on:
+  repository_dispatch:
+    types: [ upstream-pushed ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Configure Git
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions@github.com"
+
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/kskoushik26/krsguesthouse.git
+          git fetch upstream
+
+      - name: Fast-forward merge
+        run: |
+          git checkout main
+          git merge upstream/main --ff-only
+
+      - name: Push to fork
+        run: git push origin main
