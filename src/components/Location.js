@@ -1,23 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./Location.css";
+import { Link } from "react-router-dom";
 
-const reviews = [
-  {
-    name: "Hemanth gowda",
-    text: "Had a fantastic experience during my time at this hotel! The location couldn't have been better – within walking distance of the temple. Having all the amenities right at my fingertips, along with the always helpful staff, made my stay even more enjoyable.",
-    rating: 5
-  },
-  {
-    name: "Manikanta Myageri",
-    text: "I had a wonderful stay at this guest house, which is undoubtedly the best in the area. The location is perfect, being close to the temple, making it convenient for visitors. The rooms are neat, clean, and well-maintained, ensuring a comfortable experience The guest house offers essential amenities like hot water facilities, ample car parking, and security with CCTV cameras, adding to the peace of mind. The overall atmosphere is serene, making it an ideal choice for both short and long stays.Highly recommended for anyone visiting the temple and looking for a hassle-free stay!",
-    rating: 5
-  },
-  {
-    name: "Sunil Bhandari",
-    text: "The accommodations were well-maintained making it a very comfortable place to relax. The attention to cleanliness was outstanding.The location was perfect—close to the temple.Overall, it was a fantastic stay! We couldn’t have asked for more and would definitely come back again.",
-    rating: 5
-  }
-];
+import "./Location.css";
 
 const Location = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -25,40 +9,185 @@ const Location = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setMapLoaded(true);
-    }, 1000);
+    }, 700);
+
     return () => clearTimeout(timer);
   }, []);
 
+  const rooms = [
+    {
+      icon: "🛏️",
+      title: "2-Occupancy Room",
+      description: "Perfect for couples or solo travelers looking for a comfortable stay.",
+      guests: "Up to 2 Guests",
+    },
+    {
+      icon: "👨‍👩‍👧‍👦",
+      title: "4-Occupancy Family Room",
+      description: "A spacious choice for families and small groups traveling together.",
+      guests: "Up to 4 Guests",
+    },
+    {
+      icon: "🏡",
+      title: "6-Occupancy Room",
+      description: "Ideal for larger families or groups who want to stay together.",
+      guests: "Up to 6 Guests",
+    },
+  ];
+
   return (
     <section className="location">
-      <h2>Find Us Here</h2>
-      <div className="location-grid">
-        <div className="map-container">
-          {mapLoaded ? (
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31019.448193263533!2d74.85408!3d14.071459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbc71f9a9acffc1%3A0x37552ae20c8ab25b!2sK.R.S%20Guest%20House!5e0!3m2!1sen!2sin!4v1699189485749!5m2!1sen!2sin"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="K.R.S Guest House Location"
-            ></iframe>
-          ) : (
-            <p className="loading-text">Loading map...</p>
-          )}
+      <div className="location-bg-circle location-bg-circle-one" />
+      <div className="location-bg-circle location-bg-circle-two" />
+
+      <div className="location-container">
+        {/* Header */}
+        <div className="location-header">
+          <span className="location-eyebrow">STAY WITH US</span>
+
+          <h1>
+            Comfortable Rooms,
+            <span> Convenient Location</span>
+          </h1>
+
+          <p>
+            Choose the room that suits your group and find us easily with the
+            map below.
+          </p>
         </div>
-        <div className="review-section">
-          <h3>Customer Reviews</h3>
-          {reviews.map((review, index) => (
-            <div className="review" key={index}>
-              <div className="review-name">{review.name}</div>
-              <div className="review-text">{review.text}</div>
-              <div className="review-rating">★★★★★</div>
+
+        <div className="location-content">
+          {/* Room Types */}
+          <div className="room-types-section">
+            <div className="section-heading">
+              <div className="heading-icon">🛎️</div>
+
+              <div>
+                <span>ACCOMMODATION</span>
+                <h2>Room Types & Tariff</h2>
+              </div>
             </div>
-          ))}
+
+            <div className="room-list">
+              {rooms.map((room, index) => (
+                <div className="room-card" key={index}>
+                  <div className="room-icon">{room.icon}</div>
+
+                  <div className="room-info">
+                    <div className="room-title-row">
+                      <h3>{room.title}</h3>
+                      <span className="guest-badge">{room.guests}</span>
+                    </div>
+
+                    <p>{room.description}</p>
+
+                    <div className="room-footer">
+                      <span className="tariff-text">
+                        Seasonal tariff
+                      </span>
+
+                      <span className="arrow">→</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pricing-note">
+              <div className="note-icon">ℹ️</div>
+
+              <div>
+                <strong>Planning your stay?</strong>
+                <p>
+                  Room rates vary depending on the season. Contact us with
+                  your preferred dates for the latest pricing and availability.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Location */}
+          <div className="location-section">
+            <div className="section-heading">
+              <div className="heading-icon location-icon">📍</div>
+
+              <div>
+                <span>FIND US</span>
+                <h2>Our Location</h2>
+              </div>
+            </div>
+
+            <div className="map-wrapper">
+              <div className="map-container">
+                {mapLoaded ? (
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31019.448193263533!2d74.85408!3d14.071459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbc71f9a9acffc1%3A0x37552ae20c8ab25b!2sK.R.S%20Guest%20House!5e0!3m2!1sen!2sin!4v1699189485749!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="K.R.S Guest House Location"
+                  />
+                ) : (
+                  <div className="map-loading">
+                    <div className="loading-spinner" />
+                    <span>Loading location...</span>
+                  </div>
+                )}
+
+                <div className="map-label">
+                  <span className="map-pin">📍</span>
+                  <div>
+                    <strong>K.R.S Guest House</strong>
+                    <small>View on Google Maps</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="location-info">
+              <div className="info-item">
+                <div className="info-icon">📍</div>
+                <div>
+                  <span>LOCATION</span>
+                  <strong>K.R.S Guest House</strong>
+                </div>
+              </div>
+
+              <div className="info-divider" />
+
+              <div className="info-item">
+                <div className="info-icon">🧭</div>
+                <div>
+                  <span>DIRECTIONS</span>
+                  <strong>Easy to find</strong>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* Bottom CTA */}
+        <div className="location-cta">
+  <div className="cta-content">
+    <span className="cta-icon">✨</span>
+
+    <div>
+      <h3>Ready to plan your stay?</h3>
+      <p>
+        Get in touch with us for room availability and seasonal rates.
+      </p>
+    </div>
+  </div>
+
+  <Link to="/contact" className="cta-button">
+    Book with Us
+    <span>→</span>
+  </Link>
+</div>
+
       </div>
     </section>
   );
