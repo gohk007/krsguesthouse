@@ -747,6 +747,14 @@
   
     border-left: 3px solid #d4af37;
   }
+
+  .contact-link-card {
+    border-left: 3px solid #007373;
+  }
+
+  .contact-link-card strong {
+    font-size: 0.84rem;
+  }
   
   
   /* =====================================================

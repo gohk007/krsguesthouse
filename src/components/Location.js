@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { FaDirections, FaStar } from "react-icons/fa";
+import { googleMapsDirectionsUrl, googleReviewUrl } from "../business";
 import "./Location.css";
 
 const rooms = [
@@ -281,6 +283,27 @@ const Location = () => {
               →
             </span>
           </Link>
+
+          <div className="location-trust-actions">
+            <a
+              className="location-action directions-action"
+              href={googleMapsDirectionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaDirections aria-hidden="true" />
+              Get Directions
+            </a>
+            <a
+              className="location-action review-action"
+              href={googleReviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaStar aria-hidden="true" />
+              See us on Google
+            </a>
+          </div>
 
         </div>
 

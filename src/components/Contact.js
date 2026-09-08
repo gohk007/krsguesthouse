@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaDirections, FaStar } from "react-icons/fa";
+import { googleMapsDirectionsUrl, googleReviewUrl } from "../business";
 import "./Contact.css";
 
 const whatsappBookingUrl =
@@ -181,6 +183,34 @@ const Contact = () => {
                 </strong>
               </div>
             </div>
+
+            <a
+              className="contact-item contact-link-card"
+              href={googleMapsDirectionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="contact-item-icon"><FaDirections aria-hidden="true" /></div>
+
+              <div>
+                <span>Google Business</span>
+                <strong>Get directions to KRS Guest House</strong>
+              </div>
+            </a>
+
+            <a
+              className="contact-item contact-link-card"
+              href={googleReviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="contact-item-icon"><FaStar aria-hidden="true" /></div>
+
+              <div>
+                <span>Google Reviews</span>
+                <strong>Read guest reviews</strong>
+              </div>
+            </a>
 
           </div>
         </div>

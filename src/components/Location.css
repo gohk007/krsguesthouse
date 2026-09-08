@@ -474,6 +474,50 @@
   transform: translateX(4px);
 }
 
+.location-trust-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.location-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 11px 14px;
+  border: 1px solid rgba(6, 78, 59, 0.16);
+  border-radius: 12px;
+  color: #064e3b;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.location-action:hover {
+  transform: translateY(-2px);
+  border-color: rgba(6, 78, 59, 0.3);
+  background: #fff;
+}
+
+.location-action svg {
+  font-size: 14px;
+}
+
+.review-action {
+  color: #8a6810;
+  border-color: rgba(177, 138, 32, 0.28);
+}
+
+.review-action:hover {
+  border-color: rgba(177, 138, 32, 0.45);
+}
+
 /* =========================================
    LIGHTBOX
 ========================================= */
@@ -586,7 +630,7 @@
 
 @media (max-width: 650px) {
   .location {
-    padding: 65px 15px;
+    padding: 56px 14px;
   }
 
   .location-header {
@@ -601,6 +645,10 @@
   .location-header p {
     font-size: 14px;
     line-height: 1.7;
+  }
+
+  .location-content {
+    gap: 52px;
   }
 
   .section-heading {
@@ -619,6 +667,7 @@
   }
 
   .room-card {
+    align-items: flex-start;
     padding: 17px;
     gap: 13px;
     border-radius: 16px;
@@ -650,13 +699,14 @@
   }
 
   .pricing-note {
+    align-items: flex-start;
     padding: 15px;
   }
 
   /* Mobile gallery */
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 130px;
+    grid-auto-rows: clamp(108px, 31vw, 130px);
     gap: 8px;
   }
 
@@ -713,12 +763,18 @@
   .location-cta {
     flex-direction: column;
     align-items: stretch;
+    gap: 18px;
     margin-top: 50px;
     padding: 22px;
   }
 
   .cta-content {
     align-items: flex-start;
+    min-width: 0;
+  }
+
+  .cta-content > div {
+    min-width: 0;
   }
 
   .cta-content h3 {
@@ -732,6 +788,22 @@
 
   .cta-button {
     width: 100%;
+  }
+
+  .location-trust-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .location-action {
+    min-width: 0;
+    min-height: 40px;
+    padding: 9px 8px;
+    gap: 6px;
+    font-size: 11px;
+    white-space: nowrap;
   }
 
   /* Lightbox */
@@ -759,15 +831,42 @@
 ========================================= */
 
 @media (max-width: 400px) {
+  .location {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
   .location-header h1 {
     font-size: 32px;
   }
 
   .gallery-grid {
-    grid-auto-rows: 110px;
+    grid-auto-rows: clamp(96px, 30vw, 110px);
   }
 
   .room-card {
     padding: 14px;
+    gap: 10px;
+  }
+
+  .room-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+
+  .section-heading h2 {
+    font-size: 20px;
+  }
+
+  .location-cta {
+    padding: 18px;
+  }
+
+  .location-action {
+    width: 100%;
+    padding-right: 5px;
+    padding-left: 5px;
+    font-size: 10px;
   }
 }
