@@ -1,270 +1,291 @@
 import React from "react";
 import {
-  FaWhatsapp,
-  FaStar,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaEnvelope,
   FaArrowUp,
   FaChevronRight,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaStar,
+  FaWhatsapp,
 } from "react-icons/fa";
 import "./Footer.css";
 
-const Footer = React.memo(() => {
+const navigationLinks = [
+  { label: "Home", href: "/" },
+  { label: "Attractions", href: "/attraction" },
+  { label: "Location", href: "/location" },
+  { label: "Contact Us", href: "/contact" },
+  { label: "Enquiry", href: "/enquiry" },
+];
+
+const Footer = React.memo(function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  };
+
   return (
-    <footer className="footer">
-      <div className="footer-container">
+    <footer className="site-footer">
+      <div className="site-footer__glow site-footer__glow--left" />
+      <div className="site-footer__glow site-footer__glow--right" />
 
-        {/* =====================================================
-            Brand Header
-        ====================================================== */}
-
-        <div className="footer-header">
+      <div className="site-footer__container">
+        {/* Brand introduction */}
+        <section className="site-footer__intro">
           <div className="footer-brand">
-            <div className="brand-mark">
+            <div className="footer-brand__mark" aria-hidden="true">
               <span>KRS</span>
             </div>
 
-            <div>
-              <h2>KRS Guest House</h2>
-              <p>Comfortable stays. Warm hospitality.</p>
+            <div className="footer-brand__content">
+              <p className="footer-brand__eyebrow">Welcome to</p>
+              <h2 className="footer-brand__title">KRS Guest House</h2>
+              <p className="footer-brand__tagline">
+                Comfortable stays. Warm hospitality.
+              </p>
             </div>
           </div>
 
-          <p className="footer-header-text">
-            Your home away from home, where every stay is made comfortable
-            with care, warmth, and genuine hospitality.
-          </p>
-        </div>
-
-        <div className="footer-divider" />
-
-        {/* =====================================================
-            Main Footer Columns
-        ====================================================== */}
-
-        <div className="footer-main">
-
-          {/* About */}
-          <div className="footer-column footer-about">
-            <h3>About KRS</h3>
+          <div className="site-footer__welcome">
+            <span className="site-footer__welcome-line" aria-hidden="true" />
 
             <p>
-              Experience a peaceful and comfortable stay at KRS Guest House.
-              We welcome every guest with thoughtful service and the warmth
-              of home.
+              Your home away from home, where thoughtful comfort and genuine
+              hospitality make every stay memorable.
+            </p>
+          </div>
+        </section>
+
+        <div className="footer-separator" aria-hidden="true">
+          <span />
+          <i />
+          <span />
+        </div>
+
+        {/* Main content */}
+        <div className="site-footer__grid">
+          <section className="footer-section footer-section--about">
+            <FooterHeading title="About KRS" />
+
+            <p className="footer-section__description">
+              Discover a peaceful place to rest, recharge, and feel at home.
+              We welcome every guest with attentive service, modern comfort,
+              and the warmth of authentic hospitality.
             </p>
 
-            <a href="/enquiry" className="footer-outline-btn">
-              Plan Your Stay
-              <FaChevronRight />
+            <a className="footer-button" href="/enquiry">
+              <span>Plan Your Stay</span>
+              <FaChevronRight aria-hidden="true" />
             </a>
-          </div>
+          </section>
 
-          {/* Quick Links */}
-          <div className="footer-column">
-            <h3>Explore</h3>
+          <nav className="footer-section" aria-label="Footer navigation">
+            <FooterHeading title="Explore" />
 
-            <ul className="footer-links">
-              <li>
-                <a href="/">
-                  <FaChevronRight />
-                  Home
-                </a>
-              </li>
+            <ul className="footer-navigation">
+              {navigationLinks.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href}>
+                    <span className="footer-navigation__icon">
+                      <FaChevronRight aria-hidden="true" />
+                    </span>
 
-              <li>
-                <a href="/attraction">
-                  <FaChevronRight />
-                  Attractions
-                </a>
-              </li>
-
-              <li>
-                <a href="/location">
-                  <FaChevronRight />
-                  Location
-                </a>
-              </li>
-
-              <li>
-                <a href="/contact">
-                  <FaChevronRight />
-                  Contact Us
-                </a>
-              </li>
-
-              <li>
-                <a href="/enquiry">
-                  <FaChevronRight />
-                  Enquiry
-                </a>
-              </li>
+                    <span>{link.label}</span>
+                  </a>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Contact */}
-          <div className="footer-column footer-contact">
-            <h3>Get In Touch</h3>
+          <section className="footer-section">
+            <FooterHeading title="Get in Touch" />
 
-            <a href="tel:+919448734152" className="footer-contact-item">
-              <span className="contact-icon">
-                <FaPhoneAlt />
-              </span>
+            <div className="footer-contact-list">
+              <ContactLink
+                href="tel:+919448734152"
+                icon={<FaPhoneAlt />}
+                label="Call us"
+                value="+91 94487 34152"
+              />
 
-              <span>
-                <small>Call Us</small>
-                <strong>+91 94487 34152</strong>
-              </span>
+              <ContactLink
+                href="mailto:krsguesthouse26@gmail.com"
+                icon={<FaEnvelope />}
+                label="Email us"
+                value="krsguesthouse26@gmail.com"
+              />
+            </div>
+
+            <a className="footer-text-link" href="/contact">
+              <span>View contact details</span>
+              <FaChevronRight aria-hidden="true" />
             </a>
+          </section>
 
-            {/* Replace with your actual email */}
-            <a
-              href="mailto:krsguesthouse26@gmail.com"
-              className="footer-contact-item"
-            >
-              <span className="contact-icon">
-                <FaEnvelope />
-              </span>
-
-              <span>
-                <small>Email Us</small>
-                <strong>krsguesthouse26@gmail.com</strong>
-              </span>
-            </a>
-
-            <a href="/contact" className="footer-contact-link">
-              View Contact Details
-              <FaChevronRight />
-            </a>
-          </div>
-
-          {/* Location */}
-          <div className="footer-column footer-location">
-            <h3>Find Us</h3>
+          <section className="footer-section">
+            <FooterHeading title="Find Us" />
 
             <a
-              href="https://www.google.com/maps/search/?api=1&query=K.R.S+Guest+House"
+              className="footer-location"
+              href="[google.com](https://www.google.com/maps/search/?api=1&query=K.R.S+Guest+House)"
               target="_blank"
               rel="noopener noreferrer"
-              className="location-card"
+              aria-label="View KRS Guest House on Google Maps"
             >
-              <div className="location-card-top">
-                <span className="location-icon">
-                  <FaMapMarkerAlt />
-                </span>
+              <span className="footer-location__icon">
+                <FaMapMarkerAlt aria-hidden="true" />
+              </span>
 
-                <span className="location-card-title">
-                  K.R.S Guest House
-                </span>
+              <span className="footer-location__content">
+                <small>Our location</small>
+                <strong>K.R.S Guest House</strong>
+                <span>Open in Google Maps</span>
+              </span>
 
-                <FaChevronRight className="location-arrow" />
-              </div>
-
-              <div className="location-card-bottom">
-                <span>View our location</span>
-                <span className="location-card-link">
-                  Google Maps
-                </span>
-              </div>
+              <span className="footer-location__arrow">
+                <FaChevronRight aria-hidden="true" />
+              </span>
             </a>
 
-            <p className="location-note">
+            <p className="footer-location-note">
               We look forward to welcoming you.
             </p>
-          </div>
-
+          </section>
         </div>
 
-        {/* =====================================================
-            Guest Actions
-        ====================================================== */}
-
-        <div className="footer-guest-section">
-          <div className="guest-section-heading">
-            <span className="guest-section-label">Stay Connected</span>
-            <h3>We'd love to hear from you</h3>
-            <p>Have a question or enjoyed your stay?</p>
+        {/* Guest actions */}
+        <section className="footer-connect">
+          <div className="footer-connect__heading">
+            <p className="footer-kicker">Stay connected</p>
+            <h2>We would love to hear from you</h2>
+            <p>Have a question or want to share your experience?</p>
           </div>
 
-          <div className="footer-actions">
+          <div className="footer-connect__actions">
+            <ActionCard
+              href="[wa.me](https://wa.me/919448734152)"
+              className="footer-action--whatsapp"
+              icon={<FaWhatsapp />}
+              eyebrow="Quick contact"
+              title="Chat on WhatsApp"
+              description="Start a conversation with us"
+              ariaLabel="Chat with KRS Guest House on WhatsApp"
+            />
 
-            <a
-              href="https://wa.me/919448734152"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-action whatsapp-action"
-              aria-label="Chat with KRS Guest House on WhatsApp"
-            >
-              <div className="action-icon">
-                <FaWhatsapp />
-              </div>
-
-              <div className="action-content">
-                <span className="action-label">Quick Contact</span>
-                <strong>Chat on WhatsApp</strong>
-                <small>We'd love to hear from you</small>
-              </div>
-
-              <span className="action-arrow">→</span>
-            </a>
-
-            <a
-              href="https://g.page/r/CVuyigziKlU3EBM/review"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-action review-action"
-              aria-label="Leave a Google review for KRS Guest House"
-            >
-              <div className="action-icon">
-                <FaStar />
-              </div>
-
-              <div className="action-content">
-                <span className="action-label">Your Experience Matters</span>
-                <strong>Leave a Google Review</strong>
-                <small>Share your stay with others</small>
-              </div>
-
-              <span className="action-arrow">→</span>
-            </a>
-
+            <ActionCard
+              href="[g.page](https://g.page/r/CVuyigziKlU3EBM/review)"
+              className="footer-action--review"
+              icon={<FaStar />}
+              eyebrow="Your experience matters"
+              title="Leave a Google Review"
+              description="Share your stay with others"
+              ariaLabel="Leave a Google review for KRS Guest House"
+            />
           </div>
-        </div>
+        </section>
 
-        {/* =====================================================
-            Bottom Bar
-        ====================================================== */}
-
-        <div className="footer-bottom">
-          <p>
-            © {currentYear} <span>KRS Guest House</span>. All rights reserved.
+        {/* Bottom bar */}
+        <div className="site-footer__bottom">
+          <p className="site-footer__copyright">
+            Copyright © {currentYear} <strong>KRS Guest House</strong>.
+            <span> All rights reserved.</span>
           </p>
 
-          <div className="footer-bottom-links">
+          <nav
+            className="site-footer__legal-navigation"
+            aria-label="Footer shortcuts"
+          >
             <a href="/">Home</a>
-            <span>•</span>
+            <span aria-hidden="true" />
             <a href="/contact">Contact</a>
-            <span>•</span>
+            <span aria-hidden="true" />
             <a href="/enquiry">Enquiry</a>
-          </div>
+          </nav>
 
           <button
-            className="back-to-top"
-            onClick={() =>
-              window.scrollTo({ top: 0, behavior: "smooth" })
-            }
-            aria-label="Back to top"
+            type="button"
+            className="footer-back-to-top"
+            onClick={scrollToTop}
+            aria-label="Scroll back to the top"
+            title="Back to top"
           >
-            <FaArrowUp />
+            <FaArrowUp aria-hidden="true" />
           </button>
         </div>
-
       </div>
     </footer>
   );
 });
+
+function FooterHeading({ title }) {
+  return (
+    <div className="footer-heading">
+      <h3>{title}</h3>
+      <span aria-hidden="true" />
+    </div>
+  );
+}
+
+function ContactLink({ href, icon, label, value }) {
+  return (
+    <a className="footer-contact" href={href}>
+      <span className="footer-contact__icon" aria-hidden="true">
+        {icon}
+      </span>
+
+      <span className="footer-contact__content">
+        <small>{label}</small>
+        <strong>{value}</strong>
+      </span>
+
+      <FaChevronRight
+        className="footer-contact__arrow"
+        aria-hidden="true"
+      />
+    </a>
+  );
+}
+
+function ActionCard({
+  href,
+  className,
+  icon,
+  eyebrow,
+  title,
+  description,
+  ariaLabel,
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`footer-action ${className}`}
+      aria-label={ariaLabel}
+    >
+      <span className="footer-action__shine" aria-hidden="true" />
+
+      <span className="footer-action__icon" aria-hidden="true">
+        {icon}
+      </span>
+
+      <span className="footer-action__content">
+        <small>{eyebrow}</small>
+        <strong>{title}</strong>
+        <span>{description}</span>
+      </span>
+
+      <span className="footer-action__arrow" aria-hidden="true">
+        <FaChevronRight />
+      </span>
+    </a>
+  );
+}
 
 export default Footer;
