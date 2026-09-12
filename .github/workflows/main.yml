@@ -2,33 +2,40 @@ name: Auto Sync Fork
 
 on:
   schedule:
-    - cron: '30 2 * * *'  # 8:00 AM IST
+    - cron: '30 2 * * *' # 8:00 AM IST
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout the repository
+      - name: Checkout fork
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          fetch-depth: 0
 
-      - name: Set up Git
+      - name: Configure Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Add upstream and sync
+      - name: Add upstream repository
         run: |
-          if ! git remote | grep upstream; then
-            git remote add upstream https://github.com/kskoushik26/krsguesthouse.git
-          fi
+          git remote add upstream https://github.com/kskoushik26/krsguesthouse.git || true
 
-          git fetch upstream
-          git checkout main  # Change if your default branch is different
-          git merge upstream/main --allow-unrelated-histories --no-edit
+      - name: Fetch upstream
+        run: |
+          git fetch upstream main
 
-          # Change push URL to use the GitHub token
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+      - name: Sync upstream changes
+        run: |
+          git checkout main
+          git merge upstream/main --no-edit
+
+      - name: Push changes to fork
+        run: |
           git push origin main
