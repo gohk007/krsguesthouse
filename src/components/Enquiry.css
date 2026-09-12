@@ -1,145 +1,84 @@
 /* =========================================================
-   KRS GUEST HOUSE
-   Premium Responsive Hero / Enquiry Section
+   KRS GUEST HOUSE — ENQUIRY PAGE
+   Premium Light Teal + Gold Theme
+   Matches Contact / Booking Page
    ========================================================= */
-
-/* Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
 
 
 /* =========================================================
-   RESET
-   ========================================================= */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  font-family: "DM Sans", Arial, sans-serif;
-  background: #07191a;
-}
-
-button,
-input,
-textarea {
-  font: inherit;
-}
-
-
-/* =========================================================
-   HERO
+   PAGE
    ========================================================= */
 
 .hero {
   position: relative;
 
   width: 100%;
-  min-height: 100svh;
+  min-height: 100vh;
 
-  padding: 70px 20px;
+  padding: 64px 24px;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 
   overflow: hidden;
 
-  color: #fff;
+  font-family: Arial, sans-serif;
 
   background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(0, 166, 166, 0.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(212, 175, 55, 0.08),
+      transparent 25%
+    ),
     linear-gradient(
       135deg,
-      rgba(2, 24, 27, 0.84) 0%,
-      rgba(3, 35, 38, 0.62) 45%,
-      rgba(0, 0, 0, 0.70) 100%
-    ),
-    url("../../public/bridge.jpeg") center center / cover no-repeat;
-
-  background-attachment: fixed;
+      #f7fbfa 0%,
+      #eef7f5 50%,
+      #f9fbfa 100%
+    );
 }
 
 
 /* =========================================================
-   BACKGROUND DECORATION
+   DECORATIVE GLOWS
    ========================================================= */
-
-.hero::before {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at 85% 15%,
-      rgba(255, 205, 102, 0.20),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 10% 90%,
-      rgba(0, 193, 183, 0.18),
-      transparent 30%
-    );
-
-  pointer-events: none;
-}
-
-.hero::after {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.10),
-      rgba(0, 0, 0, 0.28)
-    );
-
-  pointer-events: none;
-}
 
 .hero-glow {
   position: absolute;
 
-  width: 420px;
-  height: 420px;
+  width: 260px;
+  height: 260px;
 
   border-radius: 50%;
 
-  filter: blur(100px);
-
   pointer-events: none;
 
-  opacity: 0.45;
+  filter: blur(2px);
 }
 
 .hero-glow-one {
-  top: -220px;
-  right: -150px;
+  top: -150px;
+  right: -100px;
 
-  background: rgba(255, 190, 80, 0.24);
+  background: rgba(0, 166, 166, 0.07);
 }
 
 .hero-glow-two {
-  bottom: -250px;
-  left: -180px;
+  bottom: -180px;
+  left: -130px;
 
-  background: rgba(0, 185, 180, 0.22);
+  background: rgba(212, 175, 55, 0.06);
 }
 
 
 /* =========================================================
-   MAIN GLASS CONTAINER
+   MAIN CARD
    ========================================================= */
 
 .overlay {
@@ -148,32 +87,52 @@ textarea {
 
   width: min(100%, 920px);
 
-  padding: 52px;
+  padding: 56px;
 
-  border: 1px solid rgba(255, 255, 255, 0.20);
-  border-radius: 30px;
+  overflow: hidden;
 
   background:
     linear-gradient(
       145deg,
-      rgba(13, 36, 38, 0.84),
-      rgba(7, 25, 27, 0.70)
+      rgba(255, 255, 255, 0.98),
+      rgba(246, 252, 250, 0.98)
     );
 
-  /*
-    Backdrop blur has broad modern browser support.
-    The background above keeps the design readable
-    even when blur isn't supported.
-  */
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(0, 115, 115, 0.12);
+  border-radius: 30px;
 
   box-shadow:
-    0 35px 90px rgba(0, 0, 0, 0.52),
-    0 8px 30px rgba(0, 0, 0, 0.20),
-    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+    0 30px 80px rgba(0, 65, 65, 0.12),
+    0 10px 30px rgba(0, 0, 0, 0.05);
 
-  animation: fadeUp 0.8s ease both;
+  animation: enquiryFadeUp 0.7s ease both;
+}
+
+
+/* =========================================================
+   ELEGANT TOP BORDER
+   ========================================================= */
+
+.overlay::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 5px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #006666,
+      #00a6a6,
+      #d4af37,
+      #f0d477,
+      #006666
+    );
 }
 
 
@@ -182,8 +141,11 @@ textarea {
    ========================================================= */
 
 .content {
+  position: relative;
+  z-index: 2;
+
   width: 100%;
-  max-width: 760px;
+  max-width: 790px;
 
   margin: 0 auto;
 
@@ -196,74 +158,83 @@ textarea {
    ========================================================= */
 
 .intro {
-  margin-bottom: 32px;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  margin-bottom: 15px;
-  padding: 7px 15px;
-
-  border: 1px solid rgba(255, 209, 102, 0.25);
-  border-radius: 100px;
-
-  background: rgba(255, 209, 102, 0.07);
-
-  color: #ffd166;
-
-  font-size: 0.76rem;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
+  margin-bottom: 45px;
 }
 
 
 /* =========================================================
-   HEADING
+   EYEBROW
+   ========================================================= */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 15px;
+  padding: 0;
+
+  border: 0;
+  border-radius: 0;
+
+  background: transparent;
+
+  color: #b18a20;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+
+  width: 25px;
+  height: 1px;
+
+  background: #d4af37;
+}
+
+
+/* =========================================================
+   PAGE TITLE
    ========================================================= */
 
 .content h1 {
   margin: 0;
 
-  font-family: "Playfair Display", Georgia, serif;
+  color: #004f4f;
 
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  font-weight: 700;
+  font-family: Georgia, "Times New Roman", serif;
 
-  line-height: 1.08;
-  letter-spacing: -1px;
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
 
-  color: #fff;
+  line-height: 1.15;
+  font-weight: 600;
 
-  text-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.35);
+  letter-spacing: -0.5px;
+
+  text-shadow: none;
 }
 
+
+/* Gold title portion */
+
 .content h1 span {
-  display: block;
+  display: inline;
 
-  margin-top: 5px;
+  margin-left: 5px;
 
-  background:
-    linear-gradient(
-      90deg,
-      #ffd166,
-      #ffb347,
-      #ffe7a0,
-      #ffd166
-    );
+  color: #b18a20;
 
-  background-size: 200% auto;
+  background: none;
 
-  -webkit-background-clip: text;
-  background-clip: text;
+  -webkit-text-fill-color: initial;
 
-  -webkit-text-fill-color: transparent;
-
-  animation: goldShimmer 5s linear infinite;
+  animation: none;
 }
 
 
@@ -274,17 +245,18 @@ textarea {
 .title-line {
   position: relative;
 
-  width: 110px;
+  width: 90px;
   height: 1px;
 
-  margin: 22px auto 20px;
+  margin: 18px auto 20px;
 
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #ffd166,
-    transparent
-  );
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #d4af37,
+      transparent
+    );
 }
 
 .title-line::after {
@@ -297,13 +269,13 @@ textarea {
 
   transform: translate(-50%, -50%);
 
-  padding: 0 10px;
+  padding: 0 8px;
 
-  color: #ffd166;
+  color: #d4af37;
 
-  font-size: 12px;
+  font-size: 11px;
 
-  background: rgba(11, 31, 33, 0.95);
+  background: #f5faf8;
 }
 
 
@@ -312,18 +284,16 @@ textarea {
    ========================================================= */
 
 .description {
-  max-width: 700px;
+  max-width: 650px;
 
   margin: 0 auto;
 
-  color: rgba(255, 255, 255, 0.82);
+  color: #607d7d;
 
-  font-size: 0.98rem;
-  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.8;
 
-  line-height: 1.85;
-
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  text-shadow: none;
 }
 
 
@@ -333,40 +303,51 @@ textarea {
 
 .highlights {
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   flex-wrap: wrap;
 
-  gap: 9px;
+  gap: 8px;
 
-  margin-top: 22px;
+  margin-top: 20px;
 }
 
 .highlights span {
-  padding: 7px 12px;
+  padding: 6px 11px;
 
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(
+      145deg,
+      #e4f5f2,
+      #f4fbfa
+    );
+
+  border: 1px solid rgba(0, 115, 115, 0.09);
   border-radius: 100px;
 
-  background: rgba(255, 255, 255, 0.055);
+  color: #537272;
 
-  color: rgba(255, 255, 255, 0.78);
-
-  font-size: 0.76rem;
-  font-weight: 500;
+  font-size: 0.71rem;
+  font-weight: 600;
 
   transition:
+    transform 0.25s ease,
     background 0.25s ease,
     border-color 0.25s ease,
-    transform 0.25s ease;
+    box-shadow 0.25s ease;
 }
 
 .highlights span:hover {
   transform: translateY(-2px);
 
-  border-color: rgba(255, 209, 102, 0.35);
+  background: #fff;
 
-  background: rgba(255, 209, 102, 0.08);
+  border-color: rgba(0, 115, 115, 0.18);
+
+  box-shadow:
+    0 8px 20px rgba(0, 90, 90, 0.07);
 }
 
 
@@ -377,22 +358,23 @@ textarea {
 .form-card {
   position: relative;
 
-  margin-top: 30px;
-  padding: 26px;
+  margin-top: 0;
 
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  border-radius: 22px;
+  padding: 28px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.075),
-      rgba(255, 255, 255, 0.035)
+      rgba(255, 255, 255, 0.90),
+      rgba(246, 252, 250, 0.96)
     );
 
+  border: 1px solid rgba(0, 115, 115, 0.10);
+  border-radius: 21px;
+
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 15px 45px rgba(0, 0, 0, 0.18);
+    0 15px 40px rgba(0, 90, 90, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 
@@ -402,14 +384,20 @@ textarea {
 
 .form-heading {
   display: flex;
+
   align-items: center;
 
-  gap: 14px;
+  gap: 15px;
 
-  margin-bottom: 22px;
+  margin-bottom: 25px;
 
   text-align: left;
 }
+
+
+/* =========================================================
+   FORM ICON
+   ========================================================= */
 
 .form-icon {
   flex-shrink: 0;
@@ -421,33 +409,45 @@ textarea {
   align-items: center;
   justify-content: center;
 
-  border: 1px solid rgba(255, 209, 102, 0.25);
+  color: #fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #006666,
+      #00a6a6
+    );
+
   border-radius: 12px;
 
-  background: rgba(255, 209, 102, 0.10);
+  font-size: 1rem;
 
-  color: #ffd166;
-
-  font-size: 16px;
+  box-shadow:
+    0 7px 18px rgba(0, 115, 115, 0.20);
 }
+
+
+/* =========================================================
+   FORM HEADING TEXT
+   ========================================================= */
 
 .form-heading h2 {
   margin: 0 0 3px;
 
-  color: #fff;
+  color: #004f4f;
 
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: Georgia, "Times New Roman", serif;
 
-  font-size: 1.45rem;
+  font-size: 1.55rem;
   font-weight: 600;
 }
 
 .form-heading p {
   margin: 0;
 
-  color: rgba(255, 255, 255, 0.55);
+  color: #7b9090;
 
-  font-size: 0.78rem;
+  font-size: 0.76rem;
 }
 
 
@@ -458,7 +458,8 @@ textarea {
 .enquiry-form {
   display: grid;
 
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
 
   gap: 17px;
 
@@ -481,25 +482,30 @@ textarea {
   grid-column: 1 / -1;
 }
 
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
 .field label {
   display: flex;
+
   align-items: center;
+
   gap: 7px;
 
   margin: 0 0 7px 2px;
 
-  color: rgba(255, 255, 255, 0.82);
+  color: #456565;
 
-  font-size: 0.78rem;
-  font-weight: 600;
-
-  letter-spacing: 0.2px;
+  font-size: 0.77rem;
+  font-weight: 700;
 }
 
 .optional {
-  color: rgba(255, 255, 255, 0.38);
+  color: #9aaaab;
 
-  font-size: 0.68rem;
+  font-size: 0.67rem;
   font-weight: 400;
 }
 
@@ -512,17 +518,18 @@ textarea {
 .enquiry-form textarea {
   width: 100%;
 
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 11px;
-
   outline: none;
 
-  background: rgba(0, 0, 0, 0.16);
+  background: #fff;
 
-  color: #fff;
+  border: 1px solid rgba(0, 115, 115, 0.14);
+  border-radius: 10px;
 
-  font-family: "DM Sans", Arial, sans-serif;
-  font-size: 0.88rem;
+  color: #315959;
+
+  font-family: "Roboto", Arial, sans-serif;
+
+  font-size: 0.86rem;
 
   transition:
     border-color 0.22s ease,
@@ -531,23 +538,50 @@ textarea {
     transform 0.22s ease;
 }
 
-.enquiry-form input {
-  height: 50px;
 
-  padding: 0 15px;
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.enquiry-form input {
+  height: 49px;
+
+  padding: 0 14px;
 }
 
-.enquiry-form textarea {
-  min-height: 105px;
 
-  padding: 14px 15px;
+/* =========================================================
+   TEXTAREA
+   ========================================================= */
+
+.enquiry-form textarea {
+  min-height: 100px;
+
+  padding: 13px 14px;
 
   resize: vertical;
 }
 
+
+/* =========================================================
+   PLACEHOLDER
+   ========================================================= */
+
 .enquiry-form input::placeholder,
 .enquiry-form textarea::placeholder {
-  color: rgba(255, 255, 255, 0.38);
+  color: #a4b4b4;
+}
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.enquiry-form input:hover,
+.enquiry-form textarea:hover {
+  border-color: rgba(0, 115, 115, 0.25);
+
+  background: #fff;
 }
 
 
@@ -555,20 +589,15 @@ textarea {
    FOCUS
    ========================================================= */
 
-.enquiry-form input:hover,
-.enquiry-form textarea:hover {
-  border-color: rgba(255, 255, 255, 0.27);
-}
-
 .enquiry-form input:focus,
 .enquiry-form textarea:focus {
-  border-color: rgba(255, 209, 102, 0.75);
+  border-color: #00a6a6;
 
-  background: rgba(255, 255, 255, 0.075);
+  background: #fff;
 
   box-shadow:
-    0 0 0 3px rgba(255, 209, 102, 0.09),
-    0 8px 22px rgba(0, 0, 0, 0.12);
+    0 0 0 3px rgba(0, 166, 166, 0.09),
+    0 8px 22px rgba(0, 90, 90, 0.07);
 
   transform: translateY(-1px);
 }
@@ -579,7 +608,7 @@ textarea {
    ========================================================= */
 
 .enquiry-form input[type="date"] {
-  color-scheme: dark;
+  color-scheme: light;
 
   cursor: pointer;
 }
@@ -587,13 +616,13 @@ textarea {
 .enquiry-form input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 
-  opacity: 0.75;
+  opacity: 0.65;
 
   filter:
-    invert(88%)
-    sepia(35%)
-    saturate(600%)
-    hue-rotate(350deg);
+    invert(30%)
+    sepia(15%)
+    saturate(900%)
+    hue-rotate(135deg);
 }
 
 
@@ -613,36 +642,37 @@ textarea {
 
 
 /* =========================================================
-   ERROR
+   FIELD ERROR
    ========================================================= */
 
 .error {
-  margin: 6px 2px 0;
+  margin: 5px 2px 0;
 
-  color: #ffaaa8;
+  color: #c65353;
 
-  font-size: 0.70rem;
+  font-size: 0.69rem;
+
   line-height: 1.3;
 }
 
 
 /* =========================================================
-   GENERAL FORM ERROR
+   FORM ERROR
    ========================================================= */
 
 .form-error {
   grid-column: 1 / -1;
 
-  padding: 11px 13px;
+  padding: 10px 12px;
 
-  border: 1px solid rgba(255, 100, 100, 0.25);
-  border-radius: 10px;
+  background: rgba(198, 83, 83, 0.06);
 
-  background: rgba(255, 80, 80, 0.08);
+  border: 1px solid rgba(198, 83, 83, 0.18);
+  border-radius: 9px;
 
-  color: #ffb0b0;
+  color: #a74747;
 
-  font-size: 0.78rem;
+  font-size: 0.76rem;
 }
 
 
@@ -656,38 +686,35 @@ textarea {
   grid-column: 1 / -1;
 
   width: 100%;
-  min-height: 52px;
+  min-height: 51px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  gap: 12px;
+  gap: 11px;
 
-  margin-top: 3px;
+  margin-top: 2px;
 
   border: 0;
-  border-radius: 12px;
+  border-radius: 11px;
 
   background:
     linear-gradient(
       135deg,
-      #ffd166 0%,
-      #ffb347 50%,
-      #f6a53a 100%
+      #006666,
+      #00a6a6
     );
 
-  color: #17302f;
+  color: #fff;
 
-  font-size: 0.91rem;
+  font-size: 0.89rem;
   font-weight: 700;
-
-  letter-spacing: 0.15px;
 
   cursor: pointer;
 
   box-shadow:
-    0 10px 28px rgba(255, 174, 67, 0.23);
+    0 10px 25px rgba(0, 115, 115, 0.18);
 
   transition:
     transform 0.25s ease,
@@ -695,23 +722,44 @@ textarea {
     filter 0.25s ease;
 }
 
+
+/* =========================================================
+   BUTTON HOVER
+   ========================================================= */
+
 .submit-button:hover:not(:disabled) {
   transform: translateY(-2px);
 
-  filter: brightness(1.06);
+  filter: brightness(1.05);
 
   box-shadow:
-    0 14px 35px rgba(255, 174, 67, 0.35);
+    0 14px 32px rgba(0, 115, 115, 0.25);
 }
+
+
+/* =========================================================
+   BUTTON ACTIVE
+   ========================================================= */
 
 .submit-button:active:not(:disabled) {
   transform: translateY(0);
 }
 
+
+/* =========================================================
+   BUTTON FOCUS
+   ========================================================= */
+
 .submit-button:focus-visible {
-  outline: 3px solid rgba(255, 209, 102, 0.35);
+  outline: 3px solid rgba(0, 166, 166, 0.25);
+
   outline-offset: 3px;
 }
+
+
+/* =========================================================
+   DISABLED
+   ========================================================= */
 
 .submit-button:disabled {
   opacity: 0.65;
@@ -719,10 +767,16 @@ textarea {
   cursor: not-allowed;
 }
 
-.button-arrow {
-  font-size: 1.15rem;
 
-  transition: transform 0.25s ease;
+/* =========================================================
+   ARROW
+   ========================================================= */
+
+.button-arrow {
+  font-size: 1.12rem;
+
+  transition:
+    transform 0.25s ease;
 }
 
 .submit-button:hover .button-arrow {
@@ -731,24 +785,24 @@ textarea {
 
 
 /* =========================================================
-   PRIVACY NOTE
+   PRIVACY
    ========================================================= */
 
 .privacy-note {
   grid-column: 1 / -1;
 
-  margin: -5px 0 0;
+  margin: -4px 0 0;
 
-  color: rgba(255, 255, 255, 0.38);
+  color: #8a9b9b;
 
-  font-size: 0.67rem;
+  font-size: 0.65rem;
 
   text-align: center;
 }
 
 
 /* =========================================================
-   SUCCESS
+   SUCCESS MESSAGE
    ========================================================= */
 
 .success {
@@ -757,25 +811,36 @@ textarea {
   display: flex;
   align-items: flex-start;
 
-  gap: 12px;
+  gap: 11px;
 
-  padding: 15px;
+  padding: 14px;
 
-  border: 1px solid rgba(82, 211, 128, 0.25);
-  border-radius: 12px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(45, 180, 90, 0.07),
+      rgba(82, 211, 128, 0.04)
+    );
 
-  background: rgba(45, 180, 90, 0.09);
+  border: 1px solid rgba(45, 180, 90, 0.20);
+  border-radius: 11px;
 
-  color: #c1ffd5;
+  color: #356b48;
 
-  animation: successAnimation 0.45s ease both;
+  animation:
+    successAnimation 0.45s ease both;
 }
+
+
+/* =========================================================
+   SUCCESS ICON
+   ========================================================= */
 
 .success-icon {
   flex-shrink: 0;
 
-  width: 28px;
-  height: 28px;
+  width: 27px;
+  height: 27px;
 
   display: flex;
   align-items: center;
@@ -783,27 +848,33 @@ textarea {
 
   border-radius: 50%;
 
-  background: rgba(77, 220, 125, 0.15);
+  background: rgba(45, 180, 90, 0.12);
 
-  color: #72e99a;
+  color: #2e9b55;
 
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
 }
 
-.success strong {
-  color: #d1ffdf;
 
-  font-size: 0.83rem;
+/* =========================================================
+   SUCCESS TEXT
+   ========================================================= */
+
+.success strong {
+  color: #27683f;
+
+  font-size: 0.81rem;
 }
 
 .success p {
   margin: 4px 0 0;
 
-  color: rgba(209, 255, 223, 0.70);
+  color: #66816f;
 
-  font-size: 0.73rem;
-  line-height: 1.55;
+  font-size: 0.71rem;
+
+  line-height: 1.5;
 }
 
 
@@ -813,26 +884,32 @@ textarea {
 
 .bottom-note {
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   gap: 12px;
 
-  margin-top: 23px;
+  margin-top: 35px;
+  padding-top: 25px;
 
-  color: rgba(255, 255, 255, 0.42);
+  border-top: 1px solid rgba(0, 115, 115, 0.08);
 
-  font-size: 0.68rem;
+  color: #829393;
 
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 0.9rem;
+  font-style: italic;
+
+  text-align: center;
 }
 
 .bottom-note span {
-  width: 35px;
+  width: 25px;
   height: 1px;
 
-  background: rgba(255, 255, 255, 0.20);
+  background: #d4af37;
 }
 
 
@@ -840,37 +917,37 @@ textarea {
    ANIMATIONS
    ========================================================= */
 
-@keyframes fadeUp {
+@keyframes enquiryFadeUp {
   from {
     opacity: 0;
-    transform: translateY(28px);
+
+    transform:
+      translateY(20px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+
+    transform:
+      translateY(0);
   }
 }
 
 @keyframes successAnimation {
   from {
     opacity: 0;
-    transform: translateY(6px) scale(0.98);
+
+    transform:
+      translateY(6px)
+      scale(0.98);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
 
-@keyframes goldShimmer {
-  0% {
-    background-position: 0% center;
-  }
-
-  100% {
-    background-position: 200% center;
+    transform:
+      translateY(0)
+      scale(1);
   }
 }
 
@@ -879,26 +956,30 @@ textarea {
    TABLET
    ========================================================= */
 
-@media (max-width: 800px) {
-  .hero {
-    padding: 45px 16px;
+@media (max-width: 768px) {
 
-    background-attachment: scroll;
+  .hero {
+    padding: 40px 15px;
   }
 
   .overlay {
-    padding: 38px 30px;
+    padding: 45px 28px;
 
     border-radius: 25px;
   }
 
+  .intro {
+    margin-bottom: 40px;
+  }
+
   .content h1 {
-    font-size: clamp(2.2rem, 7vw, 3.2rem);
+    font-size: 2.35rem;
   }
 
   .form-card {
-    padding: 22px;
+    padding: 23px;
   }
+
 }
 
 
@@ -906,59 +987,51 @@ textarea {
    MOBILE
    ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 560px) {
+
   .hero {
-    min-height: 100svh;
+    min-height: 100vh;
 
-    padding: 25px 10px;
-
-    align-items: flex-start;
-
-    background-position: center;
+    padding: 20px 10px;
   }
 
   .overlay {
     width: 100%;
 
-    margin: 10px 0;
+    padding: 38px 17px;
 
-    padding: 28px 16px;
-
-    border-radius: 20px;
-
-    /*
-      Less blur on mobile improves performance.
-    */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    border-radius: 21px;
   }
 
-  .content h1 {
-    font-size: clamp(2rem, 10vw, 2.7rem);
-
-    letter-spacing: -0.6px;
+  .intro {
+    margin-bottom: 35px;
   }
 
   .eyebrow {
-    margin-bottom: 13px;
+    font-size: 0.62rem;
 
-    padding: 6px 11px;
-
-    font-size: 0.64rem;
-
-    letter-spacing: 1px;
+    letter-spacing: 2px;
   }
 
-  .title-line {
-    width: 75px;
+  .eyebrow::before,
+  .eyebrow::after {
+    width: 18px;
+  }
 
-    margin: 18px auto;
+  .content h1 {
+    font-size: 2rem;
+  }
+
+  .content h1 span {
+    display: block;
+
+    margin: 3px 0 0;
   }
 
   .description {
-    font-size: 0.82rem;
+    font-size: 0.9rem;
 
-    line-height: 1.72;
+    line-height: 1.7;
   }
 
   .highlights {
@@ -968,23 +1041,21 @@ textarea {
   }
 
   .highlights span {
-    padding: 6px 9px;
+    padding: 5px 8px;
 
-    font-size: 0.63rem;
+    font-size: 0.61rem;
   }
 
   .form-card {
-    margin-top: 23px;
+    padding: 18px 13px;
 
-    padding: 18px 14px;
-
-    border-radius: 17px;
+    border-radius: 16px;
   }
 
   .form-heading {
     gap: 10px;
 
-    margin-bottom: 18px;
+    margin-bottom: 19px;
   }
 
   .form-icon {
@@ -992,16 +1063,14 @@ textarea {
     height: 37px;
 
     border-radius: 10px;
-
-    font-size: 14px;
   }
 
   .form-heading h2 {
-    font-size: 1.25rem;
+    font-size: 1.35rem;
   }
 
   .form-heading p {
-    font-size: 0.70rem;
+    font-size: 0.68rem;
   }
 
   .enquiry-form {
@@ -1015,33 +1084,33 @@ textarea {
   }
 
   .field label {
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 
-    font-size: 0.73rem;
+    font-size: 0.71rem;
   }
 
   .enquiry-form input {
-    height: 48px;
+    height: 47px;
 
-    padding: 0 13px;
+    padding: 0 12px;
 
-    font-size: 0.84rem;
+    font-size: 0.82rem;
   }
 
   .enquiry-form textarea {
-    min-height: 95px;
+    min-height: 92px;
 
-    padding: 12px 13px;
+    padding: 11px 12px;
 
-    font-size: 0.84rem;
+    font-size: 0.82rem;
   }
 
   .submit-button {
     grid-column: 1;
 
-    min-height: 50px;
+    min-height: 49px;
 
-    font-size: 0.86rem;
+    font-size: 0.84rem;
   }
 
   .privacy-note,
@@ -1051,26 +1120,26 @@ textarea {
   }
 
   .success {
-    padding: 12px;
+    padding: 11px;
   }
 
   .success p {
-    font-size: 0.68rem;
+    font-size: 0.67rem;
   }
 
   .bottom-note {
     gap: 7px;
 
-    margin-top: 18px;
+    margin-top: 25px;
+    padding-top: 20px;
 
-    font-size: 0.55rem;
-
-    letter-spacing: 0.5px;
+    font-size: 0.72rem;
   }
 
   .bottom-note span {
-    width: 18px;
+    width: 16px;
   }
+
 }
 
 
@@ -1079,28 +1148,29 @@ textarea {
    ========================================================= */
 
 @media (max-width: 380px) {
+
   .hero {
-    padding: 18px 7px;
+    padding: 15px 6px;
   }
 
   .overlay {
-    padding: 23px 12px;
+    padding: 32px 13px;
   }
 
   .content h1 {
-    font-size: 1.85rem;
+    font-size: 1.75rem;
   }
 
   .description {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
   }
 
   .highlights span {
-    font-size: 0.59rem;
+    font-size: 0.57rem;
   }
 
   .form-card {
-    padding: 16px 11px;
+    padding: 16px 10px;
   }
 
   .form-heading h2 {
@@ -1108,8 +1178,9 @@ textarea {
   }
 
   .form-heading p {
-    font-size: 0.65rem;
+    font-size: 0.63rem;
   }
+
 }
 
 
@@ -1117,7 +1188,21 @@ textarea {
    ACCESSIBILITY
    ========================================================= */
 
+.enquiry-form input:focus-visible,
+.enquiry-form textarea:focus-visible,
+.submit-button:focus-visible {
+  outline: 3px solid rgba(0, 166, 166, 0.22);
+
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -1128,21 +1213,7 @@ textarea {
 
     transition-duration: 0.01ms !important;
   }
-}
 
-
-/* =========================================================
-   SAFER VIEWPORT FALLBACK
-   ========================================================= */
-
-/*
-  Older browsers that don't understand svh will use 100vh.
-*/
-
-@supports not (height: 100svh) {
-  .hero {
-    min-height: 100vh;
-  }
 }
 
 
@@ -1151,14 +1222,13 @@ textarea {
    ========================================================= */
 
 @media print {
+
   .hero {
     min-height: auto;
 
     padding: 20px;
 
     background: #fff;
-
-    color: #000;
   }
 
   .overlay,
@@ -1176,4 +1246,9 @@ textarea {
 
     -webkit-text-fill-color: #111;
   }
+
+  .hero-glow {
+    display: none;
+  }
+
 }

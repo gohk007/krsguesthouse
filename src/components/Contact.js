@@ -1,5 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { FaDirections, FaStar } from "react-icons/fa";
+import { googleMapsDirectionsUrl, googleReviewUrl } from "../business";
 import "./Contact.css";
+
+const whatsappBookingUrl =
+  "https://wa.me/919448734152?text=" +
+  encodeURIComponent(
+    "Hello KRS Guest House, I would like to check availability and book a room. My preferred check-in and check-out dates are __ / __. Guests: __."
+  );
 
 const Contact = () => {
   const bookingSteps = [
@@ -72,8 +81,14 @@ const Contact = () => {
 
           <p>
             Booking your stay is simple. Follow these quick steps and get ready
-            for a comfortable stay in Tumari, Sagar.
+            for a comfortable stay in Siganduru.
           </p>
+        </div>
+
+        <div className="booking-trust" aria-label="Booking assurances">
+          <span><b>✓</b><strong>Verified stay</strong></span>
+          <span><b>♥</b><strong>Family-friendly</strong></span>
+          <span><b>◷</b><strong>24x7 support</strong></span>
         </div>
 
         {/* Booking Section */}
@@ -108,13 +123,15 @@ const Contact = () => {
             <h3>Check room availability today.</h3>
           </div>
 
-          <a className="call-button" href="tel:+919448734152">
-            <span className="call-icon">☎</span>
-            <span>
-              <small>Call Us</small>
-              +91 94487 34152
-            </span>
-          </a>
+          <div className="booking-actions">
+            <Link className="availability-button" to="/enquiry">
+              Check availability <span aria-hidden="true">→</span>
+            </Link>
+            <a className="whatsapp-button" href={whatsappBookingUrl} target="_blank" rel="noopener noreferrer">
+              <span className="call-icon">◔</span>
+              <span><small>WhatsApp</small>Message us directly</span>
+            </a>
+          </div>
         </div>
 
         {/* Contact Details */}
@@ -160,12 +177,40 @@ const Contact = () => {
               <div>
                 <span>Location</span>
                 <strong>
-                  KRS Guest House, Tumari,
+                  KRS Guest House, Siganduru,
                   <br />
                   Sagar, Shivamogga
                 </strong>
               </div>
             </div>
+
+            <a
+              className="contact-item contact-link-card"
+              href={googleMapsDirectionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="contact-item-icon"><FaDirections aria-hidden="true" /></div>
+
+              <div>
+                <span>Google Business</span>
+                <strong>Get directions to KRS Guest House</strong>
+              </div>
+            </a>
+
+            <a
+              className="contact-item contact-link-card"
+              href={googleReviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="contact-item-icon"><FaStar aria-hidden="true" /></div>
+
+              <div>
+                <span>Google Reviews</span>
+                <strong>Read guest reviews</strong>
+              </div>
+            </a>
 
           </div>
         </div>
