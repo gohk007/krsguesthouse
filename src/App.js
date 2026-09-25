@@ -9,75 +9,89 @@ import {
 import ScrollToTop from "./components/ScrollToTop";
 
 import Header from "./components/Header";
-import Enquiry from "./components/Enquiry";
-import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import Location from "./components/Location";
-import AttractionsList from "./components/attraction";
-import Details from "./components/Details";
 import FloatingButtons from "./components/FloatingButtons";
 import ContactBar from "./components/ContactBar";
 import Home from "./components/Home";
+import { getRouteMetadata } from "./seoMetadata";
+import { trackEvent } from "./analytics";
 
 import "./App.css";
 
-const pageMetadata = {
-  "/": {
-    title: "KRS Guest House | Budget Stay Near Siganduru Temple, Sagara",
-    description:
-      "Stay at KRS Guest House near Siganduru Chowdeshwari Temple in Sagara, Karnataka. Enjoy clean rooms, hot water, free parking, and a peaceful family-friendly stay.",
-  },
-  "/attraction": {
-    title: "Places to Visit Near Siganduru | KRS Guest House",
-    description:
-      "Explore temples, viewpoints, waterfalls, and attractions near Siganduru from KRS Guest House in Sagara, Karnataka.",
-  },
-  "/location": {
-    title: "KRS Guest House Location | Near Siganduru Temple, Sagara",
-    description:
-      "Find KRS Guest House near Siganduru Chowdeshwari Temple in Sagara, Karnataka, with directions, map details, and nearby landmarks.",
-  },
-  "/contact": {
-    title: "Contact KRS Guest House | Book a Room in Siganduru",
-    description:
-      "Contact KRS Guest House to check room availability and plan a comfortable stay near Siganduru Chowdeshwari Temple in Sagara, Karnataka.",
-  },
-  "/details": {
-    title: "Rooms and Amenities | KRS Guest House Siganduru",
-    description:
-      "See room details and amenities at KRS Guest House, including clean rooms, hot water, free parking, and family-friendly accommodation near Siganduru Temple.",
-  },
-  "/enquiry": {
-    title: "Room Enquiry | KRS Guest House Near Siganduru",
-    description:
-      "Send a room enquiry to KRS Guest House for your visit to Siganduru Chowdeshwari Temple in Sagara, Karnataka.",
-  },
-};
+const Enquiry = React.lazy(() => import("./components/Enquiry"));
+const Contact = React.lazy(() => import("./components/Contact"));
+const Location = React.lazy(() => import("./components/Location"));
+const AttractionsList = React.lazy(() => import("./components/attraction"));
+const Details = React.lazy(() => import("./components/Details"));
 
 function PageMetadata() {
   const location = useLocation();
 
   React.useEffect(() => {
-    const metadata = pageMetadata[location.pathname] || pageMetadata["/"];
+    const metadata = getRouteMetadata(location.pathname);
     const canonicalUrl = `https://krsguesthouse.com${location.pathname}`;
 
     document.title = metadata.title;
 
     const setMeta = (selector, attribute, content) => {
       const element = document.querySelector(selector);
-      if (element) element.setAttribute(attribute, content);
+      if (element) {
+        element.setAttribute(attribute, content);
+      } else {
+        const newElement = document.createElement("meta");
+        if (selector.startsWith("meta[property=\"") || selector.startsWith("meta[name=\"")) {
+          const attr = selector.match(/meta\[(?:property|name)="([^"]+)"\]/i);
+          if (attr) {
+            newElement.setAttribute(attr[1].includes(":") ? "property" : "name", attr[1]);
+          }
+        }
+        newElement.setAttribute(attribute, content);
+        document.head.appendChild(newElement);
+      }
     };
 
     setMeta('meta[name="description"]', "content", metadata.description);
+    setMeta('meta[name="keywords"]', "content", metadata.keywords);
+    setMeta('meta[property="og:type"]', "content", "website");
     setMeta('meta[property="og:title"]', "content", metadata.title);
     setMeta('meta[property="og:description"]', "content", metadata.description);
     setMeta('meta[property="og:url"]', "content", canonicalUrl);
+    setMeta('meta[property="og:image"]', "content", metadata.image);
     setMeta('meta[name="twitter:title"]', "content", metadata.title);
     setMeta('meta[name="twitter:description"]', "content", metadata.description);
     setMeta('meta[name="twitter:url"]', "content", canonicalUrl);
+    setMeta('meta[name="twitter:image"]', "content", metadata.image);
 
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute("href", canonicalUrl);
+
+    const schemaId = "route-breadcrumb-schema";
+    const schema = document.getElementById(schemaId) || document.createElement("script");
+    schema.id = schemaId;
+    schema.type = "application/ld+json";
+    schema.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://krsguesthouse.com/",
+        },
+        ...(location.pathname !== "/"
+          ? [{
+              "@type": "ListItem",
+              position: 2,
+              name: metadata.title.split(" | ")[0],
+              item: canonicalUrl,
+            }]
+          : []),
+      ],
+    });
+    document.head.appendChild(schema);
+
+    trackEvent("navigation", "page_view", location.pathname);
   }, [location.pathname]);
 
   return null;
@@ -115,14 +129,16 @@ function App() {
         <Header />
 
         {/* Pages */}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/attraction" element={<AttractionsList />} />
-          <Route path="/location" element={<Location />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/details" element={<Details />} />
-          <Route path="/enquiry" element={<Enquiry />} />
-        </Routes>
+        <React.Suspense fallback={<div className="route-loading">Loading page...</div>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/attraction" element={<AttractionsList />} />
+            <Route path="/location" element={<Location />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/details" element={<Details />} />
+            <Route path="/enquiry" element={<Enquiry />} />
+          </Routes>
+        </React.Suspense>
 
         <Footer />
       </Router>
