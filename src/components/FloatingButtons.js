@@ -4,21 +4,30 @@ import {
   FaPhoneAlt,
   FaEnvelope,
   FaMapMarkerAlt,
-  FaChevronUp,
+  FaChevronDown,
   FaTimes,
+  FaCalendarCheck,
 } from "react-icons/fa";
 import { trackEvent } from "../analytics";
 import "./FloatingButtons.css";
 
 const FloatingButtons = () => {
   const [showMap, setShowMap] = useState(false);
+  // Buttons are expanded by default; the arrow collapses / re-opens them
+  const [isOpen, setIsOpen] = useState(true);
   const closeButtonRef = useRef(null);
+  const mapTriggerRef = useRef(null);
 
   useEffect(() => {
     if (!showMap) {
       return undefined;
     }
 
+    const trigger = mapTriggerRef.current;
+    const previousOverflow = document.body.style.overflow;
+
+    // Lock background scroll while the modal is open
+    document.body.style.overflow = "hidden";
     closeButtonRef.current?.focus();
 
     const handleKeyDown = (event) => {
@@ -29,17 +38,22 @@ const FloatingButtons = () => {
 
     document.addEventListener("keydown", handleKeyDown);
 
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      // Return focus to the button that opened the modal
+      trigger?.focus();
+    };
   }, [showMap]);
 
   return (
     <>
-      {/* =========================================
-          FLOATING BUTTONS
-          ========================================= */}
+      {/* FLOATING BUTTONS: open by default; the arrow below collapses / re-opens them */}
       <div className="floating-buttons">
-
-        {/* WhatsApp */}
+        <div
+          id="floating-actions"
+          className={`fab-list${isOpen ? "" : " collapsed"}`}
+        >
         <a
           href="https://wa.me/919448734152"
           className="fab whatsapp"
@@ -51,14 +65,9 @@ const FloatingButtons = () => {
           <span className="fab-icon">
             <FaWhatsapp />
           </span>
-
-          <span className="fab-label">
-            WhatsApp
-          </span>
+          <span className="fab-label">WhatsApp</span>
         </a>
 
-
-        {/* Email */}
         <a
           href="mailto:krsguesthouse26@gmail.com"
           className="fab email"
@@ -68,14 +77,9 @@ const FloatingButtons = () => {
           <span className="fab-icon">
             <FaEnvelope />
           </span>
-
-          <span className="fab-label">
-            Email Us
-          </span>
+          <span className="fab-label">Email Us</span>
         </a>
 
-
-        {/* Call */}
         <a
           href="tel:+919448734152"
           className="fab call"
@@ -85,66 +89,77 @@ const FloatingButtons = () => {
           <span className="fab-icon">
             <FaPhoneAlt />
           </span>
-
-          <span className="fab-label">
-            Call Us
-          </span>
+          <span className="fab-label">Call Us</span>
         </a>
 
-
-        {/* Location */}
         <button
           type="button"
           className="fab fab-map"
           onClick={() => setShowMap(true)}
           aria-label="View our location"
+          ref={mapTriggerRef}
         >
           <span className="fab-icon">
             <FaMapMarkerAlt />
           </span>
-
-          <span className="fab-label">
-            Location
-          </span>
+          <span className="fab-label">Location</span>
         </button>
 
-
-        {/* Scroll Indicator */}
-        <div
-          className="scroll-indicator"
-          aria-hidden="true"
-        >
-          <FaChevronUp />
         </div>
 
+        <button
+          type="button"
+          className={`scroll-indicator${isOpen ? "" : " is-closed"}`}
+          onClick={() => {
+            trackEvent(
+              "ui",
+              "click",
+              isOpen ? "floating_buttons_close" : "floating_buttons_open"
+            );
+            setIsOpen((prev) => !prev);
+          }}
+          aria-expanded={isOpen}
+          aria-controls="floating-actions"
+          aria-label={isOpen ? "Hide contact buttons" : "Show contact buttons"}
+        >
+          <FaChevronDown aria-hidden="true" />
+        </button>
       </div>
 
       <nav className="mobile-action-bar" aria-label="Quick booking actions">
-        <a href="tel:+919448734152" onClick={() => trackEvent("contact", "click", "phone_mobile_cta")}>
+        <a
+          href="tel:+919448734152"
+          onClick={() => trackEvent("contact", "click", "phone_mobile_cta")}
+        >
           <FaPhoneAlt aria-hidden="true" />
           <span>Call</span>
         </a>
-        <a href="https://wa.me/919448734152" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("contact", "click", "whatsapp_mobile_cta")}>
+        <a
+          href="https://wa.me/919448734152"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackEvent("contact", "click", "whatsapp_mobile_cta")}
+        >
           <FaWhatsapp aria-hidden="true" />
           <span>WhatsApp</span>
         </a>
-        <a href="/contact" onClick={() => trackEvent("booking", "click", "book_mobile_cta")}>
-          <FaEnvelope aria-hidden="true" />
+        {/* If you use react-router, swap this for <Link to="/contact"> to avoid a full page reload */}
+        <a
+          href="/contact"
+          onClick={() => trackEvent("booking", "click", "book_mobile_cta")}
+        >
+          <FaCalendarCheck aria-hidden="true" />
           <span>Book now</span>
         </a>
       </nav>
 
-
-      {/* =========================================
-          MAP MODAL
-          ========================================= */}
+      {/* MAP MODAL */}
       {showMap && (
         <div
           className="map-overlay"
           onClick={() => setShowMap(false)}
           role="presentation"
         >
-
           <div
             className="map-modal"
             onClick={(e) => e.stopPropagation()}
@@ -152,12 +167,9 @@ const FloatingButtons = () => {
             aria-modal="true"
             aria-labelledby="map-title"
           >
-
-            {/* Map Header */}
             <div className="map-header">
-
               <div className="map-title">
-                <FaMapMarkerAlt />
+                <FaMapMarkerAlt aria-hidden="true" />
                 <span id="map-title">K.R.S Guest House</span>
               </div>
 
@@ -170,28 +182,21 @@ const FloatingButtons = () => {
               >
                 <FaTimes />
               </button>
-
             </div>
 
-
-            {/* Google Maps Embed */}
             <div className="map-container">
-
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31019.448193263533!2d74.85408!3d14.071459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbc71f9a9acffc1%3A0x37552ae20c8ab25b!2sK.R.S%20Guest%20House!5e0!3m2!1sen!2sin!4v1699189485749!5m2!1sen!2sin"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
-                allowFullScreen=""
+                allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="K.R.S Guest House Location"
               />
-
             </div>
-
           </div>
-
         </div>
       )}
     </>

@@ -2,706 +2,553 @@
    FLOATING CONTACT BUTTONS
    ========================================= */
 
-   .floating-buttons {
-    position: fixed;
-  
-    right: 22px;
-    bottom: 28px;
-  
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  
-    gap: 13px;
-  
-    z-index: 9999;
-  }
+.floating-buttons {
+  position: fixed;
+  right: 22px;
+  bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  --fab-gap: 13px;
+  z-index: 9999;
+}
 
-  @media (max-width: 768px) {
-    .floating-buttons {
-      right: 12px;
-      bottom: calc(68px + env(safe-area-inset-bottom));
-      gap: 8px;
-      transform: scale(0.86);
-      transform-origin: bottom right;
-    }
-  }
+/* Group of action buttons that the arrow shows / hides */
+.fab-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--fab-gap);
+  margin-bottom: var(--fab-gap);
+  max-height: 500px;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    max-height 0.35s ease,
+    margin-bottom 0.35s ease,
+    opacity 0.25s ease,
+    transform 0.35s ease,
+    visibility 0s linear 0s;
+}
 
-  .mobile-action-bar {
-    display: none;
-  }
+.fab-list.collapsed {
+  max-height: 0;
+  margin-bottom: 0;
+  opacity: 0;
+  transform: translateY(16px);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    max-height 0.35s ease,
+    margin-bottom 0.35s ease,
+    opacity 0.25s ease,
+    transform 0.35s ease,
+    visibility 0s linear 0.35s;
+}
 
-  @media (max-width: 768px) {
-    .mobile-action-bar {
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 9998;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      padding: 8px 10px max(8px, env(safe-area-inset-bottom));
-      border-top: 1px solid rgba(11, 107, 80, 0.16);
-      background: rgba(255, 255, 255, 0.97);
-      box-shadow: 0 -6px 20px rgba(7, 81, 61, 0.12);
-    }
+/* =========================================
+   MOBILE ACTION BAR (hidden on desktop)
+   ========================================= */
 
-    .mobile-action-bar a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      min-height: 42px;
-      color: #07513d;
-      font-size: 12px;
-      font-weight: 700;
-      text-decoration: none;
-    }
+.mobile-action-bar {
+  display: none;
+}
 
-    .mobile-action-bar a + a {
-      border-left: 1px solid #e1ebe6;
-    }
+/* =========================================
+   COMMON BUTTON
+   ========================================= */
 
-    .mobile-action-bar a:last-child {
-      color: #6b4c1f;
-    }
-  }
-  
-  
-  /* =========================================
-     COMMON BUTTON
-     ========================================= */
-  
-  .fab {
-    position: relative;
-  
-    width: 56px;
-    height: 56px;
-  
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  
-    padding: 0;
-  
-    border: none;
-  
-    border-radius: 50px;
-  
-    color: #ffffff;
-  
-    text-decoration: none;
-  
-    overflow: hidden;
-  
-    cursor: pointer;
-  
-    box-shadow:
-      0 8px 20px rgba(0, 0, 0, 0.15),
-      0 3px 8px rgba(0, 0, 0, 0.08);
-  
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  
-    transition:
-      width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
-  }
-  
-  
-  /* =========================================
-     ICON
-     ========================================= */
-  
-  .fab-icon {
-    min-width: 56px;
-    width: 56px;
-    height: 56px;
-  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    font-size: 23px;
-  
-    position: relative;
-  
-    z-index: 2;
-  }
-  
-  .fab-icon svg {
-    display: block;
-  
-    transition:
-      transform 0.35s ease;
-  }
-  
-  
-  /* =========================================
-     LABEL
-     ========================================= */
-  
-  .fab-label {
-    position: absolute;
-  
-    left: 55px;
-  
-    white-space: nowrap;
-  
-    font-family:
-      Inter,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      sans-serif;
-  
-    font-size: 14px;
-  
-    font-weight: 600;
-  
-    letter-spacing: 0.2px;
-  
-    opacity: 0;
-  
-    transform: translateX(10px);
-  
-    transition:
-      opacity 0.25s ease,
-      transform 0.3s ease;
-  }
-  
-  
-  /* =========================================
-     HOVER
-     ========================================= */
-  
+.fab {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  border: none;
+  border-radius: 50px;
+  color: #ffffff;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.15),
+    0 3px 8px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* ICON */
+
+.fab-icon {
+  position: relative;
+  z-index: 2;
+  min-width: 56px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+}
+
+.fab-icon svg {
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+/* LABEL */
+
+.fab-label {
+  position: absolute;
+  left: 55px;
+  white-space: nowrap;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  opacity: 0;
+  transform: translateX(10px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.3s ease;
+}
+
+/* =========================================
+   EXPAND ON HOVER (mouse only) + KEYBOARD FOCUS
+   Touch devices no longer get a "stuck" expanded button.
+   ========================================= */
+
+@media (hover: hover) and (pointer: fine) {
   .fab:hover {
     width: 145px;
-  
     transform: translateY(-3px);
-  
     box-shadow:
-      0 14px 30px rgba(0, 0, 0, 0.20),
-      0 5px 12px rgba(0, 0, 0, 0.10);
+      0 14px 30px rgba(0, 0, 0, 0.2),
+      0 5px 12px rgba(0, 0, 0, 0.1);
   }
-  
+
   .fab:hover .fab-label {
     opacity: 1;
-  
     transform: translateX(0);
   }
-  
+
   .fab:hover .fab-icon svg {
     transform: scale(1.12) rotate(-5deg);
   }
-  
-  
-  /* =========================================
-     WHATSAPP
-     ========================================= */
-  
-  .fab.whatsapp {
-    background:
-      linear-gradient(
-        135deg,
-        #25d366 0%,
-        #16b957 100%
-      );
-  }
-  
-  .fab.whatsapp:hover {
-    box-shadow:
-      0 14px 30px rgba(37, 211, 102, 0.35),
-      0 5px 12px rgba(37, 211, 102, 0.20);
-  }
-  
-  
-  /* =========================================
-     EMAIL
-     ========================================= */
-  
-  .fab.email {
-    background:
-      linear-gradient(
-        135deg,
-        #008f8f 0%,
-        #006b6b 100%
-      );
-  }
-  
-  .fab.email:hover {
-    box-shadow:
-      0 14px 30px rgba(0, 115, 115, 0.35),
-      0 5px 12px rgba(0, 115, 115, 0.20);
-  }
-  
-  
-  /* =========================================
-     CALL
-     ========================================= */
-  
-  .fab.call {
-    background:
-      linear-gradient(
-        135deg,
-        #43c833 0%,
-        #259f22 100%
-      );
-  }
-  
-  .fab.call:hover {
-    box-shadow:
-      0 14px 30px rgba(52, 175, 35, 0.35),
-      0 5px 12px rgba(52, 175, 35, 0.20);
-  }
-  
-  
-  /* =========================================
-     LOCATION
-     ========================================= */
-  
-  .fab-map {
-    background:
-      linear-gradient(
-        135deg,
-        #ea4335 0%,
-        #c5221f 100%
-      );
-  }
-  
-  .fab-map:hover {
-    box-shadow:
-      0 14px 30px rgba(234, 67, 53, 0.35),
-      0 5px 12px rgba(234, 67, 53, 0.20);
-  }
-  
-  
-  /* =========================================
-     SHINE EFFECT
-     ========================================= */
-  
-  .fab::before {
-    content: "";
-  
-    position: absolute;
-  
-    top: 0;
-    left: -120%;
-  
-    width: 70%;
-    height: 100%;
-  
-    background:
-      linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.25),
-        transparent
-      );
-  
-    transform: skewX(-20deg);
-  
-    transition:
-      left 0.6s ease;
-  }
-  
+
   .fab:hover::before {
     left: 130%;
   }
-  
-  
-  /* =========================================
-     WHATSAPP PULSE
-     ========================================= */
-  
-  .fab.whatsapp .fab-icon::after {
-    content: "";
-  
-    position: absolute;
-  
-    width: 100%;
-    height: 100%;
-  
-    border-radius: 50%;
-  
-    border:
-      1px solid rgba(37, 211, 102, 0.5);
-  
-    animation:
-      whatsappPulse 2.2s infinite;
-  
-    pointer-events: none;
+
+  .fab.whatsapp:hover {
+    box-shadow:
+      0 14px 30px rgba(37, 211, 102, 0.35),
+      0 5px 12px rgba(37, 211, 102, 0.2);
   }
-  
-  @keyframes whatsappPulse {
-    0% {
-      transform: scale(0.9);
-      opacity: 0.8;
-    }
-  
-    70% {
-      transform: scale(1.35);
-      opacity: 0;
-    }
-  
-    100% {
-      transform: scale(1.35);
-      opacity: 0;
-    }
+
+  .fab.email:hover {
+    box-shadow:
+      0 14px 30px rgba(0, 115, 115, 0.35),
+      0 5px 12px rgba(0, 115, 115, 0.2);
   }
-  
-  
-  /* =========================================
-     SCROLL INDICATOR
-     ========================================= */
-  
+
+  .fab.call:hover {
+    box-shadow:
+      0 14px 30px rgba(52, 175, 35, 0.35),
+      0 5px 12px rgba(52, 175, 35, 0.2);
+  }
+
+  .fab-map:hover {
+    box-shadow:
+      0 14px 30px rgba(234, 67, 53, 0.35),
+      0 5px 12px rgba(234, 67, 53, 0.2);
+  }
+}
+
+.fab:focus-visible {
+  width: 145px;
+  outline: 3px solid #ffffff;
+  outline-offset: -3px;
+  box-shadow: 0 0 0 3px #07513d;
+}
+
+.fab:focus-visible .fab-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* =========================================
+   COLOURS
+   ========================================= */
+
+.fab.whatsapp {
+  background: linear-gradient(135deg, #25d366 0%, #16b957 100%);
+}
+
+.fab.email {
+  background: linear-gradient(135deg, #008f8f 0%, #006b6b 100%);
+}
+
+.fab.call {
+  background: linear-gradient(135deg, #43c833 0%, #259f22 100%);
+}
+
+.fab-map {
+  background: linear-gradient(135deg, #ea4335 0%, #c5221f 100%);
+}
+
+/* SHINE EFFECT */
+
+.fab::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+/* WHATSAPP PULSE */
+
+.fab.whatsapp .fab-icon::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid rgba(37, 211, 102, 0.5);
+  animation: whatsappPulse 2.2s infinite;
+  pointer-events: none;
+}
+
+@keyframes whatsappPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  70%,
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   TOGGLE ARROW (show / hide buttons)
+   ========================================= */
+
+.scroll-indicator {
+  width: 34px;
+  height: 34px;
+  margin-right: 11px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555555;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  animation: floatingArrow 2s ease-in-out infinite;
+}
+
+.scroll-indicator svg {
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+/* Closed: arrow points up = "open me" */
+.scroll-indicator.is-closed svg {
+  transform: rotate(180deg);
+}
+
+.scroll-indicator:focus-visible {
+  outline: 3px solid #07513d;
+  outline-offset: 2px;
+}
+
+@keyframes floatingArrow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* =========================================
+   MAP OVERLAY + MODAL
+   ========================================= */
+
+.map-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 10000;
+  animation: mapOverlayIn 0.25s ease;
+}
+
+@keyframes mapOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.map-modal {
+  width: min(900px, 95vw);
+  height: min(650px, 85vh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+  animation: mapModalIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes mapModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.map-header {
+  min-height: 60px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #ea4335, #c5221f);
+  color: #ffffff;
+}
+
+.map-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.map-title svg {
+  font-size: 18px;
+}
+
+.map-close {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 17px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.map-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: rotate(90deg);
+}
+
+.map-close:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.map-container {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  background: #eeeeee;
+}
+
+.map-container iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* =========================================
+   TABLET / MOBILE  (<= 768px)
+   Bottom action bar takes over Call / WhatsApp / Book.
+   Floating stack keeps only Location, sitting above the bar.
+   ========================================= */
+
+@media (max-width: 768px) {
+  /* Keep page content from hiding behind the fixed bar */
+  body {
+    padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .floating-buttons {
+    right: 10px;
+    bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+    --fab-gap: 6px;
+  }
+
   .scroll-indicator {
-    width: 34px;
-    height: 34px;
-  
-    margin-top: 3px;
-    margin-right: 11px;
-  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    color: #777777;
-  
-    font-size: 11px;
-  
-    background:
-      rgba(255, 255, 255, 0.90);
-  
-    border:
-      1px solid rgba(0, 0, 0, 0.06);
-  
+    width: 28px;
+    height: 28px;
+    margin-top: 0;
+    margin-right: 9px;
+    font-size: 9px;
+  }
+
+  .fab {
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-  
-    box-shadow:
-      0 4px 12px rgba(0, 0, 0, 0.10);
-  
-    animation:
-      floatingArrow 2s ease-in-out infinite;
   }
-  
-  @keyframes floatingArrow {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-  
-    50% {
-      transform: translateY(-3px);
-    }
-  }
-  
-  
-  /* =========================================
-     MAP OVERLAY
-     ========================================= */
-  
-  .map-overlay {
-    position: fixed;
-  
-    inset: 0;
-  
-    width: 100%;
-    height: 100%;
-  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    padding: 20px;
-  
-    background:
-      rgba(0, 0, 0, 0.65);
-  
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-  
-    z-index: 10000;
-  
-    animation:
-      mapOverlayIn 0.25s ease;
-  }
-  
-  @keyframes mapOverlayIn {
-    from {
-      opacity: 0;
-    }
-  
-    to {
-      opacity: 1;
-    }
-  }
-  
-  
-  /* =========================================
-     MAP MODAL
-     ========================================= */
-  
-  .map-modal {
-    width: min(900px, 95vw);
-  
-    height: min(650px, 85vh);
-  
-    display: flex;
-    flex-direction: column;
-  
-    overflow: hidden;
-  
-    background: #ffffff;
-  
-    border-radius: 18px;
-  
-    box-shadow:
-      0 25px 70px rgba(0, 0, 0, 0.35);
-  
-    animation:
-      mapModalIn 0.3s
-      cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  
-  @keyframes mapModalIn {
-    from {
-      opacity: 0;
-  
-      transform:
-        translateY(20px)
-        scale(0.96);
-    }
-  
-    to {
-      opacity: 1;
-  
-      transform:
-        translateY(0)
-        scale(1);
-    }
-  }
-  
-  
-  /* =========================================
-     MAP HEADER
-     ========================================= */
-  
-  .map-header {
-    min-height: 60px;
-  
-    padding: 0 18px;
-  
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  
-    background:
-      linear-gradient(
-        135deg,
-        #ea4335,
-        #c5221f
-      );
-  
-    color: #ffffff;
-  }
-  
-  
-  /* =========================================
-     MAP TITLE
-     ========================================= */
-  
-  .map-title {
-    display: flex;
-    align-items: center;
-  
-    gap: 10px;
-  
-    font-size: 16px;
-  
-    font-weight: 700;
-  }
-  
-  .map-title svg {
+
+  .fab-icon {
+    min-width: 42px;
+    width: 42px;
+    height: 42px;
     font-size: 18px;
   }
-  
-  
-  /* =========================================
-     CLOSE BUTTON
-     ========================================= */
-  
-  .map-close {
-    width: 38px;
-    height: 38px;
-  
+
+  .fab-label {
+    display: none;
+  }
+
+  .fab:focus-visible {
+    width: 42px;
+  }
+
+  .mobile-action-bar {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9998;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 8px 10px max(8px, env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid rgba(11, 107, 80, 0.16);
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 -6px 20px rgba(7, 81, 61, 0.12);
+  }
+
+  .mobile-action-bar a {
     display: flex;
     align-items: center;
     justify-content: center;
-  
-    padding: 0;
-  
-    border: none;
-  
-    border-radius: 50%;
-  
-    background:
-      rgba(255, 255, 255, 0.15);
-  
-    color: #ffffff;
-  
-    font-size: 17px;
-  
-    cursor: pointer;
-  
-    transition:
-      background 0.2s ease,
-      transform 0.2s ease;
+    gap: 6px;
+    min-height: 44px;
+    color: #07513d;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
   }
-  
-  .map-close:hover {
-    background:
-      rgba(255, 255, 255, 0.25);
-  
-    transform: rotate(90deg);
+
+  .mobile-action-bar a:active {
+    background: rgba(7, 81, 61, 0.08);
   }
-  
-  
-  /* =========================================
-     MAP CONTAINER
-     ========================================= */
-  
-  .map-container {
-    flex: 1;
-  
+
+  .mobile-action-bar a:focus-visible {
+    outline: 2px solid #07513d;
+    outline-offset: -2px;
+  }
+
+  .mobile-action-bar a + a {
+    border-left: 1px solid #e1ebe6;
+  }
+
+  .mobile-action-bar a:last-child {
+    color: #6b4c1f;
+  }
+
+  /* Map modal */
+  .map-overlay {
+    padding: 10px;
+  }
+
+  .map-modal {
     width: 100%;
-  
-    min-height: 0;
-  
-    background: #eeeeee;
+    height: 80vh;
+    height: 80dvh;
+    border-radius: 14px;
   }
-  
-  .map-container iframe {
-    display: block;
-  
-    width: 100%;
-    height: 100%;
-  
-    border: 0;
+
+  .map-header {
+    min-height: 55px;
+    padding: 0 14px;
   }
-  
-  
-  /* =========================================
-     MOBILE
-     ========================================= */
-  
-  @media (max-width: 600px) {
-  
-    .floating-buttons {
-      right: 14px;
-  
-      bottom: 18px;
-  
-      gap: 10px;
-    }
-  
-  
-    .fab {
-      width: 52px;
-      height: 52px;
-  
-      border-radius: 50%;
-    }
-  
-  
-    .fab-icon {
-      min-width: 52px;
-  
-      width: 52px;
-  
-      height: 52px;
-  
-      font-size: 21px;
-    }
-  
-  
-    /* No expansion on mobile */
-  
-    .fab:hover {
-      width: 52px;
-  
-      transform: translateY(-2px);
-    }
-  
-  
-    .fab-label {
-      display: none;
-    }
-  
-  
-    .scroll-indicator {
-      width: 30px;
-      height: 30px;
-  
-      margin-right: 11px;
-  
-      font-size: 10px;
-    }
-  
-  
-    /* Map */
-  
-    .map-overlay {
-      padding: 10px;
-    }
-  
-    .map-modal {
-      width: 100%;
-  
-      height: 80vh;
-  
-      border-radius: 14px;
-    }
-  
-    .map-header {
-      min-height: 55px;
-  
-      padding: 0 14px;
-    }
-  
-    .map-title {
-      font-size: 14px;
-    }
-  
-    .map-close {
-      width: 34px;
-      height: 34px;
-    }
+
+  .map-title {
+    font-size: 14px;
   }
-  
-  
-  /* =========================================
-     ACCESSIBILITY
-     ========================================= */
-  
-  @media (prefers-reduced-motion: reduce) {
-  
-    .fab,
-    .fab-icon svg,
-    .fab-label,
-    .fab::before,
-    .map-overlay,
-    .map-modal,
-    .map-close {
-      transition: none;
-  
-      animation: none;
-    }
-  
-    .scroll-indicator,
-    .fab.whatsapp .fab-icon::after {
-      animation: none;
-    }
+
+  .map-close {
+    width: 40px;
+    height: 40px;
   }
-  
+}
+
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .fab,
+  .fab-icon svg,
+  .fab-label,
+  .fab::before,
+  .map-overlay,
+  .map-modal,
+  .map-close,
+  .fab-list,
+  .scroll-indicator svg {
+    transition: none;
+    animation: none;
+  }
+
+  .scroll-indicator,
+  .fab.whatsapp .fab-icon::after {
+    animation: none;
+  }
+}

@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FaDirections, FaStar } from "react-icons/fa";
 import { googleMapsDirectionsUrl, googleReviewUrl } from "../business";
 import "./Location.css";
 
+const commonFacilities = [
+  "Attached Bathroom",
+  "Hot Water",
+  "Clean & Hygienic",
+  "Peaceful Environment",
+];
+
 const rooms = [
   {
     icon: "🛏️",
     title: "2-Occupancy Room",
-    description:
-      "Perfect for a family of 2",
+    description: "Perfect for a family of 2",
     guests: "Up to 2 Guests",
-    facilities: [
-      "Attached Bathroom",
-      "Hot Water",
-      "Clean & Hygienic",
-      "Peaceful Environment"
-    ],
+    facilities: commonFacilities,
   },
   {
     icon: "👨‍👩‍👧‍👦",
@@ -24,12 +25,7 @@ const rooms = [
     description:
       "A spacious choice for families and small groups traveling together.",
     guests: "Up to 4 Guests",
-    facilities: [
-      "Attached Bathroom",
-      "Hot Water",
-      "Clean & Hygienic",
-      "Peaceful Environment"
-    ],
+    facilities: commonFacilities,
   },
   {
     icon: "🏡",
@@ -37,12 +33,7 @@ const rooms = [
     description:
       "Ideal for larger families or groups who want to stay together.",
     guests: "Up to 6 Guests",
-    facilities: [
-      "Attached Bathroom",
-      "Hot Water",
-      "Clean & Hygienic",
-      "Peaceful Environment"
-    ],
+    facilities: commonFacilities,
   },
 ];
 
@@ -58,32 +49,49 @@ const images = [
 ];
 
 const Location = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  // Index of the open image, or null when the lightbox is closed
+  const [activeIndex, setActiveIndex] = useState(null);
 
-  // Navigate to contact and make sure the page starts from the top
+  const close = useCallback(() => setActiveIndex(null), []);
+  const step = useCallback(
+    (dir) => setActiveIndex((i) => (i + dir + images.length) % images.length),
+    []
+  );
+
+  // Keyboard controls + lock page scroll while lightbox is open
+  useEffect(() => {
+    if (activeIndex === null) return undefined;
+
+    const onKey = (e) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    };
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [activeIndex, close, step]);
+
+  // Make sure the contact page starts from the top
   const handleBookNow = () => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
   return (
     <section className="location">
-      {/* Decorative Background */}
       <div className="location-bg-circle location-bg-circle-one" />
       <div className="location-bg-circle location-bg-circle-two" />
 
       <div className="location-container">
-
-        {/* =========================
-            HEADER
-        ========================== */}
-        <div className="location-header">
-          <span className="location-eyebrow">
-            STAY WITH US
-          </span>
+        {/* HEADER */}
+        <header className="location-header">
+          <span className="location-eyebrow">STAY WITH US</span>
 
           <h1>
             Comfortable Rooms,
@@ -94,213 +102,113 @@ const Location = () => {
             Choose the room that suits your group and explore some of the
             beautiful moments and spaces at K.R.S Guest House.
           </p>
-        </div>
+        </header>
 
-        {/* =========================
-            MAIN CONTENT
-        ========================== */}
         <div className="location-content">
-
-          {/* =========================
-              ROOM TYPES
-          ========================== */}
+          {/* ROOM TYPES */}
           <div className="room-types-section">
-
             <div className="section-heading">
-              <div className="heading-icon">
-                🛎️
-              </div>
-
+              <div className="heading-icon" aria-hidden="true">🛎️</div>
               <div>
-                <span>
-                  ACCOMMODATION
-                </span>
-
-                <h2>
-                  Room Types & Tariff
-                </h2>
+                <span>ACCOMMODATION</span>
+                <h2>Room Types &amp; Tariff</h2>
               </div>
             </div>
 
             <div className="room-list">
-              {rooms.map((room, index) => (
-                <div
-                  className="room-card"
-                  key={index}
-                >
-                  <div className="room-icon">
+              {rooms.map((room) => (
+                <article className="room-card" key={room.title}>
+                  <div className="room-icon" aria-hidden="true">
                     {room.icon}
                   </div>
 
                   <div className="room-info">
-
                     <div className="room-title-row">
-                      <h3>
-                        {room.title}
-                      </h3>
-
-                      <span className="guest-badge">
-                        {room.guests}
-                      </span>
+                      <h3>{room.title}</h3>
+                      <span className="guest-badge">{room.guests}</span>
                     </div>
 
-                    <p>
-                      {room.description}
-                    </p>
+                    <p>{room.description}</p>
 
-                    <div className="room-features">
+                    <ul className="room-features">
                       {room.facilities.map((facility) => (
-                        <span key={facility}>✓ {facility}</span>
+                        <li key={facility}>{facility}</li>
                       ))}
-                    </div>
+                    </ul>
 
                     <div className="room-footer">
-                      <span className="tariff-text">
-                        Seasonal tariff
-                      </span>
+                      <span className="tariff-text">Seasonal tariff</span>
                     </div>
-
                   </div>
-                </div>
+                </article>
               ))}
             </div>
 
+            {/* Pricing note */}
+           
           </div>
 
-          {/* =========================
-              GALLERY
-          ========================== */}
+          {/* GALLERY */}
           <div className="gallery-section">
-
             <div className="section-heading">
-
-              <div className="heading-icon">
-                📸
-              </div>
-
+              <div className="heading-icon" aria-hidden="true">📸</div>
               <div>
-                <span>
-                  OUR GALLERY
-                </span>
-
-                <h2>
-                  Explore Our Stay
-                </h2>
+                <span>OUR GALLERY</span>
+                <h2>Explore Our Stay</h2>
               </div>
-
             </div>
 
             <div className="gallery-grid">
-
               {images.map((image, index) => (
-
-                <div
+                <button
+                  type="button"
                   className={`gallery-card gallery-card-${index + 1}`}
                   key={image}
-                  onClick={() =>
-                    setSelectedImage(image)
-                  }
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (
-                      e.key === "Enter" ||
-                      e.key === " "
-                    ) {
-                      setSelectedImage(image);
-                    }
-                  }}
-                  aria-label={`View gallery image ${
-                    index + 1
-                  }`}
+                  onClick={() => setActiveIndex(index)}
+                  aria-label={`View gallery image ${index + 1}`}
                 >
-
                   <img
                     src={image}
-                    alt={`K.R.S Guest House gallery ${
-                      index + 1
-                    }`}
+                    alt={`K.R.S Guest House gallery ${index + 1}`}
                     className="gallery-image"
                     loading="lazy"
                   />
-
-                  <div className="image-overlay">
-
-                    <div className="view-icon">
-                      ↗
-                    </div>
-
-                    <span>
-                      View Image
-                    </span>
-
-                  </div>
-
-                </div>
-
+                  <span className="image-overlay" aria-hidden="true">
+                    <span className="view-icon">↗</span>
+                    <span className="view-text">View Image</span>
+                  </span>
+                </button>
               ))}
-
             </div>
-
-            {/* Pricing Note */}
-            <div className="pricing-note">
-
-              <div className="note-icon">
-                ℹ️
-              </div>
-
+             <div className="pricing-note">
+              <div className="note-icon" aria-hidden="true">ℹ️</div>
               <div>
-                <strong>
-                  Planning your stay?
-                </strong>
-
+                <strong>Planning your stay?</strong>
                 <p>
                   Room rates may vary depending on the season and availability.
                   Contact us for the latest tariff and room availability.
                 </p>
               </div>
-
             </div>
-
           </div>
-
+          
         </div>
 
-        {/* =========================
-            BOTTOM CTA
-        ========================== */}
+        {/* BOTTOM CTA */}
         <div className="location-cta">
-
           <div className="cta-content">
-
-            <span className="cta-icon">
-              ✨
-            </span>
-
+            <span className="cta-icon" aria-hidden="true">✨</span>
             <div>
-
-              <h3>
-                Ready to plan your stay?
-              </h3>
-
+              <h3>Ready to plan your stay?</h3>
               <p>
-                Get in touch with us for room
-                availability and seasonal rates.
+                Get in touch with us for room availability and seasonal rates.
               </p>
-
             </div>
-
           </div>
 
-          <Link
-            to="/contact"
-            className="cta-button"
-            onClick={handleBookNow}
-          >
+          <Link to="/contact" className="cta-button" onClick={handleBookNow}>
             Book with Us
-            <span>
-              →
-            </span>
+            <span aria-hidden="true">→</span>
           </Link>
 
           <div className="location-trust-actions">
@@ -323,48 +231,65 @@ const Location = () => {
               See us on Google
             </a>
           </div>
-
         </div>
-
       </div>
 
-      {/* =========================
-          IMAGE LIGHTBOX
-      ========================== */}
-      {selectedImage && (
-
+      {/* LIGHTBOX */}
+      {activeIndex !== null && (
         <div
           className="lightbox"
-          onClick={() =>
-            setSelectedImage(null)
-          }
+          onClick={close}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Gallery image viewer"
         >
-
           <button
+            type="button"
             className="close-button"
-            onClick={() =>
-              setSelectedImage(null)
-            }
+            onClick={close}
             aria-label="Close image"
           >
             ×
           </button>
 
+          <button
+            type="button"
+            className="nav-button nav-prev"
+            onClick={(e) => {
+              e.stopPropagation();
+              step(-1);
+            }}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+
           <img
-            src={selectedImage}
-            alt="Selected gallery"
+            src={images[activeIndex]}
+            alt={`K.R.S Guest House gallery ${activeIndex + 1}`}
             className="lightbox-image"
-            onClick={(e) =>
-              e.stopPropagation()
-            }
+            onClick={(e) => e.stopPropagation()}
           />
 
+          <button
+            type="button"
+            className="nav-button nav-next"
+            onClick={(e) => {
+              e.stopPropagation();
+              step(1);
+            }}
+            aria-label="Next image"
+          >
+            ›
+          </button>
+
+          <span className="lightbox-count">
+            {activeIndex + 1} / {images.length}
+          </span>
         </div>
-
       )}
-
     </section>
   );
 };
 
-export default Location;
+export default Location; 
