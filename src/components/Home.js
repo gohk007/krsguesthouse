@@ -44,7 +44,7 @@ const Home = () => {
   const homeFacilities = [
     {
       icon: "🛕",
-      title: "Close to Temple",
+      title: "Near to Temple",
       description:
         "Located just 350 meters from Siganduru Chowdeshwari Temple.",
     },
@@ -145,7 +145,7 @@ const Home = () => {
     {
       question: "Is the guest house in a peaceful location?",
       answer:
-        "Yes. The guest house offers a calm and peaceful environment while remaining conveniently close to the temple.",
+        "Yes. The guest house offers a calm and peaceful environment while remaining conveniently near the temple.",
     },
     {
       question: "Can I check room availability before visiting?",
@@ -433,7 +433,7 @@ const Home = () => {
             </h2>
 
             <p>
-              Stay close to Siganduru Chowdeshwari Temple with
+              Stay near Siganduru Chowdeshwari Temple with
               convenient access to the guest house.
             </p>
 
