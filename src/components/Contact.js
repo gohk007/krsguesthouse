@@ -1,6 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaDirections, FaStar } from "react-icons/fa";
+import {
+  FaDirections,
+  FaStar,
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaWhatsapp,
+} from "react-icons/fa";
 import { googleMapsDirectionsUrl, googleReviewUrl } from "../business";
 import { trackEvent } from "../analytics";
 import "./Contact.css";
@@ -18,9 +25,8 @@ const Contact = () => {
       title: "Check Availability",
       text: (
         <>
-          Call us at{" "}
-          <a href="tel:+919448734152">+91 94487 34152</a> to check room
-          availability for your preferred dates.
+          Call us at <a href="tel:+919448734152">+91 94487 34152</a> to check
+          room availability for your preferred dates.
         </>
       ),
     },
@@ -68,159 +74,147 @@ const Contact = () => {
 
   return (
     <section className="contact-page">
-      <div className="contact-card">
+      <div className="contact-shell">
+        {/* ============ Left: identity + contact ============ */}
+        <aside className="contact-panel">
+          <div className="panel-ripples" aria-hidden="true"></div>
 
-        {/* Decorative background */}
-        <div className="contact-glow contact-glow-one"></div>
-        <div className="contact-glow contact-glow-two"></div>
+          <div className="panel-top">
+            <p className="panel-name">KRS Guest House</p>
+            <h1>Plan your stay with us</h1>
+            <p className="panel-lead">
+              Booking your stay is simple. Follow these quick steps and get
+              ready for a comfortable stay in Siganduru.
+            </p>
 
-        {/* Header */}
-        <div className="contact-header">
-          <span className="contact-eyebrow">KRS Guest House</span>
-
-          <h1>Plan Your Stay With Us</h1>
-
-          <p>
-            Booking your stay is simple. Follow these quick steps and get ready
-            for a comfortable stay in Siganduru.
-          </p>
-        </div>
-
-        {/* Booking Section */}
-        <div className="booking-section">
-          <div className="section-heading">
-            <span className="section-icon">✦</span>
-
-            <div>
-              <span className="section-label">Simple & Easy</span>
-              <h2>How to Book a Room</h2>
-            </div>
-          </div>
-
-          <div className="booking-steps">
-            {bookingSteps.map((step) => (
-              <div className="booking-step" key={step.number}>
-                <div className="step-number">{step.number}</div>
-
-                <div className="step-content">
-                  <h3>{step.title}</h3>
-                  <p>{step.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Call to Action */}
-        <div className="booking-cta">
-          <div>
-            <span>Ready to book?</span>
-            <h3>Check room availability today.</h3>
-          </div>
-
-          <div className="booking-actions">
-            <Link className="availability-button" to="/enquiry" onClick={() => trackEvent("booking", "click", "check_availability")}>
-              Check availability <span aria-hidden="true">→</span>
-            </Link>
-            <a className="whatsapp-button" href={whatsappBookingUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("booking", "click", "whatsapp_booking") }>
-              <span className="call-icon">◔</span>
-              <span><small>WhatsApp</small>Message us directly</span>
-            </a>
-          </div>
-        </div>
-
-        {/* Contact Details */}
-        <div className="contact-details">
-          <div className="section-heading">
-            <span className="section-icon">✦</span>
-
-            <div>
-              <span className="section-label">Get In Touch</span>
-              <h2>Contact Us</h2>
-            </div>
-          </div>
-
-          <div className="contact-grid">
+            <div className="panel-actions">
+              <Link
+                className="btn btn-primary"
+                to="/enquiry"
+                onClick={() =>
+                  trackEvent("booking", "click", "check_availability")
+                }
+              >
+                Check availability <span aria-hidden="true">→</span>
+              </Link>
 
               <a
-              className="contact-item"
-              href="mailto:krsguesthouse26@gmail.com"
-              onClick={() => trackEvent("contact", "click", "email_contact_page")}
-            >
-              <div className="contact-item-icon">✉</div>
-
-              <div>
-                <span>Email</span>
-                <strong>krsguesthouse26@gmail.com</strong>
-              </div>
-            </a>
-
-            <a
-              className="contact-item"
-              href="tel:+919448734152"
-              onClick={() => trackEvent("contact", "click", "phone_contact_page")}
-            >
-              <div className="contact-item-icon">☎</div>
-
-              <div>
-                <span>Phone</span>
-                <strong>+91 94487 34152</strong>
-              </div>
-            </a>
-
-            <div className="contact-item address-item">
-              <div className="contact-item-icon">⌖</div>
-
-              <div>
-                <span>Location</span>
-                <strong>
-                  KRS Guest House, Siganduru,
-                  <br />
-                  Sagar, Shivamogga
-                </strong>
-              </div>
+                className="btn btn-whatsapp"
+                href={whatsappBookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() =>
+                  trackEvent("booking", "click", "whatsapp_booking")
+                }
+              >
+                <FaWhatsapp aria-hidden="true" />
+                <span>
+                  <small>WhatsApp</small>
+                  Message us directly
+                </span>
+              </a>
             </div>
+          </div>
 
+          <ul className="contact-list">
+            <li>
+              <a
+                href="tel:+919448734152"
+                onClick={() =>
+                  trackEvent("contact", "click", "phone_contact_page")
+                }
+              >
+                <span className="ci-icon">
+                  <FaPhoneAlt aria-hidden="true" />
+                </span>
+                <span className="ci-text">
+                  <small>Phone</small>
+                  <strong>+91 94487 34152</strong>
+                </span>
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="mailto:krsguesthouse26@gmail.com"
+                onClick={() =>
+                  trackEvent("contact", "click", "email_contact_page")
+                }
+              >
+                <span className="ci-icon">
+                  <FaEnvelope aria-hidden="true" />
+                </span>
+                <span className="ci-text">
+                  <small>Email</small>
+                  <strong>krsguesthouse26@gmail.com</strong>
+                </span>
+              </a>
+            </li>
+
+            <li>
+              <div className="ci-static">
+                <span className="ci-icon">
+                  <FaMapMarkerAlt aria-hidden="true" />
+                </span>
+                <span className="ci-text">
+                  <small>Location</small>
+                  <strong>
+                    KRS Guest House, Siganduru,
+                    <br />
+                    Sagar, Shivamogga
+                  </strong>
+                </span>
+              </div>
+            </li>
+          </ul>
+
+          <div className="panel-links">
             <a
-              className="contact-item contact-link-card"
               href={googleMapsDirectionsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackEvent("location", "click", "directions_contact_page")}
+              onClick={() =>
+                trackEvent("location", "click", "directions_contact_page")
+              }
             >
-              <div className="contact-item-icon"><FaDirections aria-hidden="true" /></div>
-
-              <div>
-                <span>Google Business</span>
-                <strong>Get directions to KRS Guest House</strong>
-              </div>
+              <FaDirections aria-hidden="true" /> Get directions
             </a>
-
             <a
-              className="contact-item contact-link-card"
               href={googleReviewUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackEvent("review", "click", "google_reviews_contact_page")}
+              onClick={() =>
+                trackEvent("review", "click", "google_reviews_contact_page")
+              }
             >
-              <div className="contact-item-icon"><FaStar aria-hidden="true" /></div>
-
-              <div>
-                <span>Google Reviews</span>
-                <strong>Read guest reviews</strong>
-              </div>
+              <FaStar aria-hidden="true" /> Read guest reviews
             </a>
-
           </div>
-        </div>
+        </aside>
 
-        {/* Footer note */}
-        <div className="contact-footer">
-          <span>◆</span>
-          We look forward to welcoming you to KRS Guest House.
-          <span>◆</span>
-        </div>
+        {/* ============ Right: booking steps ============ */}
+        <main className="booking-panel">
+          <header className="booking-head">
+            <p className="booking-kicker">Simple &amp; easy</p>
+            <h2>How to book a room</h2>
+          </header>
 
+          <ol className="steps">
+            {bookingSteps.map((step) => (
+              <li className="step" key={step.number}>
+                <span className="step-number">{step.number}</span>
+                <div className="step-body">
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <p className="booking-note">
+            We look forward to welcoming you to KRS Guest House.
+          </p>
+        </main>
       </div>
     </section>
   );

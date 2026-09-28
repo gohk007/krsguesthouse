@@ -82,6 +82,7 @@ const AttractionsList = () => {
       {/* Hero Section */}
       <section className="attractions-hero">
         <div className="hero-overlay"></div>
+        <div className="hero-glow"></div>
 
         <div className="hero-content">
           <span className="hero-small-title">
@@ -97,6 +98,15 @@ const AttractionsList = () => {
 
           <div className="hero-line"></div>
         </div>
+
+        <svg
+          className="hero-wave"
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path d="M0,64 C240,120 480,0 720,48 C960,96 1200,110 1440,50 L1440,120 L0,120 Z" />
+        </svg>
       </section>
 
       {/* Introduction */}
@@ -149,7 +159,6 @@ const AttractionsList = () => {
 
               <div className="card-footer">
                 <span>✦ KRS Guest House</span>
-                <span className="explore-arrow">→</span>
               </div>
             </div>
           </article>

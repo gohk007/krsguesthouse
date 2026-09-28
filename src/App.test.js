@@ -18,7 +18,7 @@ test('includes route metadata for the main routed pages', () => {
   expect(pageMetadata['/attraction']).toMatchObject({
     title: expect.stringContaining('Places to Visit'),
   });
-  expect(pageMetadata['/location']).toMatchObject({
+  expect(pageMetadata['/rooms']).toMatchObject({
     title: expect.stringContaining('Location'),
   });
 });

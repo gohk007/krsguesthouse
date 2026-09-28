@@ -1,298 +1,160 @@
 /* =========================================
    CONTACT BAR
+   No `all: initial` / `!important` needed:
+   every class is namespaced with `contact-bar__`
+   so site-wide styles can't collide with it.
    ========================================= */
 
-   .contact-bar {
-    all: initial;
-  
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: center !important;
-  
-    width: 100% !important;
-    box-sizing: border-box !important;
-  
-    background: antiquewhite !important;
-  
-    padding: 10px 10px !important;
-    margin: 0 !important;
-  
-    gap: 35px !important;
-  
-    font-family: Arial, sans-serif !important;
+.contact-bar {
+  --cb-bg: antiquewhite;
+  --cb-green: #14532d;
+  --cb-green-soft: rgba(20, 83, 45, 0.12);
+  --cb-text: #2b2118;
+  --cb-muted: #6b5a48;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 8px;
+  background: var(--cb-bg);
+  border-bottom: 1px solid var(--cb-green);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+/* ---------- Link (whole item is the tap target) ---------- */
+
+.contact-bar .contact-bar__link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 3px 14px;
+  color: var(--cb-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* divider between the two items, only when side by side */
+.contact-bar .contact-bar__link + .contact-bar__link {
+  border-left: 1px solid var(--cb-green-soft);
+}
+
+.contact-bar .contact-bar__link:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.contact-bar .contact-bar__link:focus-visible {
+  outline: 2px solid var(--cb-green);
+  outline-offset: -3px;
+  border-radius: 4px;
+}
+
+/* ---------- Icon badge ---------- */
+
+.contact-bar .contact-bar__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--cb-green);
+  color: #fff;
+  transition: transform 0.2s ease;
+}
+
+.contact-bar .contact-bar__icon {
+  width: 10px;
+  height: 10px;
+}
+
+.contact-bar .contact-bar__link:hover .contact-bar__badge {
+  transform: scale(1.08);
+}
+
+/* ---------- Text ---------- */
+
+.contact-bar .contact-bar__text {
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.contact-bar .contact-bar__label {
+  color: var(--cb-muted);
+  font-weight: 500;
+}
+
+.contact-bar .contact-bar__number {
+  color: var(--cb-text);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap; /* keep the number on one line, label may wrap */
+}
+
+.contact-bar .contact-bar__link:hover .contact-bar__number {
+  color: var(--cb-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 768px) {
+  .contact-bar .contact-bar__link {
+    padding: 3px 10px;
   }
-  
-  
-  /* =========================================
-     CONTACT ITEM
-     ========================================= */
-  
-  .contact-bar .contact-item {
-    all: initial;
-  
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  
-    box-sizing: border-box !important;
-  
-    margin: 0 !important;
-    padding: 0 !important;
+
+  .contact-bar .contact-bar__text {
+    font-size: 12px;
   }
-  
-  
-  /* =========================================
-     CONTACT LINK
-     ========================================= */
-  
-  .contact-bar .contact-link {
-    all: initial;
-  
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  
-    box-sizing: border-box !important;
-  
-    margin: 0 !important;
-    padding: 0 !important;
-  
-    gap: 6px !important;
-  
-    text-decoration: none !important;
-    white-space: nowrap !important;
-  
-    cursor: pointer;
+}
+
+/* =========================================
+   MOBILE - two full-width rows
+   ========================================= */
+
+@media (max-width: 600px) {
+  .contact-bar {
+    flex-direction: column;
+    padding: 0;
   }
-  
-  
-  /* =========================================
-     PHONE ICON
-     ========================================= */
-  
-  .contact-bar .contact-icon {
-    color: darkgreen !important;
-  
-    width: 14px !important;
-    height: 14px !important;
-  
-    min-width: 14px !important;
-    min-height: 14px !important;
-  
-    max-width: 14px !important;
-    max-height: 14px !important;
-  
-    font-size: 14px !important;
-  
-    flex-shrink: 0 !important;
+
+  .contact-bar .contact-bar__link {
+    justify-content: center;
+    min-height: 30px;
+    padding: 4px 10px;
   }
-  
-  
-  /* =========================================
-     CONTACT TEXT
-     ========================================= */
-  
-  .contact-bar .contact-text {
-    all: initial;
-  
-    display: inline !important;
-  
-    color: #222 !important;
-  
-    font-family: Arial, sans-serif !important;
-  
-    font-size: 14px !important;
-    font-weight: 600 !important;
-  
-    line-height: 14px !important;
-  
-    margin: 0 !important;
-    padding: 0 !important;
-  
-    white-space: nowrap !important;
+
+  .contact-bar .contact-bar__link + .contact-bar__link {
+    border-left: 0;
+    border-top: 1px solid var(--cb-green-soft);
   }
-  
-  
-  /* =========================================
-     HOVER
-     ========================================= */
-  
-  .contact-bar .contact-link:hover .contact-text {
-    color: darkgreen !important;
+
+  .contact-bar .contact-bar__badge {
+    width: 18px;
+    height: 18px;
   }
-  
-  .contact-bar .contact-link:hover .contact-icon {
-    color: #14532d !important;
+
+  .contact-bar .contact-bar__icon {
+    width: 9px;
+    height: 9px;
   }
-  
-  
-  /* =========================================
-     TABLET
-     ========================================= */
-  
-  @media (max-width: 768px) {
-  
-    .contact-bar {
-      padding: 4px 8px !important;
-      gap: 20px !important;
-    }
-  
-    .contact-bar .contact-icon {
-      width: 13px !important;
-      height: 13px !important;
-  
-      min-width: 13px !important;
-      min-height: 13px !important;
-  
-      max-width: 13px !important;
-      max-height: 13px !important;
-  
-      font-size: 13px !important;
-    }
-  
-    .contact-bar .contact-text {
-      font-size: 11px !important;
-      line-height: 13px !important;
-    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-bar .contact-bar__link,
+  .contact-bar .contact-bar__badge {
+    transition: none;
   }
-  
-  
-  /* =========================================
-     MOBILE
-     TWO SMALL LINES
-     ========================================= */
-  
-  @media (max-width: 600px) {
-  
-    .contact-bar {
-      all: initial;
-  
-      display: flex !important;
-      flex-direction: column !important;
-  
-      align-items: center !important;
-      justify-content: center !important;
-  
-      width: 100% !important;
-  
-      box-sizing: border-box !important;
-  
-      background: antiquewhite !important;
-  
-      padding: 4px 5px !important;
-      margin: 0 !important;
-  
-      gap: 1px !important;
-  
-      font-family: Arial, sans-serif !important;
-    }
-  
-  
-    .contact-bar .contact-item {
-      all: initial;
-  
-      display: flex !important;
-  
-      align-items: center !important;
-      justify-content: center !important;
-  
-      width: 100% !important;
-  
-      box-sizing: border-box !important;
-  
-      margin: 0 !important;
-      padding: 6px !important;
-    }
-  
-  
-    .contact-bar .contact-link {
-      all: initial;
-  
-      display: flex !important;
-  
-      align-items: center !important;
-      justify-content: center !important;
-  
-      box-sizing: border-box !important;
-  
-      gap: 4px !important;
-  
-      margin: 0 !important;
-      padding: 0 !important;
-  
-      text-decoration: none !important;
-      white-space: nowrap !important;
-    }
-  
-  
-    .contact-bar .contact-icon {
-      color: darkgreen !important;
-  
-      width: 10px !important;
-      height: 10px !important;
-  
-      min-width: 10px !important;
-      min-height: 10px !important;
-  
-      max-width: 10px !important;
-      max-height: 10px !important;
-  
-      font-size: 10px !important;
-  
-      flex-shrink: 0 !important;
-    }
-  
-  
-    .contact-bar .contact-text {
-      all: initial;
-  
-      display: inline !important;
-  
-      color: #222 !important;
-  
-      font-family: Arial, sans-serif !important;
-  
-      font-size: 14px !important;
-      font-weight: 600 !important;
-  
-      line-height: 11px !important;
-  
-      margin: 0 !important;
-      padding: 0 !important;
-  
-      white-space: nowrap !important;
-    }
+  .contact-bar .contact-bar__link:hover .contact-bar__badge {
+    transform: none;
   }
-  
-  
-  /* =========================================
-     VERY SMALL MOBILE
-     ========================================= */
-  
-  @media (max-width: 380px) {
-  
-    .contact-bar {
-      padding: 3px 4px !important;
-      gap: 1px !important;
-    }
-  
-    .contact-bar .contact-icon {
-      width: 9px !important;
-      height: 9px !important;
-  
-      min-width: 9px !important;
-      min-height: 9px !important;
-  
-      max-width: 9px !important;
-      max-height: 9px !important;
-  
-      font-size: 9px !important;
-    }
-  
-    .contact-bar .contact-text {
-      font-size: 14px !important;
-      line-height: 10px !important;
-    }
-  }
-  
+}

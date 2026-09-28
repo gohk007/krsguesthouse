@@ -133,9 +133,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/attraction" element={<AttractionsList />} />
-            <Route path="/location" element={<Location />} />
+            <Route path="/rooms" element={<Location />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/details" element={<Details />} />
+            <Route path="/policies" element={<Details />} />
             <Route path="/enquiry" element={<Enquiry />} />
           </Routes>
         </React.Suspense>
