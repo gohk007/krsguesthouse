@@ -18,8 +18,8 @@ const MAP_URL =
 const navigationLinks = [
   { label: "Home", href: "/" },
   { label: "Attractions", href: "/attraction" },
-  { label: "Location", href: "/rooms" },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Rooms", href: "/rooms" },
+  { label: "Book now", href: "/contact" },
   { label: "Enquiry", href: "/enquiry" },
 ];
 
