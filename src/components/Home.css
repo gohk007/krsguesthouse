@@ -187,7 +187,7 @@
 .home-page-location-card dt { color: var(--saffron-soft); font-size: 14px; font-weight: 700; }
 .home-page-location-card dd { margin: 4px 0 0; color: rgba(255, 255, 255, 0.9); font-size: 16px; }
 .home-page-location-card .home-page-btn {
-  align-self: flex-start; color: #2b1d04; box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.4);
+  align-self: center; color: #2b1d04; box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.4);
   background: linear-gradient(135deg, var(--saffron-soft), var(--saffron));
 }
 .home-page-map {
@@ -275,12 +275,16 @@
   .home-page-heading { margin-bottom: 32px; }
   .home-page-heading p { font-size: 16px; }
   .home-page-facilities-grid { grid-template-columns: 1fr; gap: 14px; }
-  .home-page-facility { padding: 28px 22px 24px; border-radius: 18px; }
+  .home-page-facility { padding: 18px 16px 16px; border-radius: 14px; }
+  .home-page-facility-icon { width: 52px; height: 52px; margin-bottom: 12px; font-size: 24px; }
+  .home-page-facility h3 { font-size: 18px; }
+  .home-page-facility p { font-size: 14px; }
   .home-page-location-card { padding: 30px 24px; border-radius: 20px; }
   .home-page-map, .home-page-map iframe { min-height: 320px; border-radius: 20px; }
   .home-page-map iframe { border-radius: 14px; }
   .home-page-cta { margin: 0 16px 64px; padding: 32px 24px; border-radius: 22px; }
   .home-page-cta-actions, .home-page-cta-actions .home-page-btn { width: 100%; }
+  .home-page-faq { display: none; }
   .home-page-faq-question { padding: 18px 18px; font-size: 16px; }
   .home-page-faq-answer p { padding: 0 18px; font-size: 15px; }
   .is-open .home-page-faq-answer p { padding-bottom: 20px; }
