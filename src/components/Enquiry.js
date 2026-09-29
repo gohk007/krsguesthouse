@@ -199,12 +199,14 @@ const Enquiry = () => {
     members: String(startGuests),
     room: requestedKey || buildOptions(startGuests)[0].key,
   });
-  const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [calOpen, setCalOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [sentEmail, setSentEmail] = useState("");
   const triggerRef = useRef(null);
+  const doneRef = useRef(null);
   const touched = useRef({});
 
   const todayDate = useMemo(localToday, []);
@@ -230,13 +232,26 @@ const Enquiry = () => {
     };
   }, [calOpen]);
 
+  /* Success popup: Esc to close, lock page scroll, focus the button */
+  useEffect(() => {
+    if (!popupOpen) return undefined;
+    const onKey = (e) => e.key === "Escape" && setPopupOpen(false);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    if (doneRef.current) doneRef.current.focus();
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [popupOpen]);
+
   const clearError = (...names) => {
     setErrors((prev) => {
       const next = { ...prev };
       names.forEach((n) => (next[n] = ""));
       return next;
     });
-    if (submitted) setSubmitted(false);
   };
 
   // Keep only digits, drop a pasted +91 / 91 / 0 prefix, and allow max 10 digits
@@ -254,7 +269,6 @@ const Enquiry = () => {
     const { name } = e.target;
     const value = name === "phone" ? cleanPhone(e.target.value) : e.target.value;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (submitted) setSubmitted(false);
     // Once a field has been checked, keep checking it while the guest edits
     if (touched.current[name] || errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: fieldError(name, value) }));
@@ -319,8 +333,6 @@ const Enquiry = () => {
     setErrors((prev) => ({ ...prev, [name]: fieldError(name, value) }));
   };
 
-
-
   const validateForm = () => {
     const newErrors = {};
 
@@ -365,7 +377,6 @@ const Enquiry = () => {
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-    setSubmitted(false);
 
     try {
       const response = await fetch("https://formspree.io/f/xldjvgdp", {
@@ -386,7 +397,10 @@ const Enquiry = () => {
 
       if (!response.ok) throw new Error("Form submission failed");
 
-      setSubmitted(true);
+      // Remember the email for the popup before the form resets
+      setSentEmail(formData.email);
+      setPopupOpen(true);
+
       touched.current = {};
       setFormData({
         ...initialFormData,
@@ -613,20 +627,6 @@ const Enquiry = () => {
                 🔒 We use your details only to check availability and reply.
                 Fastest: <a href="tel:+919448734152">+91 94487 34152</a>
               </p>
-
-              {submitted && (
-                <div className="success" role="status" aria-live="polite">
-                  <span className="success-icon" aria-hidden="true">✓</span>
-                  <div>
-                    <strong>Enquiry sent successfully!</strong>
-                    <p>
-                      Thank you for contacting KRS Guest House. We will get back
-                      to you soon. For urgent enquiries, please call{" "}
-                      <strong>9448734152</strong>.
-                    </p>
-                  </div>
-                </div>
-              )}
             </form>
           </section>
 
@@ -637,41 +637,97 @@ const Enquiry = () => {
           </div>
         </div>
       </div>
+
+      {/* CALENDAR SHEET */}
       {calOpen &&
         createPortal(
-        <div
-          className="sheet-backdrop"
-          onMouseDown={(e) => e.target === e.currentTarget && setCalOpen(false)}
-        >
-          <div className="sheet" role="dialog" aria-modal="true" aria-label="Select your dates">
-            <div className="sheet-head">
-              <strong>Select your dates</strong>
-              <button type="button" className="sheet-close" onClick={() => setCalOpen(false)} aria-label="Close calendar">✕</button>
+          <div
+            className="sheet-backdrop"
+            onMouseDown={(e) => e.target === e.currentTarget && setCalOpen(false)}
+          >
+            <div className="sheet" role="dialog" aria-modal="true" aria-label="Select your dates">
+              <div className="sheet-head">
+                <strong>Select your dates</strong>
+                <button type="button" className="sheet-close" onClick={() => setCalOpen(false)} aria-label="Close calendar">✕</button>
+              </div>
+              <div className="sheet-body">
+                <p className="sheet-hint" aria-live="polite">
+                  {!formData.checkin
+                    ? "Tap your check-in date"
+                    : !formData.checkout
+                    ? "Now tap your check-out date"
+                    : `${prettyDate(formData.checkin)} → ${prettyDate(formData.checkout)} · ${nights} night${nights > 1 ? "s" : ""}`}
+                </p>
+                <RangeCalendar
+                  today={todayDate}
+                  checkin={formData.checkin}
+                  checkout={formData.checkout}
+                  onChange={setDates}
+                />
+              </div>
+              <div className="sheet-foot">
+                <button type="button" className="link-button" onClick={() => setDates("", "")}>Clear dates</button>
+                <button type="button" className="sheet-done" disabled={!nights} onClick={() => setCalOpen(false)}>
+                  Apply dates
+                </button>
+              </div>
             </div>
-            <div className="sheet-body">
-            <p className="sheet-hint" aria-live="polite">
-              {!formData.checkin
-                ? "Tap your check-in date"
-                : !formData.checkout
-                ? "Now tap your check-out date"
-                : `${prettyDate(formData.checkin)} → ${prettyDate(formData.checkout)} · ${nights} night${nights > 1 ? "s" : ""}`}
-            </p>
-            <RangeCalendar
-              today={todayDate}
-              checkin={formData.checkin}
-              checkout={formData.checkout}
-              onChange={setDates}
-            />
-            </div>
-            <div className="sheet-foot">
-              <button type="button" className="link-button" onClick={() => setDates("", "")}>Clear dates</button>
-              <button type="button" className="sheet-done" disabled={!nights} onClick={() => setCalOpen(false)}>
-                Apply dates
+          </div>,
+          document.body
+        )}
+
+      {/* SUCCESS POPUP */}
+      {popupOpen &&
+        createPortal(
+          <div
+            className="sheet-backdrop"
+            onMouseDown={(e) => e.target === e.currentTarget && setPopupOpen(false)}
+          >
+            <div
+              className="sheet popup"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="popup-title"
+            >
+              <button
+                type="button"
+                className="sheet-close popup-x"
+                onClick={() => setPopupOpen(false)}
+                aria-label="Close"
+              >
+                ✕
+              </button>
+
+              <div className="popup-icon" aria-hidden="true">✓</div>
+              <h3 id="popup-title" className="popup-title">Enquiry sent!</h3>
+              <p className="popup-lead">
+                Please <strong>check your email</strong>
+                {sentEmail && <> at <span className="popup-email">{sentEmail}</span></>}
+                {" "}for all the details.
+              </p>
+
+              <ul className="popup-list">
+                <li><span aria-hidden="true">💰</span> Room prices</li>
+                <li><span aria-hidden="true">🛏️</span> Availability for your dates</li>
+                <li><span aria-hidden="true">📝</span> How to book</li>
+              </ul>
+              <p className="popup-spam">Can't see it? Check your spam or promotions folder.</p>
+
+              <div className="popup-urgent">
+                <span>Urgent? Call us directly</span>
+                <a href="tel:+919448734152">📞 9448734152</a>
+              </div>
+
+              <button
+                type="button"
+                ref={doneRef}
+                className="sheet-done popup-done"
+                onClick={() => setPopupOpen(false)}
+              >
+                Got it
               </button>
             </div>
-          </div>
-        </div>
-      ,
+          </div>,
           document.body
         )}
     </main>
