@@ -39,7 +39,7 @@ const Header = () => {
       { path: "/contact", label: "Book Now", id: "contact" },
       { path: "/attraction", label: "Attractions", id: "attraction" },
       { path: "/enquiry", label: "Enquiry", id: "enquiry" },
-      { path: "/policies", label: "Guest Policies", id: "details" },
+      { path: "/policies", label: "Know Before You Stay", id: "details" },
     ],
     []
   );

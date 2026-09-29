@@ -8,6 +8,9 @@
   --gold-700: #8a5c0f;      /* AA-contrast gold for text */
   --gold-100: #fff0d2;
   --gold-50: #fffaf1;
+  --red-700: #9b1c1c;
+  --red-600: #c81e1e;
+  --red-50: #fef2f2;
   --ink: #18352c;
   --ink-soft: #425850;
   --ink-muted: #5f716a;
@@ -138,7 +141,7 @@
   background: linear-gradient(145deg, rgba(6, 78, 59, 0.1), rgba(220, 169, 75, 0.14));
 }
 
-/* ---------- Timings ---------- */
+/* ---------- Timings & payments ---------- */
 
 .timing-grid {
   display: grid;
@@ -165,7 +168,8 @@
   background: var(--green-700);
 }
 
-.timing-card--check-out .timing-card__icon {
+.timing-card--check-out .timing-card__icon,
+.timing-card--cash .timing-card__icon {
   background: var(--gold-500);
   color: var(--green-900);
 }
@@ -216,7 +220,8 @@
   background: var(--accent);
 }
 
-.notice--extension {
+.notice--extension,
+.notice--deposit {
   --accent: var(--gold-500);
   background: var(--gold-50);
   border-color: rgba(220, 169, 75, 0.25);
@@ -231,8 +236,96 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.notice--extension .notice__icon {
+.notice--extension .notice__icon,
+.notice--deposit .notice__icon {
   color: var(--gold-700);
+}
+
+/* ---------- Payment modes: accepted vs not accepted ---------- */
+
+.pay-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--gap);
+}
+
+.pay-panel {
+  --tone: var(--green-700);
+  padding: 1.15rem;
+  border: 1px solid rgba(6, 78, 59, 0.18);
+  border-top: 4px solid var(--tone);
+  border-radius: var(--radius-md);
+  background: #f3f9f5;
+}
+
+.pay-panel--denied {
+  --tone: var(--red-600);
+  border-color: rgba(200, 30, 30, 0.22);
+  border-top-color: var(--red-600);
+  background: var(--red-50);
+}
+
+.pay-panel__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--tone);
+}
+
+.pay-panel__title svg {
+  font-size: 1.2rem;
+}
+
+.pay-panel__list {
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.pay-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 0.8rem;
+  background: #fff;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.pay-item__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  color: #fff;
+  background: var(--tone);
+}
+
+.pay-item strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--green-900);
+}
+
+.pay-panel--denied .pay-item strong {
+  color: var(--red-700);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.pay-item small {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
 }
 
 .notice h3 {
