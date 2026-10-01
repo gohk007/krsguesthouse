@@ -52,6 +52,7 @@
   max-width: 60rem;
   margin-inline: auto;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--gap);
 }
 
@@ -86,6 +87,7 @@
 
 .details-card {
   position: relative;
+  min-width: 0;
   padding: clamp(1.25rem, 4vw, 2.25rem);
   background: var(--surface);
   border: 1px solid var(--line);
@@ -141,11 +143,11 @@
   background: linear-gradient(145deg, rgba(6, 78, 59, 0.1), rgba(220, 169, 75, 0.14));
 }
 
-/* ---------- Timings & payments ---------- */
+/* ---------- Timings ---------- */
 
 .timing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
   gap: var(--gap);
 }
 
@@ -245,12 +247,15 @@
 
 .pay-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* side by side on desktop */
   gap: var(--gap);
+  align-items: stretch;
 }
 
 .pay-panel {
   --tone: var(--green-700);
+  min-width: 0;
+  width: 100%;
   padding: 1.15rem;
   border: 1px solid rgba(6, 78, 59, 0.18);
   border-top: 4px solid var(--tone);
@@ -295,6 +300,10 @@
   background: #fff;
   border-radius: var(--radius-sm);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.pay-item > div {
+  min-width: 0;
 }
 
 .pay-item__icon {
@@ -412,6 +421,29 @@
   background: var(--gold-100);
 }
 
+/* ---------- View more / Show less ---------- */
+
+.rules-toggle {
+  display: block;
+  margin: 1rem auto 0;
+  padding: 0.7rem 1.5rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--green-700);
+  background: var(--tint);
+  border: 1.5px solid var(--green-700);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.rules-toggle:hover,
+.rules-toggle:focus-visible {
+  color: #fff;
+  background: var(--green-700);
+}
+
 /* ---------- Acknowledgement ---------- */
 
 .acknowledgement {
@@ -448,6 +480,16 @@
   .icon-tile {
     width: 2.6rem;
     height: 2.6rem;
+  }
+
+  /* Single column on phones */
+  .pay-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Hide the "Not accepted" panel on mobile */
+  .pay-panel--denied {
+    display: none;
   }
 
   .rule {

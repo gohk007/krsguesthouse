@@ -15,7 +15,7 @@ const DIRECTIONS_URL =
   "https://www.google.com/maps/search/?api=1&query=K.R.S+Guest+House+Siganduru";
 
 const FACILITIES = [
-  { icon: "🛕", title: "350 meters to the temple", text: "A short walk to Siganduru Chowdeshwari Temple." },
+  { icon: "🛕", title: "The temple is 350 meters away.", text: "A short walk to Siganduru Chowdeshwari Temple." },
   { icon: "🛏️", title: "Rooms for 2, 4 or 6", text: "Comfortable rooms for families and groups." },
   { icon: "🚿", title: "Bathroom with hot water", text: "Clean bathrooms with hot water and western toilets." },
   { icon: "🚗", title: "Free parking", text: "Park at the guest house at no extra cost." },

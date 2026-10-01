@@ -289,6 +289,10 @@
 }
 
 .room-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   padding-top: 12px;
   border-top: 1px dashed rgba(6, 78, 59, 0.16);
 }
@@ -298,34 +302,25 @@
   font-weight: 700;
 }
 
-/* Pricing note */
-.pricing-note {
-  display: flex;
-  gap: 14px;
-  margin-top: 16px;
-  padding: 18px 20px;
-  border: 1px solid rgba(220, 169, 75, 0.35);
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--cream), rgba(255, 255, 255, 0.95));
-}
-.note-icon {
-  flex-shrink: 0;
-  font-size: 19px;
-  line-height: 1.3;
-}
-.pricing-note strong {
-  display: block;
-  margin-bottom: 4px;
-  color: var(--primary-dark);
-  font-size: 15px;
+/* Enquire button inside each room card */
+.room-enquire {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 7px 16px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: var(--white);
+  font-size: 13px;
   font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
-.pricing-note p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.6;
-}
+.room-enquire span { transition: transform 0.2s ease; }
+.room-enquire:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.room-enquire:hover span { transform: translateX(3px); }
+.room-enquire:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
 /* =========================================================
    GALLERY (mosaic)
@@ -653,8 +648,6 @@
   .room-info > p { margin: 8px 0 12px; font-size: 14px; }
   .room-features { grid-template-columns: 1fr; gap: 7px; margin-bottom: 12px; }
   .room-features li { font-size: 13.5px; }
-
-  .pricing-note { padding: 15px; gap: 11px; }
 
   /* Gallery: 2 columns */
   .gallery-grid {

@@ -259,32 +259,55 @@
   .home-page-section { padding: 72px 24px; }
   .home-page-location, .home-page-faq { padding-top: 0; }
 }
+
+/* ---------- Mobile (compact layout) ---------- */
 @media (max-width: 600px) {
-  .home-page-hero { padding-bottom: 44px; }
+  /* Hero: thumbnail strip hidden (hero image still auto-rotates) */
+  .home-page-hero { padding-bottom: 36px; }
   .home-page-hero-media { height: 560px; }
   .home-page-hero-content { padding: 0 20px 64px; }
   .home-page-hero-text { font-size: 16px; margin-bottom: 24px; }
   .home-page-hero-actions .home-page-btn { width: 100%; }
   .home-page-btn-link { min-height: 40px; }
-  .home-page-thumb { width: 64px; height: 44px; }
+  .home-page-thumbs { display: none; }
+
+  /* Trust + reviews band */
   .home-page-band { margin: -36px 16px 0; padding: 22px 20px; border-radius: 16px; }
   .home-page-trust { gap: 18px; width: 100%; }
   .home-page-review-link { width: 100%; justify-content: center; }
+
+  /* Shared section */
   .home-page-section { padding: 56px 16px; }
   .home-page-location, .home-page-faq { padding-top: 0; }
   .home-page-heading { margin-bottom: 32px; }
   .home-page-heading p { font-size: 16px; }
-  .home-page-facilities-grid { grid-template-columns: 1fr; gap: 14px; }
-  .home-page-facility { padding: 18px 16px 16px; border-radius: 14px; }
-  .home-page-facility-icon { width: 52px; height: 52px; margin-bottom: 12px; font-size: 24px; }
-  .home-page-facility h3 { font-size: 18px; }
-  .home-page-facility p { font-size: 14px; }
-  .home-page-location-card { padding: 30px 24px; border-radius: 20px; }
-  .home-page-map, .home-page-map iframe { min-height: 320px; border-radius: 20px; }
+
+  /* Facilities: compact 2-column grid, titles only */
+  .home-page-facilities { padding: 36px 16px 28px; }
+  .home-page-facilities .home-page-heading { margin-bottom: 18px; }
+  .home-page-facilities .home-page-heading p { display: none; }
+  .home-page-facilities .home-page-heading h2 { font-size: 24px; }
+  .home-page-facilities .home-page-heading h2::after { margin-top: 10px; width: 44px; height: 3px; }
+  .home-page-facilities-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .home-page-facility { padding: 14px 10px 12px; border-radius: 12px; }
+  .home-page-facility-icon {
+    width: 40px; height: 40px; margin-bottom: 8px; font-size: 20px;
+    box-shadow: inset 0 0 0 1px rgba(11, 92, 69, 0.1);
+  }
+  .home-page-facility h3 { font-size: 14px; line-height: 1.25; margin-bottom: 0; }
+  .home-page-facility p { display: none; } /* delete this line to bring descriptions back */
+
+  /* Location: green info card hidden, map only */
+  .home-page-location-card { display: none; }
+  .home-page-location { padding-bottom: 36px; }
+  .home-page-location .home-page-heading { margin-bottom: 16px; }
+  .home-page-map, .home-page-map iframe { min-height: 260px; border-radius: 20px; }
   .home-page-map iframe { border-radius: 14px; }
-  .home-page-cta { margin: 0 16px 64px; padding: 32px 24px; border-radius: 22px; }
-  .home-page-cta-actions, .home-page-cta-actions .home-page-btn { width: 100%; }
-  .home-page-faq { display: none; }
+
+  /* CTA */
+ .home-page-cta { display: none; }
+
+  /* FAQ (now visible on mobile) */
   .home-page-faq-question { padding: 18px 18px; font-size: 16px; }
   .home-page-faq-answer p { padding: 0 18px; font-size: 15px; }
   .is-open .home-page-faq-answer p { padding-bottom: 20px; }

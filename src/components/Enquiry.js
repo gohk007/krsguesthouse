@@ -29,6 +29,62 @@ const keyParts = (key) => {
 const roomLabel = (key) =>
   keyParts(key).map(([count, size]) => `${count} × ${SIZES[size]}`).join(" + ");
 
+/* Card title: just the room count, e.g. "1 Room" / "2 Rooms" */
+const roomCount = (key) => keyParts(key).reduce((t, [c]) => t + c, 0);
+const roomTitle = (key) => {
+  const n = roomCount(key);
+  return `${n} ${n === 1 ? "Room" : "Rooms"}`;
+};
+/* Small text under the title, e.g. "1 room can accommodate 6 people" */
+const roomNote = (key) =>
+  keyParts(key)
+    .map(([count, size]) =>
+      count === 1
+        ? `1 room can accommodate ${size} people`
+        : `${count} rooms, each accommodates ${size} people`
+    )
+    .join(" + ");
+
+/* Simple room layouts. Change beds/labels here to match the real rooms. */
+const PLAN = {
+  2: { beds: 1, w: 44, label: "1 King bed", bedName: "King" },
+  4: { beds: 2, w: 40, label: "2 Double beds", bedName: "Double" },
+  6: { beds: 3, w: 27, label: "3 Double beds", bedName: "Double" },
+};
+
+const RoomPlan = ({ size }) => {
+  const { beds, w, label, bedName } = PLAN[size];
+  const h = beds === 3 ? 46 : beds === 2 ? 50 : 54;
+  return (
+    <figure className="room-plan">
+      <svg viewBox="0 0 140 80" role="img" aria-label={`${SIZES[size]} layout: ${label} and attached bathroom`}>
+        {/* room walls */}
+        <rect x="2" y="2" width="136" height="76" rx="3" className="plan-wall" />
+        {/* door gap */}
+        <rect x="52" y="76" width="20" height="4" className="plan-door" />
+        {/* bathroom */}
+        <rect x="106" y="2" width="32" height="32" className="plan-bath" />
+        <circle cx="122" cy="12" r="4" className="plan-fixture" />
+        <rect x="116" y="22" width="12" height="6" rx="2" className="plan-fixture" />
+        <text x="122" y="42" textAnchor="middle" className="plan-text">Bath</text>
+        {/* beds */}
+        {Array.from({ length: beds }).map((_, i) => {
+          const x = 8 + i * (w + 6);
+          return (
+            <g key={i}>
+              <rect x={x} y="8" width={w} height={h} rx="3" className="plan-bed" />
+              <rect x={x + 3} y="11" width={(w - 9) / 2} height="8" rx="2" className="plan-pillow" />
+              <rect x={x + 6 + (w - 9) / 2} y="11" width={(w - 9) / 2} height="8" rx="2" className="plan-pillow" />
+              <text x={x + w / 2} y={8 + h / 2 + 8} textAnchor="middle" className="plan-text">{bedName}</text>
+            </g>
+          );
+        })}
+      </svg>
+      <figcaption>{label} · Attached bathroom</figcaption>
+    </figure>
+  );
+};
+
 /* Suggest room combinations for a party size: fewest rooms, least empty beds,
    and no room that isn't needed. */
 const buildOptions = (n) => {
@@ -80,11 +136,19 @@ const prettyDate = (k) =>
 const nightsBetween = (a, b) =>
   Math.round((parseKey(b) - parseKey(a)) / 86400000);
 
+/* Guests can only enquire for dates from today up to 30 days ahead */
+const MAX_DAYS_AHEAD = 30;
+const addDays = (k, n) => {
+  const d = parseKey(k);
+  d.setDate(d.getDate() + n);
+  return toKey(d.getFullYear(), d.getMonth(), d.getDate());
+};
+
 /* =========================================================
-   CALENDAR (check-in / check-out range)
+   CALENDAR (check-in / check-out range) - one month at a time
    ========================================================= */
 
-const Month = ({ year, month, today, checkin, checkout, hover, onPick, onHover }) => {
+const Month = ({ year, month, today, maxDate, checkin, checkout, hover, onPick, onHover }) => {
   const first = new Date(year, month, 1).getDay();
   const days = new Date(year, month + 1, 0).getDate();
   const cells = [];
@@ -105,7 +169,7 @@ const Month = ({ year, month, today, checkin, checkout, hover, onPick, onHover }
         {cells.map((d, i) => {
           if (!d) return <span key={`e${i}`} />;
           const key = toKey(year, month, d);
-          const past = key < today;
+          const past = key < today || key > maxDate;
           const isStart = key === checkin;
           const isEnd = key === checkout;
           const inRange = checkin && end && key > checkin && key < end;
@@ -140,7 +204,7 @@ const Month = ({ year, month, today, checkin, checkout, hover, onPick, onHover }
   );
 };
 
-const RangeCalendar = ({ today, checkin, checkout, onChange }) => {
+const RangeCalendar = ({ today, maxDate, checkin, checkout, onChange }) => {
   const t = parseKey(today);
   const [view, setView] = useState({ y: t.getFullYear(), m: t.getMonth() });
   const [hover, setHover] = useState("");
@@ -151,8 +215,9 @@ const RangeCalendar = ({ today, checkin, checkout, onChange }) => {
       return { y: d.getFullYear(), m: d.getMonth() };
     });
 
-  const next = new Date(view.y, view.m + 1, 1);
   const atMin = view.y === t.getFullYear() && view.m === t.getMonth();
+  const mx = parseKey(maxDate);
+  const atMax = view.y > mx.getFullYear() || (view.y === mx.getFullYear() && view.m >= mx.getMonth());
 
   const pick = (key) => {
     if (!checkin || (checkin && checkout) || key <= checkin) {
@@ -166,16 +231,11 @@ const RangeCalendar = ({ today, checkin, checkout, onChange }) => {
     <div className="calendar" onMouseLeave={() => setHover("")}>
       <div className="cal-nav">
         <button type="button" onClick={() => shift(-1)} disabled={atMin} aria-label="Previous month">‹</button>
-        <button type="button" onClick={() => shift(1)} aria-label="Next month">›</button>
+        <button type="button" onClick={() => shift(1)} disabled={atMax} aria-label="Next month">›</button>
       </div>
       <div className="cal-months">
         <Month
-          year={view.y} month={view.m} today={today}
-          checkin={checkin} checkout={checkout} hover={hover}
-          onPick={pick} onHover={setHover}
-        />
-        <Month
-          year={next.getFullYear()} month={next.getMonth()} today={today}
+          year={view.y} month={view.m} today={today} maxDate={maxDate}
           checkin={checkin} checkout={checkout} hover={hover}
           onPick={pick} onHover={setHover}
         />
@@ -210,12 +270,23 @@ const Enquiry = () => {
   const touched = useRef({});
 
   const todayDate = useMemo(localToday, []);
+  const maxDate = useMemo(() => addDays(todayDate, MAX_DAYS_AHEAD), [todayDate]);
   const guests = Number(formData.members) || 1;
   const options = useMemo(() => buildOptions(guests), [guests]);
   const nights =
     formData.checkin && formData.checkout && formData.checkout > formData.checkin
       ? nightsBetween(formData.checkin, formData.checkout)
       : 0;
+
+  /* When arriving from the Rooms page (?room=...), select that exact room
+     and set the guest count to its size. Runs whenever the param changes. */
+  useEffect(() => {
+    const key = SINGLE_KEY[requestedRoom];
+    if (!key) return;
+    const size = keyParts(key)[0][1];
+    setFormData((prev) => ({ ...prev, room: key, members: String(size) }));
+    setErrors((prev) => ({ ...prev, room: "", members: "" }));
+  }, [requestedRoom]);
 
   /* Calendar sheet: Esc to close, lock page scroll, return focus */
   useEffect(() => {
@@ -350,12 +421,16 @@ const Enquiry = () => {
       newErrors.checkin = "Please select a check-in date.";
     } else if (formData.checkin < todayDate) {
       newErrors.checkin = "Check-in date cannot be in the past.";
+    } else if (formData.checkin > maxDate) {
+      newErrors.checkin = `Check-in must be within the next ${MAX_DAYS_AHEAD} days.`;
     }
 
     if (!formData.checkout) {
       newErrors.checkout = "Please select a check-out date.";
     } else if (formData.checkin && formData.checkout <= formData.checkin) {
       newErrors.checkout = "Check-out must be after check-in.";
+    } else if (formData.checkout > maxDate) {
+      newErrors.checkout = `Check-out must be within the next ${MAX_DAYS_AHEAD} days.`;
     }
 
     if (
@@ -514,12 +589,20 @@ const Enquiry = () => {
                       />
                       <span className="radio-dot" aria-hidden="true" />
                       <span className="room-text">
-                        <strong>{roomLabel(o.key)}</strong>
-                        <small>
-                          {o.rooms} {o.rooms === 1 ? "room" : "rooms"} · sleeps up to {o.cap}
-                        </small>
+                        <strong>{roomTitle(o.key)}</strong>
+                        <small>{roomNote(o.key)}</small>
                       </span>
                       <span className={`room-tag ${o.tag === "Best fit" ? "best" : ""}`}>{o.tag}</span>
+
+                      {formData.room === o.key && (
+                        <div className="room-plans">
+                          {keyParts(o.key).flatMap(([count, size]) =>
+                            Array.from({ length: count }, (_, i) => (
+                              <RoomPlan key={`${size}-${i}`} size={size} />
+                            ))
+                          )}
+                        </div>
+                      )}
                     </label>
                   ))}
                 </div>
@@ -660,6 +743,7 @@ const Enquiry = () => {
                 </p>
                 <RangeCalendar
                   today={todayDate}
+                  maxDate={maxDate}
                   checkin={formData.checkin}
                   checkout={formData.checkout}
                   onChange={setDates}
