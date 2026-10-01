@@ -8,9 +8,9 @@ const appHtml = fs.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
 const routes = [
   { path: '/', title: 'KRS Guest House | Rooms Near Siganduru Temple, Karnataka' },
   { path: '/attraction', title: 'Places to Visit Near Siganduru, Karnataka | KRS Guest House' },
-  { path: '/location', title: 'KRS Guest House Location | Rooms Near Siganduru Temple' },
+  { path: '/rooms', title: 'KRS Guest House Location | Rooms Near Siganduru Temple' },
   { path: '/contact', title: 'Contact KRS Guest House | Book Rooms in Siganduru' },
-  { path: '/details', title: 'Rooms and Amenities | KRS Guest House, Siganduru Karnataka' },
+  { path: '/policies', title: 'Rooms and Amenities | KRS Guest House, Siganduru Karnataka' },
   { path: '/enquiry', title: 'Room Enquiry | KRS Guest House Near Siganduru Temple' },
 ];
 

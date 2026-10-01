@@ -1,704 +1,259 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { googleReviewUrl } from "../business";
 import { trackEvent } from "../analytics";
 import "./Home.css";
 
+// Static data lives outside the component so it isn't rebuilt on every render.
+const IMAGES = [
+  "/krs.png",
+  "https://res.cloudinary.com/dm0l1t1vk/image/upload/f_auto,q_auto,w_1600/v1752135436/image1_a8nu2z.jpg",
+  "https://res.cloudinary.com/dm0l1t1vk/image/upload/f_auto,q_auto,w_1600/v1752135435/image7_1_q4pgpx.jpg",
+];
+
+const PHONE = "+919448734152";
+const DIRECTIONS_URL =
+  "https://www.google.com/maps/search/?api=1&query=K.R.S+Guest+House+Siganduru";
+
+const FACILITIES = [
+  { icon: "🛕", title: "350 meters to the temple", text: "A short walk to Siganduru Chowdeshwari Temple." },
+  { icon: "🛏️", title: "Rooms for 2, 4 or 6", text: "Comfortable rooms for families and groups." },
+  { icon: "🚿", title: "Bathroom with hot water", text: "Clean bathrooms with hot water and western toilets." },
+  { icon: "🚗", title: "Free parking", text: "Park at the guest house at no extra cost." },
+  { icon: "📹", title: "CCTV in common areas", text: "Added security for guests and the property." },
+  { icon: "🤝", title: "Help when you need it", text: "Our local team is on hand throughout your stay." },
+];
+
+// Merged from 14 down to 8: removed repeats (bathroom x3, hot water, cleanliness, peaceful).
+const FAQS = [
+  { q: "How far is the guest house from the temple?", a: "About 350 meters, an easy walk to Siganduru Chowdeshwari Temple." },
+  { q: "What room types do you have?", a: "2-occupancy rooms, 4-occupancy family rooms and 6-occupancy rooms." },
+  { q: "Is it suitable for families?", a: "Yes. The 4- and 6-occupancy rooms are designed for families and small groups." },
+  { q: "Do the rooms have bathrooms and hot water?", a: "Yes. Bathrooms have hot water and western-style toilets." },
+  { q: "Is parking available?", a: "Yes, free parking is available for guests." },
+  { q: "Is there security?", a: "CCTV cameras cover the common areas of the guest house." },
+  { q: "Do rates change with the season?", a: "Yes. Rates vary by season and availability, so please call or send an enquiry for the latest tariff." },
+  { q: "How do I book?", a: "Call us or send an enquiry to check availability and confirm your booking directly." },
+];
+
 const Home = () => {
-  const whatsappBookingUrl =
-    "https://wa.me/919448734152?text=Hi%20KRS%20Guest%20House%2C%20I%20want%20to%20check%20room%20availability.";
-
-  const homeImages = [
-    "/krs.png",
-    "https://res.cloudinary.com/dm0l1t1vk/image/upload/f_auto,q_auto,w_1600/v1752135436/image1_a8nu2z.jpg",
-    "https://res.cloudinary.com/dm0l1t1vk/image/upload/f_auto,q_auto,w_1600/v1752135435/image7_1_q4pgpx.jpg",
-  ];
-
-  const homeRoomPlans = [
-    {
-      icon: "🛏️",
-      title: "2 Guests Room",
-      guests: "Perfect for a family of 2",
-      description:
-        "Comfortable stay with clean bedding, attached bathroom, hot water, and a peaceful atmosphere for a relaxing visit.",
-      features: ["Attached bathroom", "Hot water", "Clean stay"],
-    },
-    {
-      icon: "👨‍👩‍👧‍👦",
-      title: "Family Room",
-      guests: "Suitable for up to 4 guests",
-      description:
-        "Spacious and family-friendly room designed for temple visits, group stays, and comfortable family accommodation.",
-      features: ["Family friendly", "Extra space", "Peaceful setting"],
-    },
-    {
-      icon: "🏠",
-      title: "Group Room",
-      guests: "Suitable for up to 6 guests",
-      description:
-        "Perfect for larger groups visiting Siganduru with shared comfort, easy access, and convenient guest support.",
-      features: ["Group stay", "Parking", "Support available"],
-    },
-  ];
-
-  const homeFacilities = [
-    {
-      icon: "🛕",
-      title: "Close to Temple",
-      description:
-        "Located just 350 meters from Siganduru Chowdeshwari Temple.",
-    },
-    {
-      icon: "🛏️",
-      title: "Comfortable Rooms",
-      description:
-        "Well-maintained rooms suitable for families and groups.",
-    },
-    {
-      icon: "🚿",
-      title: "Bathroom Facility",
-      description:
-        "Separate clean bathrooms are available for guests to freshen up.",
-    },
-    {
-      icon: "♨️",
-      title: "Hot Water",
-      description: "Hot water facility is available for guests.",
-    },
-    {
-      icon: "🚗",
-      title: "Free Parking",
-      description: "Convenient parking facility is available for guests.",
-    },
-    {
-      icon: "📹",
-      title: "CCTV Security",
-      description:
-        "CCTV cameras are installed in common areas for added security.",
-    },
-    {
-      icon: "✨",
-      title: "Clean & Hygienic",
-      description:
-        "Rooms and common areas are maintained with care.",
-    },
-    {
-      icon: "🕐",
-      title: "Guest Support",
-      description:
-        "We are available to assist guests whenever needed.",
-    },
-  ];
-
-  const homeFaqs = [
-    {
-      question: "Is a bathroom facility available for guests?",
-      answer:
-        "Yes. Separate clean bathrooms are available for guests to freshen up and use comfortably.",
-    },
-    {
-      question: "Are the bathrooms attached to the rooms?",
-      answer:
-        "Yes, the bathrooms are attached to the rooms and come with hot water facilities and western-style toilets.",
-    },
-    {
-      question: "Is hot water available?",
-      answer:
-        "Yes. Hot water facility is available for guests.",
-    },
-    {
-      question: "Is CCTV camera security available?",
-      answer:
-        "Yes. CCTV cameras are installed in common areas of the guest house to provide additional security for guests and the property.",
-    },
-    {
-      question: "Is free parking available?",
-      answer:
-        "Yes. Parking facility is available for guests at the guest house.",
-    },
-    {
-      question:
-        "How far is the guest house from Siganduru Chowdeshwari Temple?",
-      answer:
-        "The guest house is conveniently located approximately 350 meters from the temple, making it easy for guests to visit.",
-    },
-    {
-      question: "What room types are available?",
-      answer:
-        "We currently offer 2-occupancy rooms, 4-occupancy family rooms, and 6-occupancy rooms.",
-    },
-    {
-      question: "How many guests can stay in the rooms?",
-      answer:
-        "Our rooms are available for up to 2, 4, or 6 guests depending on the room selected.",
-    },
-    {
-      question: "Is the guest house suitable for families?",
-      answer:
-        "Yes. We have family-friendly room options including 4-occupancy and 6-occupancy rooms.",
-    },
-    {
-      question: "Are the rooms clean and hygienic?",
-      answer:
-        "Yes. We take care to maintain clean and hygienic rooms and common areas for a comfortable guest experience.",
-    },
-    {
-      question: "Is the guest house in a peaceful location?",
-      answer:
-        "Yes. The guest house offers a calm and peaceful environment while remaining conveniently close to the temple.",
-    },
-    {
-      question: "Can I check room availability before visiting?",
-      answer:
-        "Yes. We recommend contacting us before your visit to confirm room availability and the latest seasonal tariff.",
-    },
-    {
-      question: "Do room rates change depending on the season?",
-      answer:
-        "Yes. Room rates may vary depending on the season and availability. Please contact us for the latest pricing.",
-    },
-    {
-      question: "How can I contact the guest house for booking?",
-      answer:
-        "You can contact us directly through our Contact page to enquire about room availability, pricing and booking.",
-    },
-  ];
-
-  const [homeSelectedImage, setHomeSelectedImage] = useState(0);
-  const [homeOpenFaq, setHomeOpenFaq] = useState(null);
+  const [selected, setSelected] = useState(0);
+  const [openFaq, setOpenFaq] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setHomeSelectedImage((currentIndex) =>
-        currentIndex === homeImages.length - 1 ? 0 : currentIndex + 1
-      );
-    }, 5000);
-
+    // Respect users who prefer reduced motion: no auto-rotation.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = setInterval(
+      () => setSelected((i) => (i + 1) % IMAGES.length),
+      6000
+    );
     return () => clearInterval(timer);
-  }, [homeImages.length]);
-
-  const handleHomeFaqToggle = (index) => {
-    setHomeOpenFaq(homeOpenFaq === index ? null : index);
-  };
+  }, [selected]); // resets the timer when a thumbnail is clicked
 
   return (
     <main className="home-page">
-
-      {/* ================= HERO ================= */}
-
+      {/* HERO */}
       <section className="home-page-hero">
-        <div className="home-page-hero-image-wrapper">
+        <div className="home-page-hero-media">
           <img
-            src={homeImages[homeSelectedImage]}
+            src={IMAGES[selected]}
             alt="K.R.S Guest House"
             className="home-page-hero-image"
             width="1600"
             height="900"
-            loading={homeSelectedImage === 0 ? "eager" : "lazy"}
-            fetchPriority={homeSelectedImage === 0 ? "high" : "auto"}
+            loading={selected === 0 ? "eager" : "lazy"}
+            fetchPriority={selected === 0 ? "high" : "auto"}
             decoding="async"
           />
-
           <div className="home-page-hero-overlay">
             <div className="home-page-hero-content">
-
-              <span className="home-page-hero-small-text">
-                WELCOME TO K.R.S GUEST HOUSE
-              </span>
-
-              <h1>
-                Comfortable Stay Near
-                <br />
-                Siganduru Chowdeshwari Temple
-              </h1>
-
-              <p>
-                Clean rooms, family-friendly accommodation, free parking,
-                and a peaceful stay just 350 meters from the temple.
+              <p className="home-page-hero-kicker">K.R.S Guest House, Siganduru</p>
+              <h1>Comfortable Stay Near Siganduru Chowdeshwari Temple</h1>
+              <p className="home-page-hero-text">
+                Clean, family-friendly rooms with free parking, 350 meters from
+                the temple.
               </p>
-
-              <p className="home-page-hero-search-copy">
-                Looking for a clean and affordable stay near Siganduru?
-                KRS Guest House offers comfortable rooms for families,
-                temple visitors, and travelers seeking a calm place to rest.
-              </p>
-
-              <Link
-                to="/enquiry"
-                className="home-page-hero-button"
-                onClick={() => trackEvent("booking", "click", "hero_check_availability")}
-              >
-                Check availability
-              </Link>
-
-              <Link
-                to="/location"
-                className="home-page-hero-button home-page-hero-button-enquiry"
-                onClick={() => trackEvent("booking", "click", "hero_view_rooms")}
-              >
-                See room options
-              </Link>
-
-              <a
-                href="tel:+919448734152"
-                className="home-page-hero-button home-page-hero-button-primary"
-                onClick={() => trackEvent("contact", "click", "booking_phone_hero")}
-              >
-                Call to book <span aria-hidden="true">→</span>
-              </a>
-
-
+              <div className="home-page-hero-actions">
+                <a
+                  href={`tel:${PHONE}`}
+                  className="home-page-btn home-page-btn-gold"
+                  onClick={() => trackEvent("contact", "click", "booking_phone_hero")}
+                >
+                  Call to book
+                </a>
+                <Link
+                  to="/enquiry"
+                  className="home-page-btn home-page-btn-glass"
+                  onClick={() => trackEvent("booking", "click", "hero_check_availability")}
+                >
+                  Check availability
+                </Link>
+                <Link
+                  to="/rooms"
+                  className="home-page-btn home-page-btn-link"
+                  onClick={() => trackEvent("booking", "click", "hero_view_rooms")}
+                >
+                  See room options
+                </Link>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Image thumbnails */}
-
-        <div className="home-page-image-thumbnails">
-          {homeImages.map((image, index) => (
+        <div className="home-page-thumbs">
+          {IMAGES.map((image, index) => (
             <button
-              key={index}
+              key={image}
               type="button"
-              className={`home-page-thumbnail ${homeSelectedImage === index
-                  ? "home-page-thumbnail-active"
-                  : ""
-                }`}
-              onClick={() => setHomeSelectedImage(index)}
+              className={`home-page-thumb ${selected === index ? "is-active" : ""}`}
+              onClick={() => setSelected(index)}
               aria-label={`View guest house image ${index + 1}`}
+              aria-current={selected === index}
             >
-              <img
-                src={image}
-                alt={`Guest house ${index + 1}`}
-                width="90"
-                height="62"
-                loading="lazy"
-                decoding="async"
-              />
+              <img src={image} alt="" width="90" height="62" loading="lazy" decoding="async" />
             </button>
           ))}
         </div>
       </section>
 
-      <div className="home-page-sticky-booking-bar" aria-label="Quick booking actions">
-        <span>Book your stay today</span>
-        <div className="home-page-sticky-booking-actions">
-          <a
-            href="tel:+919448734152"
-            onClick={() => trackEvent("contact", "click", "sticky_phone")}
-          >
-            Call Now
-          </a>
-          <a
-            href={whatsappBookingUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackEvent("contact", "click", "sticky_whatsapp")}
-          >
-            WhatsApp
-          </a>
-          <Link
-            to="/contact"
-            onClick={() => trackEvent("booking", "click", "sticky_check_availability")}
-          >
-            Check Availability
-          </Link>
-        </div>
-      </div>
-
-      <section className="home-page-trust-strip" aria-label="Why guests choose us">
-        <div><span>✓</span><strong>Direct booking</strong><small>Talk to our local team</small></div>
-        <div><span>♥</span><strong>Family-friendly</strong><small>Rooms for every group</small></div>
-        <div><span>◷</span><strong>Near the temple</strong><small>Just 350 meters away</small></div>
-      </section>
-
-      <section className="home-page-room-options" aria-labelledby="home-page-room-options-title">
-        <div className="home-page-section-heading">
-          <span className="home-page-section-label">ROOM OPTIONS</span>
-          <h2 id="home-page-room-options-title">Choose Your Perfect Stay</h2>
-          <p>
-            Comfortable rooms for families and groups visiting Siganduru for worship, travel, or a peaceful break.
-          </p>
-        </div>
-
-        <div className="home-page-room-options-grid">
-          {homeRoomPlans.map((room) => (
-            <article className="home-page-room-option-card" key={room.title}>
-              <div className="home-page-room-option-top">
-                <span className="home-page-room-option-icon">{room.icon}</span>
-                <span className="home-page-room-option-guests">{room.guests}</span>
-              </div>
-
-              <div className="home-page-room-option-content">
-                <h3>{room.title}</h3>
-                <p>{room.description}</p>
-
-                <ul>
-                  {room.features.map((feature) => (
-                    <li key={feature}>✓ {feature}</li>
-                  ))}
-                </ul>
-
-                <Link
-                  to="/contact"
-                  className="home-page-room-option-button"
-                  onClick={() => trackEvent("booking", "click", `room_${room.title.toLowerCase().replace(/\s+/g, "_")}`)}
-                >
-                  Enquire now
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="home-page-reviews" aria-labelledby="home-page-reviews-title">
-        <div>
-          <span className="home-page-section-label">GUEST FEEDBACK</span>
-          <h2 id="home-page-reviews-title">Planning your stay with confidence</h2>
-          <p>Read the latest guest feedback on our Google Business profile before you book.</p>
-        </div>
+      {/* TRUST + REVIEWS in one band */}
+      <section className="home-page-band" aria-label="Why guests choose us">
+        <ul className="home-page-trust">
+          <li><strong>Book direct</strong><span>Talk to our local team</span></li>
+          <li><strong>Family-friendly</strong><span>Rooms for every group size</span></li>
+          <li><strong>350 m to the temple</strong><span>Easy to walk</span></li>
+        </ul>
         <a
-          href={googleReviewUrl}
-          className="home-page-review-link"
+         href={DIRECTIONS_URL}
+          className="home-page-review-link home-page-directions-link"
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => trackEvent("review", "click", "google_reviews_home")}
+          onClick={() => trackEvent("navigation", "click", "get_directions_reviews_band")}
         >
-          <span aria-hidden="true">★</span>
-          <span><strong>Read Google reviews</strong><small>Opens Google Business Profile</small></span>
-          <span aria-hidden="true">→</span>
+          <span className="home-page-stars" aria-hidden="true">★★★★★</span>
+          <span>Read guest reviews on Google</span>
         </a>
       </section>
 
-      {/* ================= FACILITIES ================= */}
-
-      <section className="home-page-facilities">
-
-        <div className="home-page-section-heading">
-
-          <span className="home-page-section-label">
-            OUR FACILITIES
-          </span>
-
-          <h2>Everything You Need</h2>
-
+      {/* FACILITIES */}
+      <section className="home-page-section home-page-facilities">
+        <div className="home-page-heading">
+          <h2>Everything you need for a temple visit</h2>
           <p>
-            Essential facilities to make your stay comfortable,
-            convenient and peaceful.
+            Looking for a clean, affordable stay near Siganduru? We keep things
+            simple, comfortable and close to the temple.
           </p>
-
         </div>
-
         <div className="home-page-facilities-grid">
-
-          {homeFacilities.map((facility, index) => (
-            <article
-              className="home-page-facility-card"
-              key={index}
-            >
-
-              <div className="home-page-facility-icon">
-                {facility.icon}
-              </div>
-
-              <h3>{facility.title}</h3>
-
-              <p>{facility.description}</p>
-
+          {FACILITIES.map((f) => (
+            <article className="home-page-facility" key={f.title}>
+              <span className="home-page-facility-icon" aria-hidden="true">{f.icon}</span>
+              <h3>{f.title}</h3>
+              <p>{f.text}</p>
             </article>
           ))}
-
         </div>
-
       </section>
 
-      {/* ================= LOCATION ================= */}
-
-      <section className="home-page-location">
-
-        <div className="home-page-location-bg home-page-location-bg-one" />
-        <div className="home-page-location-bg home-page-location-bg-two" />
-
-        <div className="home-page-location-container">
-
-          <div className="home-page-location-header">
-
-            <span className="home-page-section-label">
-              FIND US
-            </span>
-
-            <h2>
-              Comfortable Rooms,
-              <span> Convenient Location</span>
-            </h2>
-
-            <p>
-              Stay close to Siganduru Chowdeshwari Temple with
-              convenient access to the guest house.
-            </p>
-
-          </div>
-
-          <div className="home-page-location-content">
-
-            {/* Location information */}
-
-            <div className="home-page-location-details">
-
-              <div className="home-page-location-heading">
-
-                <div className="home-page-location-heading-icon">
-                  📍
-                </div>
-
-                <div>
-                  <span>OUR LOCATION</span>
-                  <h3>K.R.S Guest House</h3>
-                </div>
-
-              </div>
-
-              <div className="home-page-location-card">
-
-                <div className="home-page-location-info-icon">
-                  🛕
-                </div>
-
-                <div>
-                  <span>NEARBY TEMPLE</span>
-
-                  <strong>
-                    Siganduru Chowdeshwari Temple
-                  </strong>
-
-                  <p>
-                    Approximately 350 meters from the guest house.
-                  </p>
-                </div>
-
-              </div>
-
-              <div className="home-page-location-card">
-
-                <div className="home-page-location-info-icon">
-                  📍
-                </div>
-
-                <div>
-                  <span>LOCATION</span>
-
-                  <strong>
-                    K.R.S Guest House
-                  </strong>
-
-                  <p>
-                    Conveniently located for temple visitors,
-                    families and travelers.
-                  </p>
-                </div>
-
-              </div>
-
-              <div className="home-page-location-card">
-
-                <div className="home-page-location-info-icon">
-                  🧭
-                </div>
-
-                <div>
-                  <span>DIRECTIONS</span>
-
-                  <strong>
-                    Easy to Find
-                  </strong>
-
-                  <p>
-                    Use the map to find the guest house and
-                    plan your route before travelling.
-                  </p>
-                </div>
-
-              </div>
-
-              <div className="home-page-location-features">
-
-                <span>
-                  <b>✓</b> 350m from Temple
-                </span>
-
-                <span>
-                  <b>✓</b> Peaceful Location
-                </span>
-
-                <span>
-                  <b>✓</b> Free Parking
-                </span>
-
-                <span>
-                  <b>✓</b> Guest Support
-                </span>
-
-              </div>
-
-            </div>
-
-            {/* Map */}
-
-            <div className="home-page-map-section">
-
-              <div className="home-page-map-header">
-
-                <div>
-                  <span>MAP & DIRECTIONS</span>
-                  <h3>Find Us Easily</h3>
-                </div>
-
-                <div className="home-page-map-pin">
-                  📍
-                </div>
-
-              </div>
-
-              <div className="home-page-map-wrapper">
-
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31019.448193263533!2d74.85408!3d14.071459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbc71f9a9acffc1%3A0x37552ae20c8ab25b!2sK.R.S%20Guest%20House!5e0!3m2!1sen!2sin!4v1699189485749!5m2!1sen!2sin"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="K.R.S Guest House Location"
-                />
-
-                <div className="home-page-map-label">
-
-                  <span>📍</span>
-
-                  <div>
-                    <strong>K.R.S Guest House</strong>
-                    <small>
-                      Siganduru, Karnataka
-                    </small>
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
+      {/* LOCATION */}
+      <section className="home-page-section home-page-location">
+        <div className="home-page-heading">
+          <h2>Find us in Siganduru</h2>
+          <p>Use the map to plan your route before you travel.</p>
         </div>
+        <div className="home-page-location-grid">
+          <div className="home-page-location-card">
+            <h3>K.R.S Guest House</h3>
+            <dl>
+              <div>
+                <dt>Nearest landmark</dt>
+                <dd>Siganduru Chowdeshwari Temple, about 350 meters away</dd>
+              </div>
+              <div>
+                <dt>Good to know</dt>
+                <dd>Free parking and guest support on site</dd>
+              </div>
+            </dl>
+            <a
+              href={DIRECTIONS_URL}
+              className="home-page-btn home-page-btn-green"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent("navigation", "click", "get_directions_home")}
+            >
+              Get directions
+            </a>
+          </div>
 
+          <div className="home-page-map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31019.448193263533!2d74.85408!3d14.071459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbc71f9a9acffc1%3A0x37552ae20c8ab25b!2sK.R.S%20Guest%20House!5e0!3m2!1sen!2sin!4v1699189485749!5m2!1sen!2sin"
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+              title="K.R.S Guest House location map"
+            />
+          </div>
+        </div>
       </section>
 
-      {/* ================= FAQ — KEEP AT END ================= */}
-
-      <section className="home-page-booking-cta" aria-label="Book your stay">
-        <div className="home-page-booking-cta-content">
-          <span>✨</span>
-          <div>
-            <h3>Plan Your Temple Visit With Us</h3>
-            <p>
-              Looking for a clean, comfortable, and affordable stay near Siganduru Chowdeshwari Temple? KRS Guest House offers family-friendly rooms, peaceful surroundings, and convenient access to the temple.
-            </p>
-          </div>
+      {/* BOOKING CTA (now visible on mobile too) */}
+      <section className="home-page-cta" aria-label="Book your stay">
+        <div>
+          <h2>Planning a temple visit?</h2>
+          <p>Ask about rooms and today's tariff. We reply directly.</p>
         </div>
-
-        <div className="home-page-booking-cta-actions">
+        <div className="home-page-cta-actions">
           <Link
-            to="/contact"
-            className="home-page-booking-cta-button"
+            to="/enquiry"
+            className="home-page-btn home-page-btn-gold"
             onClick={() => trackEvent("booking", "click", "footer_check_availability")}
           >
-            Check Availability
+            Check availability
           </Link>
           <a
-            href="tel:+919448734152"
-            className="home-page-booking-cta-button home-page-booking-cta-button-secondary"
+            href={`tel:${PHONE}`}
+            className="home-page-btn home-page-btn-glass"
             onClick={() => trackEvent("contact", "click", "footer_call")}
           >
-            Call Now
+            Call now
           </a>
         </div>
       </section>
 
-      <section className="home-page-faq">
-
-        <div className="home-page-section-heading">
-
-          <span className="home-page-section-label">
-            FAQ
-          </span>
-
-          <h2>
-            Frequently Asked Questions
-          </h2>
-
-          <p>
-            Everything you may want to know before your stay.
-          </p>
-
+      {/* FAQ (now visible on mobile too) */}
+      <section className="home-page-section home-page-faq">
+        <div className="home-page-heading">
+          <h2>Questions before you stay</h2>
         </div>
-
-        <div className="home-page-faq-container">
-
-          {homeFaqs.map((faq, index) => (
-
-            <div
-              className={`home-page-faq-item ${homeOpenFaq === index
-                  ? "home-page-faq-open"
-                  : ""
-                }`}
-              key={index}
-            >
-
-              <button
-                type="button"
-                className="home-page-faq-question"
-                id={`home-faq-question-${index}`}
-                onClick={() => handleHomeFaqToggle(index)}
-                aria-expanded={homeOpenFaq === index}
-                aria-controls={`home-faq-answer-${index}`}
-              >
-
-                <span>
-                  {faq.question}
-                </span>
-
-                <span className="home-page-faq-icon">
-                  {homeOpenFaq === index ? "−" : "+"}
-                </span>
-
-              </button>
-
-              <div
-                id={`home-faq-answer-${index}`}
-                className={`home-page-faq-answer ${homeOpenFaq === index
-                    ? "home-page-faq-answer-show"
-                    : ""
-                  }`}
-                role="region"
-                aria-labelledby={`home-faq-question-${index}`}
-              >
-
-                <p>
-                  {faq.answer}
-                </p>
-
+        <div className="home-page-faq-list">
+          {FAQS.map((faq, index) => {
+            const open = openFaq === index;
+            return (
+              <div className={`home-page-faq-item ${open ? "is-open" : ""}`} key={faq.q}>
+                <button
+                  type="button"
+                  className="home-page-faq-question"
+                  id={`faq-q-${index}`}
+                  aria-expanded={open}
+                  aria-controls={`faq-a-${index}`}
+                  onClick={() => setOpenFaq(open ? null : index)}
+                >
+                  <span>{faq.q}</span>
+                  <span className="home-page-faq-icon" aria-hidden="true" />
+                </button>
+                <div
+                  id={`faq-a-${index}`}
+                  className="home-page-faq-answer"
+                  role="region"
+                  aria-labelledby={`faq-q-${index}`}
+                >
+                  <p>{faq.a}</p>
+                </div>
               </div>
-
-            </div>
-
-          ))}
-
+            );
+          })}
         </div>
-
       </section>
-
     </main>
   );
 };
