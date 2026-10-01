@@ -27,9 +27,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Fetch upstream main
+      - name: Add and fetch upstream
         run: |
-          git remote add upstream https://github.com/ksoushik26/krsguesthouse.git
+          git remote add upstream https://github.com/kskoushik26/krsguesthouse.git
           git fetch upstream main
 
       - name: Merge upstream changes
