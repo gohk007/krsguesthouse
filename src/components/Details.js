@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FaArrowLeft,
   FaArrowRight,
@@ -68,6 +68,7 @@ const NOT_ACCEPTED_PAYMENTS = [
   { id: "debit", value: "Debit cards", Icon: FaCreditCard },
   { id: "other", value: "Any other payment method", hint: "Only UPI and cash are accepted", Icon: FaTimesCircle },
 ];
+
 const DEPOSIT_NOTICE = {
   id: "deposit",
   title: "Refundable key deposit",
@@ -96,6 +97,8 @@ const RULES = [
   { Icon: FaTrashAlt, text: "Please keep the rooms and premises clean and dispose of waste only in the bins provided." },
   { Icon: FaLock, text: "The guest house is not responsible for loss of valuables or personal belongings. Please lock your room when you go out." },
 ];
+
+const INITIAL_RULES_COUNT = 5;
 
 /* ---------- Small presentational pieces ---------- */
 
@@ -168,92 +171,108 @@ const PaymentPanel = ({ variant, title, StatusIcon, items }) => (
 
 /* ---------- Page ---------- */
 
-const Details = () => (
-  <main className="details-page">
-    <div className="details-container">
-      <header className="details-header">
-  <h1>Know Before You Stay</h1>
-  <p>
-    A quick guide to timings, payments and house rules at <strong>KRS Guest House</strong>.
-  </p>
-</header>
+const Details = () => {
+  const [showAllRules, setShowAllRules] = useState(false);
+  const visibleRules = showAllRules ? RULES : RULES.slice(0, INITIAL_RULES_COUNT);
+  const hiddenCount = RULES.length - INITIAL_RULES_COUNT;
 
-      <section className="details-card" aria-labelledby="stay-heading">
-        <SectionHeading
-          id="stay-heading"
-          Icon={FaClock}
-          title="Check-in & check-out"
-          subtitle="Plan your arrival and departure."
-        />
-
-        <InfoCards items={TIMINGS} />
-
-        {NOTICES.map((notice) => (
-          <Notice key={notice.id} {...notice} />
-        ))}
-      </section>
-
-      <section className="details-card" aria-labelledby="payment-heading">
-        <SectionHeading
-          id="payment-heading"
-          Icon={FaWallet}
-          title="Payments & key deposit"
-          subtitle="How to pay and what to expect on arrival."
-        />
-
-        <div className="pay-grid">
-          <PaymentPanel
-            variant="accepted"
-            title="Accepted"
-            StatusIcon={FaCheckCircle}
-            items={ACCEPTED_PAYMENTS}
-          />
-          <PaymentPanel
-            variant="denied"
-            title="Not accepted"
-            StatusIcon={FaTimesCircle}
-            items={NOT_ACCEPTED_PAYMENTS}
-          />
-        </div>
-
-        <Notice {...DEPOSIT_NOTICE} />
-      </section>
-
-      <section className="details-card" aria-labelledby="rules-heading">
-        <SectionHeading
-          id="rules-heading"
-          Icon={FaInfoCircle}
-          title="Rules & regulations"
-          subtitle="Please read before you book."
-        />
-
-        <ul className="rules-list">
-          {RULES.map(({ Icon, text, important }) => (
-            <li className={`rule${important ? " rule--important" : ""}`} key={text}>
-              <span className="rule__icon" aria-hidden="true">
-                <Icon />
-              </span>
-              <p>{text}</p>
-              {important && <span className="rule__badge">Important</span>}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <footer className="acknowledgement">
-        <span className="notice__icon" aria-hidden="true">
-          <FaInfoCircle />
-        </span>
-        <div>
-          <strong>Guest acknowledgement</strong>
+  return (
+    <main className="details-page">
+      <div className="details-container">
+        <header className="details-header">
+          <h1>Know Before You Stay</h1>
           <p>
-            By making a reservation, guests agree to follow all property rules and
-            regulations during their stay.
+            A quick guide to timings, payments and house rules at{" "}
+            <strong>KRS Guest House</strong>.
           </p>
-        </div>
-      </footer>
-    </div>
-  </main>
-);
+        </header>
+
+        <section className="details-card" aria-labelledby="stay-heading">
+          <SectionHeading
+            id="stay-heading"
+            Icon={FaClock}
+            title="Check-in & check-out"
+            subtitle="Plan your arrival and departure."
+          />
+
+          <InfoCards items={TIMINGS} />
+
+          {NOTICES.map((notice) => (
+            <Notice key={notice.id} {...notice} />
+          ))}
+        </section>
+
+        <section className="details-card" aria-labelledby="payment-heading">
+          <SectionHeading
+            id="payment-heading"
+            Icon={FaWallet}
+            title="Payments & key deposit"
+            subtitle="How to pay and what to expect on arrival."
+          />
+
+          <div className="pay-grid">
+            <PaymentPanel
+              variant="accepted"
+              title="Accepted"
+              StatusIcon={FaCheckCircle}
+              items={ACCEPTED_PAYMENTS}
+            />
+            <PaymentPanel
+              variant="denied"
+              title="Not accepted"
+              StatusIcon={FaTimesCircle}
+              items={NOT_ACCEPTED_PAYMENTS}
+            />
+          </div>
+
+          <Notice {...DEPOSIT_NOTICE} />
+        </section>
+
+        <section className="details-card" aria-labelledby="rules-heading">
+          <SectionHeading
+            id="rules-heading"
+            Icon={FaInfoCircle}
+            title="Rules & regulations"
+            subtitle="Please read before you book."
+          />
+
+          <ul className="rules-list">
+            {visibleRules.map(({ Icon, text, important }) => (
+              <li className={`rule${important ? " rule--important" : ""}`} key={text}>
+                <span className="rule__icon" aria-hidden="true">
+                  <Icon />
+                </span>
+                <p>{text}</p>
+                {important && <span className="rule__badge">Important</span>}
+              </li>
+            ))}
+          </ul>
+
+          <button
+            type="button"
+            className="rules-toggle"
+            onClick={() => setShowAllRules((v) => !v)}
+            aria-expanded={showAllRules}
+          >
+            {showAllRules ? "Show less" : `View ${hiddenCount} more rules`}
+          </button>
+        </section>
+
+        <footer className="acknowledgement">
+          <span className="notice__icon" aria-hidden="true">
+            <FaInfoCircle />
+          </span>
+          <div>
+            <strong>Guest acknowledgement</strong>
+            <p>
+              By making a reservation, guests agree to follow all property rules and
+              regulations during their stay.
+            </p>
+          </div>
+        </footer>
+      </div>
+    </main>
+  );
+};
 
 export default Details;
