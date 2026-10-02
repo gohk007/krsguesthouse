@@ -4,6 +4,9 @@ import { FaDirections, FaStar } from "react-icons/fa";
 import { googleMapsDirectionsUrl, googleReviewUrl } from "../business";
 import "./Location.css";
 
+// Route where the <Enquiry /> component is rendered. Change it if yours differs.
+const ENQUIRY_PATH = "/enquiry";
+
 const commonFacilities = [
   "Attached Bathroom",
   "Hot Water",
@@ -138,14 +141,20 @@ const Location = () => {
 
                     <div className="room-footer">
                       <span className="tariff-text">Seasonal tariff</span>
+                      <Link
+                        to={`${ENQUIRY_PATH}?room=${encodeURIComponent(room.title)}`}
+                        className="room-enquire"
+                        onClick={handleBookNow}
+                        aria-label={`Enquire about the ${room.title}`}
+                      >
+                        Enquire
+                        <span aria-hidden="true">→</span>
+                      </Link>
                     </div>
                   </div>
                 </article>
               ))}
             </div>
-
-            {/* Pricing note */}
-           
           </div>
 
           {/* GALLERY */}
@@ -180,18 +189,7 @@ const Location = () => {
                 </button>
               ))}
             </div>
-             <div className="pricing-note">
-              <div className="note-icon" aria-hidden="true">ℹ️</div>
-              <div>
-                <strong>Planning your stay?</strong>
-                <p>
-                  Room rates may vary depending on the season and availability.
-                  Contact us for the latest tariff and room availability.
-                </p>
-              </div>
-            </div>
           </div>
-          
         </div>
 
         {/* BOTTOM CTA */}
@@ -292,4 +290,4 @@ const Location = () => {
   );
 };
 
-export default Location; 
+export default Location;
