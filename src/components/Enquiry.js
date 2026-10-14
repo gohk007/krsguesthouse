@@ -354,8 +354,8 @@ const Enquiry = () => {
     setFormData((prev) => ({
       ...prev,
       members: String(next),
-      // keep the chosen rooms if they still suit the party, else use best fit
-      room: opts.some((o) => o.key === prev.room) ? prev.room : opts[0].key,
+      // always select the best fit for the new guest count
+      room: opts[0].key,
     }));
     clearError("members", "room");
   };
