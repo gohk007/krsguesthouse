@@ -486,6 +486,7 @@
 .stepper output { min-width: 96px; text-align: center; color: var(--teal-900); font-weight: 700; font-size: 0.9rem; }
 
 .hint { margin: 6px 0 0 4px; color: var(--muted); font-size: 0.7rem; }
+.hint-warn { color: var(--gold-dark); font-weight: 600; line-height: 1.4; }
 
 /* ---------- INPUTS ---------- */
 
@@ -711,6 +712,41 @@
 
 .popup-done { width: 100%; flex-shrink: 0; }
 
+/* ---------- CONFIRM EMAIL ---------- */
+
+.confirm-icon { font-size: 1.6rem; }
+
+.confirm-email {
+  margin: 0 0 12px;
+  padding: 14px 12px;
+  background: #fbf5df;
+  border: 1.5px dashed var(--gold);
+  border-radius: 12px;
+  color: var(--teal-900);
+  font-size: 1.05rem;
+  font-weight: 700;
+  word-break: break-all;
+}
+
+.confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 6px;
+}
+.confirm-edit {
+  min-height: 46px;
+  border: 1.5px solid var(--teal-700);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--teal-700);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.confirm-edit:hover:not(:disabled) { background: var(--teal-100); }
+.confirm-edit:disabled { opacity: 0.4; cursor: not-allowed; }
+
 /* ---------- RESPONSIVE ---------- */
 
 @media (max-width: 768px) {
@@ -748,13 +784,17 @@
   .bottom-note { font-size: 0.72rem; gap: 7px; }
   .bottom-note span { width: 16px; }
 
-  /* success popup as a bottom sheet */
+  /* success popup + confirm sheet as bottom sheets */
   .popup {
     width: 100%;
     padding: 30px 18px calc(18px + env(safe-area-inset-bottom, 0px));
   }
   .popup-title { font-size: 1.35rem; }
   .popup-urgent a { width: 100%; } /* big tap target for calling */
+
+  /* confirm email: stack buttons, main action on top for thumbs */
+  .confirm-actions { grid-template-columns: 1fr; }
+  .confirm-actions .sheet-done { order: -1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
