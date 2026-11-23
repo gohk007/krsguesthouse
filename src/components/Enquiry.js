@@ -354,10 +354,12 @@ const Enquiry = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [calOpen, setCalOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false); // "Is this email correct?" sheet
   const [sentEmail, setSentEmail] = useState("");
   const [emailChecked, setEmailChecked] = useState(false); // email field has been left once
   const triggerRef = useRef(null);
   const doneRef = useRef(null);
+  const confirmRef = useRef(null);
   const touched = useRef({});
 
   const todayDate = useMemo(localToday, []);
@@ -400,6 +402,20 @@ const Enquiry = () => {
       if (trigger) trigger.focus();
     };
   }, [calOpen]);
+
+  /* Confirm-email sheet: Esc to close, lock page scroll, focus the send button */
+  useEffect(() => {
+    if (!confirmOpen) return undefined;
+    const onKey = (e) => e.key === "Escape" && !isSubmitting && setConfirmOpen(false);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    if (confirmRef.current) confirmRef.current.focus();
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [confirmOpen, isSubmitting]);
 
   /* Success popup: Esc to close, lock page scroll, focus the button */
   useEffect(() => {
@@ -555,12 +571,23 @@ const Enquiry = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  /* ---------- SUBMIT ---------- */
+  /* ---------- SUBMIT: validate → confirm email → send ---------- */
 
-  const handleSubmit = async (e) => {
+  // Step 1: validate the form, then ask the guest to confirm their email
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+    setConfirmOpen(true);
+  };
 
+  // Guest spotted a typo: close the sheet and jump to the email field
+  const editEmail = () => {
+    setConfirmOpen(false);
+    setTimeout(() => document.getElementById("email")?.focus(), 50);
+  };
+
+  // Step 2: guest confirmed the email, so actually send the enquiry
+  const sendEnquiry = async () => {
     setIsSubmitting(true);
 
     try {
@@ -569,7 +596,7 @@ const Enquiry = () => {
         ...formData,
         email: formData.email.trim(),
         room: roomLabel(formData.room), // e.g. "2 × 2-Occupancy Room"
-        rooms_count: keyParts(formData.room).reduce((t, [c]) => t + c, 0),
+        rooms_count: roomCount(formData.room),
         nights,
         enquiry_type: "Guest House Stay Enquiry",
         _subject: `New Stay Enquiry from ${formData.name}`,
@@ -579,6 +606,7 @@ const Enquiry = () => {
 
       // Remember the email for the popup before the form resets
       setSentEmail(formData.email.trim());
+      setConfirmOpen(false);
       setPopupOpen(true);
 
       touched.current = {};
@@ -592,6 +620,7 @@ const Enquiry = () => {
       setShowMessage(false);
     } catch (error) {
       console.error("Error submitting enquiry:", error);
+      setConfirmOpen(false);
       setErrors({
         form: "Something went wrong. Please try again or call us directly.",
       });
@@ -760,6 +789,10 @@ const Enquiry = () => {
                   id="email"
                   type="email"
                   name="email"
+                  inputMode="email"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
                   placeholder="name@gmail.com"
                   value={formData.email}
                   onChange={handleChange}
@@ -781,8 +814,8 @@ const Enquiry = () => {
                 )}
 
                 {!errors.email && !emailSuggestion && (
-                  <small className="hint">
-                    Our reply with prices and booking details goes to this email.
+                  <small className="hint hint-warn">
+                    ⚠️ Please double-check your email. Our reply with prices and details will be sent here.
                   </small>
                 )}
               </div>
@@ -875,6 +908,56 @@ const Enquiry = () => {
                 <button type="button" className="link-button" onClick={() => setDates("", "")}>Clear dates</button>
                 <button type="button" className="sheet-done" disabled={!nights} onClick={() => setCalOpen(false)}>
                   Apply dates
+                </button>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
+
+      {/* CONFIRM EMAIL */}
+      {confirmOpen &&
+        createPortal(
+          <div
+            className="sheet-backdrop"
+            onMouseDown={(e) => e.target === e.currentTarget && !isSubmitting && setConfirmOpen(false)}
+          >
+            <div
+              className="sheet popup confirm"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="confirm-title"
+            >
+              <div className="popup-icon confirm-icon" aria-hidden="true">✉️</div>
+              <h3 id="confirm-title" className="popup-title">Is this email correct?</h3>
+              <p className="popup-lead">
+                Prices, availability and details will be sent <strong>only to this address</strong>:
+              </p>
+
+              <div className="confirm-email">{formData.email.trim()}</div>
+
+              <p className="popup-spam">
+                A small typo means you won't receive our reply. Please read it once more.
+              </p>
+
+              <div className="confirm-actions">
+                <button
+                  type="button"
+                  className="confirm-edit"
+                  onClick={editEmail}
+                  disabled={isSubmitting}
+                >
+                  Edit email
+                </button>
+                <button
+                  type="button"
+                  ref={confirmRef}
+                  className="sheet-done"
+                  onClick={sendEnquiry}
+                  disabled={isSubmitting}
+                  aria-busy={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : "Yes, send enquiry"}
                 </button>
               </div>
             </div>
